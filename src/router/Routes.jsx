@@ -4,6 +4,7 @@ import AdminLayout from "@/layouts/AdminLayout";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import TermsAndPolicies from "@/Admin/Settings/Settings";
 import Agency from "@/Admin/Agency/Agency";
+import GlobalPricing from "@/Admin/GlobalPricing/GlobalPricing";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
         element: <MainDashboard />,
       },
       { path: "agency-management", element: <Agency /> },
-      { path: "global-pricing-rules", element: <>Global Pricing Rules</> },
+      { path: "global-pricing-rules", element: <GlobalPricing /> },
       { path: "admin&agent-control", element: <>Admin & Agent Control</> },
       { path: "customer-overview", element: <>Customer Overview</> },
       { path: "payments&commission", element: <>Payments & Commission</> },
