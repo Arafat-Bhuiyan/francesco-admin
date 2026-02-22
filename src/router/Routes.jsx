@@ -3,6 +3,7 @@ import MainDashboard from "@/Admin/Dashboard/MainDashboard";
 import AdminLayout from "@/layouts/AdminLayout";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import TermsAndPolicies from "@/Admin/Settings/Settings";
+import Agency from "@/Admin/Agency/Agency";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +23,7 @@ const router = createBrowserRouter([
         index: true,
         element: <MainDashboard />,
       },
-      { path: "agency-management", element: <>Agency Management</> },
+      { path: "agency-management", element: <Agency /> },
       { path: "global-pricing-rules", element: <>Global Pricing Rules</> },
       { path: "admin&agent-control", element: <>Admin & Agent Control</> },
       { path: "customer-overview", element: <>Customer Overview</> },
