@@ -149,7 +149,7 @@ const CarManagement = () => {
               {/* Status Badge */}
               <div className="absolute top-8 right-8">
                 <span
-                  className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider ${
+                  className={`px-4 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
                     car.status === "Available"
                       ? "bg-[#F0FDF4] text-[#15803D]"
                       : car.status === "Rental"
@@ -165,7 +165,7 @@ const CarManagement = () => {
             {/* Details Section */}
             <div className="px-8 pb-8 space-y-6">
               <div className="flex justify-between items-center">
-                <h3 className="text-xl font-black text-[#111827]">
+                <h3 className="text-xl font-semibold text-[#111827]">
                   {car.name}
                 </h3>
               </div>
@@ -175,7 +175,7 @@ const CarManagement = () => {
                   <span className="text-gray-400 text-sm font-semibold">
                     Price per day:
                   </span>
-                  <span className="text-[#111827] font-black">
+                  <span className="text-[#111827] font-semibold">
                     ${car.price}
                   </span>
                 </div>

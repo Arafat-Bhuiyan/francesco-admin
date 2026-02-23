@@ -10,6 +10,7 @@ import Admin_AgentControl from "@/Admin/Admin_AgentControl/Admin_AgentControl";
 import CustomerOverview from "@/Admin/CustomerOverview/CustomerOverview";
 import Payment from "@/Admin/Payment/Payment";
 import CarManagement from "@/AgencyAdmin/CarManagement/CarManagement";
+import AgentManagement from "@/AgencyAdmin/AgentManagement/AgentManagement";
 
 const DashboardWrapper = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -44,14 +45,7 @@ const router = createBrowserRouter([
 
       // Agency Admin specific routes
       { path: "car-management", element: <CarManagement /> },
-      {
-        path: "agent-management",
-        element: (
-          <div className="p-8 font-bold text-xl">
-            Agent Management (Coming Soon)
-          </div>
-        ),
-      },
+      { path: "agent-management", element: <AgentManagement /> },
       {
         path: "booking-management",
         element: (
