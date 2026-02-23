@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Search, Plus, Edit3, Users, BookOpen, DollarSign } from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import AgentModal from "./AgentModal";
 
 // Mock data based on Figma
@@ -110,8 +110,6 @@ const AgentManagement = () => {
 
   return (
     <div className="py-8 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <Toaster position="top-right" />
-
       {/* Header */}
       <div className="flex justify-end items-center">
         <button

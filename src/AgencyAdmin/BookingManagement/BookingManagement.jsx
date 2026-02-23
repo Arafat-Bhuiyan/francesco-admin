@@ -15,7 +15,7 @@ import {
   Eye,
 } from "lucide-react";
 import BookingDetailsModal from "./BookingDetailsModal";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 // Mock data
 const INITIAL_BOOKINGS = [
@@ -120,8 +120,6 @@ const BookingManagement = () => {
 
   return (
     <div className="py-8 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <Toaster position="top-right" />
-
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat, index) => (

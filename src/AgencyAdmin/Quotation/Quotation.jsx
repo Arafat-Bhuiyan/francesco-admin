@@ -13,7 +13,7 @@ import {
   Plus,
 } from "lucide-react";
 import QuotationModal from "./QuotationModal";
-import { Toaster } from "react-hot-toast";
+// Redundant Toaster import removed
 
 // Mock data for quotations
 const INITIAL_QUOTATIONS = [
@@ -120,15 +120,6 @@ const Quotation = () => {
 
   return (
     <div className="py-8 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <Toaster position="top-right" />
-
-      {/* Header */}
-      <div className="flex justify-end items-center">
-        <button className="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold flex items-center gap-2 shadow-lg shadow-blue-600/20 hover:scale-[1.02] transition-all active:scale-95 leading-none">
-          <Plus className="w-5 h-5" /> Create New Quotation
-        </button>
-      </div>
-
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat, index) => (

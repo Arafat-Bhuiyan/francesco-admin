@@ -13,6 +13,7 @@ import CarManagement from "@/AgencyAdmin/CarManagement/CarManagement";
 import AgentManagement from "@/AgencyAdmin/AgentManagement/AgentManagement";
 import BookingManagement from "@/AgencyAdmin/BookingManagement/BookingManagement";
 import Quotation from "@/AgencyAdmin/Quotation/Quotation";
+import CustomerManagement from "@/AgencyAdmin/CustomerManagement/CustomerManagement";
 
 const DashboardWrapper = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -50,7 +51,7 @@ const router = createBrowserRouter([
       { path: "agent-management", element: <AgentManagement /> },
       { path: "booking-management", element: <BookingManagement /> },
       { path: "quotation-pricing", element: <Quotation /> },
-      { path: "customer-management", element: <CustomerOverview /> },
+      { path: "customer-management", element: <CustomerManagement /> },
       {
         path: "payments-deposits",
         element: (
