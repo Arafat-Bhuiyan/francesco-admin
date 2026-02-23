@@ -20,7 +20,7 @@ export default function AdminLayout() {
     : location.pathname.startsWith(`/admin/payments&commission`)
     ? "Payments & Commission"
     : location.pathname.startsWith(`/admin/settings`)
-    ? "General Settings"
+    ? "Settings"
     : "Overview Dashboard";
 
   const subtitle = location.pathname.startsWith(`/admin/agency-management`)

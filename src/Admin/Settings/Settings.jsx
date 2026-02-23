@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import General from "./General";
+import Cargo from "./Cargo";
 
 export default function TermsAndPolicies() {
   const [activeTab, setActiveTab] = useState("general");
@@ -23,6 +24,7 @@ export default function TermsAndPolicies() {
 <li>We are committed to protecting your personal information and respecting your privacy.</li>
 <li>All data is handled in accordance with applicable laws and regulations.</li>
 </ul>`,
+    cargo: `<p>Cargo settings configuration content goes here.</p>`,
   });
 
   const [editContent, setEditContent] = useState(content[activeTab]);
@@ -100,17 +102,27 @@ export default function TermsAndPolicies() {
               onClick={() => handleTabChange("general")}
               className={`pb-3 font-semibold transition-colors ${
                 activeTab === "general"
-                  ? "text-[#2A98FF] border-b-2 border-[#2A98FF]"
+                  ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
                   : "text-gray-600 hover:text-gray-800"
               }`}
             >
               General
             </button>
             <button
+              onClick={() => handleTabChange("cargo")}
+              className={`pb-3 font-semibold transition-colors ${
+                activeTab === "cargo"
+                  ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
+                  : "text-gray-600 hover:text-gray-800"
+              }`}
+            >
+              Cargo Settings
+            </button>
+            <button
               onClick={() => handleTabChange("terms")}
               className={`pb-3 font-semibold transition-colors ${
                 activeTab === "terms"
-                  ? "text-[#2A98FF] border-b-2 border-[#2A98FF]"
+                  ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
                   : "text-gray-600 hover:text-gray-800"
               }`}
             >
@@ -120,7 +132,7 @@ export default function TermsAndPolicies() {
               onClick={() => handleTabChange("privacy")}
               className={`pb-3 font-semibold transition-colors ${
                 activeTab === "privacy"
-                  ? "text-[#2A98FF] border-b-2 border-[#2A98FF]"
+                  ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
                   : "text-gray-600 hover:text-gray-800"
               }`}
             >
@@ -128,10 +140,10 @@ export default function TermsAndPolicies() {
             </button>
           </div>
 
-          {!isEditing && activeTab !== "general" && (
+          {!isEditing && activeTab !== "general" && activeTab !== "cargo" && (
             <button
               onClick={() => setIsEditing(true)}
-              className="px-4 py-2 bg-[#2A98FF] text-white font-semibold rounded hover:bg-[#0b85f7] transition-colors"
+              className="px-4 py-2 bg-[#FF67C2CC] text-white font-semibold rounded hover:bg-[#D3037F] transition-colors"
             >
               Edit
             </button>
@@ -139,7 +151,7 @@ export default function TermsAndPolicies() {
         </div>
 
         {/* Toolbar */}
-        {isEditing && activeTab !== "general" && (
+        {isEditing && activeTab !== "general" && activeTab !== "cargo" && (
           <div className="flex items-center flex-wrap gap-2 mb-4 p-2 border border-gray-300 rounded bg-gray-50">
             <select
               value={fontSize}
@@ -211,8 +223,9 @@ export default function TermsAndPolicies() {
 
         {/* Content */}
         {activeTab === "general" && <General />}
+        {activeTab === "cargo" && <Cargo />}
 
-        {activeTab !== "general" && (
+        {activeTab !== "general" && activeTab !== "cargo" && (
           <>
             {isEditing ? (
               <>
@@ -225,19 +238,19 @@ export default function TermsAndPolicies() {
                   dangerouslySetInnerHTML={{
                     __html: (editContent ?? content[activeTab] ?? "").replace(
                       /\n/g,
-                      "<br>"
+                      "<br>",
                     ),
                   }}
                   onBlur={(e) =>
                     setEditContent(
-                      e.currentTarget.innerHTML.replace(/<br>/g, "\n")
+                      e.currentTarget.innerHTML.replace(/<br>/g, "\n"),
                     )
                   }
                 />
                 <div className="flex gap-3 mt-4">
                   <button
                     onClick={handleSaveEdit}
-                    className="px-6 py-2 bg-[#2A98FF] text-white font-semibold rounded hover:bg-[#0b85f7] transition-colors"
+                    className="px-6 py-2 bg-[#FF67C2CC] text-white font-semibold rounded hover:bg-[#D3037F] transition-colors"
                   >
                     Save
                   </button>
