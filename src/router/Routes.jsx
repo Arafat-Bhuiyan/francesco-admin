@@ -9,6 +9,7 @@ import GlobalPricing from "@/Admin/GlobalPricing/GlobalPricing";
 import Admin_AgentControl from "@/Admin/Admin_AgentControl/Admin_AgentControl";
 import CustomerOverview from "@/Admin/CustomerOverview/CustomerOverview";
 import Payment from "@/Admin/Payment/Payment";
+import CarManagement from "@/AgencyAdmin/CarManagement/CarManagement";
 
 const DashboardWrapper = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -42,14 +43,7 @@ const router = createBrowserRouter([
       { path: "settings", element: <TermsAndPolicies /> },
 
       // Agency Admin specific routes
-      {
-        path: "car-management",
-        element: (
-          <div className="p-8 font-bold text-xl">
-            Car Management (Coming Soon)
-          </div>
-        ),
-      },
+      { path: "car-management", element: <CarManagement /> },
       {
         path: "agent-management",
         element: (
