@@ -12,6 +12,7 @@ import Payment from "@/Admin/Payment/Payment";
 import CarManagement from "@/AgencyAdmin/CarManagement/CarManagement";
 import AgentManagement from "@/AgencyAdmin/AgentManagement/AgentManagement";
 import BookingManagement from "@/AgencyAdmin/BookingManagement/BookingManagement";
+import Quotation from "@/AgencyAdmin/Quotation/Quotation";
 
 const DashboardWrapper = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -48,14 +49,7 @@ const router = createBrowserRouter([
       { path: "car-management", element: <CarManagement /> },
       { path: "agent-management", element: <AgentManagement /> },
       { path: "booking-management", element: <BookingManagement /> },
-      {
-        path: "quotation-pricing",
-        element: (
-          <div className="p-8 font-bold text-xl">
-            Quotation & Pricing (Coming Soon)
-          </div>
-        ),
-      },
+      { path: "quotation-pricing", element: <Quotation /> },
       { path: "customer-management", element: <CustomerOverview /> },
       {
         path: "payments-deposits",
