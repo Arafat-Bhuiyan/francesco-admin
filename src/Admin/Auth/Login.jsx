@@ -12,8 +12,21 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (email && password) {
+    if (email === "superadmin@admin.com" && password === "123") {
+      const user = { email, role: "Super Admin", name: "Super Admin" };
+      localStorage.setItem("user", JSON.stringify(user));
       navigate("/admin", { replace: true });
+    } else if (
+      email === "agencyadmin@admin.com" &&
+      password === "123"
+    ) {
+      const user = { email, role: "Agency Admin", name: "Agency Admin" };
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/admin", { replace: true });
+    } else {
+      alert(
+        "Invalid credentials. \nSuper Admin: superadmin@admin.com / superadmin123 \nAgency Admin: agencyadmin@admin.com / agencyadmin123",
+      );
     }
   };
 

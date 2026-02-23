@@ -1,5 +1,6 @@
 import Login from "@/Admin/Auth/Login";
 import MainDashboard from "@/Admin/Dashboard/MainDashboard";
+import AgencyDashboard from "@/AgencyAdmin/Dashboard/AgencyDashboard";
 import AdminLayout from "@/layouts/AdminLayout";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import TermsAndPolicies from "@/Admin/Settings/Settings";
@@ -8,6 +9,12 @@ import GlobalPricing from "@/Admin/GlobalPricing/GlobalPricing";
 import Admin_AgentControl from "@/Admin/Admin_AgentControl/Admin_AgentControl";
 import CustomerOverview from "@/Admin/CustomerOverview/CustomerOverview";
 import Payment from "@/Admin/Payment/Payment";
+
+const DashboardWrapper = () => {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const role = user.role || "Super Admin";
+  return role === "Super Admin" ? <MainDashboard /> : <AgencyDashboard />;
+};
 
 const router = createBrowserRouter([
   {
@@ -25,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainDashboard />,
+        element: <DashboardWrapper />,
       },
       { path: "agency-management", element: <Agency /> },
       { path: "global-pricing-rules", element: <GlobalPricing /> },
@@ -33,6 +40,57 @@ const router = createBrowserRouter([
       { path: "customer-overview", element: <CustomerOverview /> },
       { path: "payments&commission", element: <Payment /> },
       { path: "settings", element: <TermsAndPolicies /> },
+
+      // Agency Admin specific routes
+      {
+        path: "car-management",
+        element: (
+          <div className="p-8 font-bold text-xl">
+            Car Management (Coming Soon)
+          </div>
+        ),
+      },
+      {
+        path: "agent-management",
+        element: (
+          <div className="p-8 font-bold text-xl">
+            Agent Management (Coming Soon)
+          </div>
+        ),
+      },
+      {
+        path: "booking-management",
+        element: (
+          <div className="p-8 font-bold text-xl">
+            Booking Management (Coming Soon)
+          </div>
+        ),
+      },
+      {
+        path: "quotation-pricing",
+        element: (
+          <div className="p-8 font-bold text-xl">
+            Quotation & Pricing (Coming Soon)
+          </div>
+        ),
+      },
+      { path: "customer-management", element: <CustomerOverview /> },
+      {
+        path: "payments-deposits",
+        element: (
+          <div className="p-8 font-bold text-xl">
+            Payments & Deposits (Coming Soon)
+          </div>
+        ),
+      },
+      {
+        path: "reports-analytics",
+        element: (
+          <div className="p-8 font-bold text-xl">
+            Reports & Analytics (Coming Soon)
+          </div>
+        ),
+      },
     ],
   },
 ]);
