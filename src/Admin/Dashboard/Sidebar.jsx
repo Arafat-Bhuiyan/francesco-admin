@@ -93,7 +93,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
     {
       icon: Settings,
       label: "Settings",
-      slug: "settings",
+      slug: "agency-settings",
     },
   ];
 

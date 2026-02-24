@@ -41,6 +41,8 @@ export default function AdminLayout() {
       return "Payments & Deposits";
     if (location.pathname.startsWith("/admin/reports-analytics"))
       return "Reports & Analytics";
+    if (location.pathname.startsWith("/admin/agency-settings"))
+      return "Agency Settings";
 
     return "Dashboard";
   };
@@ -79,6 +81,8 @@ export default function AdminLayout() {
       return "Track payments, deposits, and financial transactions";
     if (location.pathname.startsWith("/admin/reports-analytics"))
       return "View your agency's performance reports and analytics";
+    if (location.pathname.startsWith("/admin/agency-settings"))
+      return "Agency Settings";
 
     return "";
   };

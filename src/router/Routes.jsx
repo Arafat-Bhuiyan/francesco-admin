@@ -16,6 +16,7 @@ import Quotation from "@/AgencyAdmin/Quotation/Quotation";
 import CustomerManagement from "@/AgencyAdmin/CustomerManagement/CustomerManagement";
 import AgencyPayment from "@/AgencyAdmin/Payment/Payment";
 import Reports from "@/AgencyAdmin/Reports/Reports";
+import Settings from "@/AgencyAdmin/Settings/Settings";
 
 const DashboardWrapper = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -56,6 +57,7 @@ const router = createBrowserRouter([
       { path: "customer-management", element: <CustomerManagement /> },
       { path: "payments-deposits", element: <AgencyPayment /> },
       { path: "reports-analytics", element: <Reports /> },
+      { path: "agency-settings", element: <Settings /> },
     ],
   },
 ]);
