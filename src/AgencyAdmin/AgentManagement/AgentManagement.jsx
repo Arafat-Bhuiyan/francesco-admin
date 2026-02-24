@@ -114,7 +114,7 @@ const AgentManagement = () => {
       <div className="flex justify-end items-center">
         <button
           onClick={handleAddNew}
-          className="bg-[#3B82F6] text-white px-8 py-3.5 rounded-full font-extrabold flex items-center gap-2 shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all active:scale-[0.98]"
+          className="bg-gradient-to-r from-[#63CBFF] to-[#167FF3] text-white px-8 py-3.5 rounded-full font-extrabold flex items-center gap-2 shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all active:scale-[0.98]"
         >
           <Plus className="w-5 h-5" /> Add New Agent
         </button>

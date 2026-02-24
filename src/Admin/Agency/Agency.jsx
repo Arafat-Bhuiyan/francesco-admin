@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Eye, Ban } from "lucide-react";
+import { Eye, Ban, Plus } from "lucide-react";
 import AgencyDetailsModal from "./AgencyDetailsModal";
+import AddAgencyModal from "./AddAgencyModal";
 
 const Agency = () => {
   const [selectedAgency, setSelectedAgency] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
   const [agencies, setAgencies] = useState([
     {
       id: 1,
@@ -78,8 +81,21 @@ const Agency = () => {
     }
   };
 
+  const handleAddAgency = (newAgency) => {
+    setAgencies((prev) => [newAgency, ...prev]);
+  };
+
   return (
     <div className="p-6 bg-[#FBFBFB] min-h-screen">
+      {/* Header */}
+      <div className="flex justify-end items-center pb-6">
+        <button
+          onClick={() => setIsAddModalOpen(true)}
+          className="bg-gradient-to-r from-[#63CBFF] to-[#167FF3] text-white px-8 py-3.5 rounded-full font-semibold flex items-center gap-2 shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all active:scale-[0.98]"
+        >
+          <Plus className="w-5 h-5" /> Add New Agency
+        </button>
+      </div>
       <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden p-8">
         <h2 className="text-[#101828] text-xl font-bold mb-8">All Agencies</h2>
 
@@ -175,6 +191,13 @@ const Agency = () => {
         onClose={() => setIsModalOpen(false)}
         agency={selectedAgency}
         onToggleStatus={handleToggleStatus}
+      />
+
+      {/* Add New Agency Modal */}
+      <AddAgencyModal
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        onAdd={handleAddAgency}
       />
     </div>
   );

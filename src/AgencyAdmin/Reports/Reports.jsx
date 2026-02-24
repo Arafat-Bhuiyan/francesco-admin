@@ -53,7 +53,7 @@ const Reports = () => {
         <button className="h-12 px-6 bg-white border border-gray-100 rounded-2xl flex items-center gap-2 text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all shadow-sm">
           <Filter className="w-4 h-4" /> Filter Period
         </button>
-        <button className="h-12 px-6 bg-blue-600 rounded-2xl flex items-center gap-2 text-sm font-bold text-white hover:bg-blue-700 hover:scale-[1.02] transition-all active:scale-95 shadow-lg shadow-blue-600/20">
+        <button className="h-12 px-6 bg-gradient-to-r from-[#63CBFF] to-[#167FF3] rounded-2xl flex items-center gap-2 text-sm font-bold text-white hover:bg-blue-700 hover:scale-[1.02] transition-all active:scale-95 shadow-lg shadow-blue-600/20">
           <Download className="w-4 h-4" /> Export Report
         </button>
       </div>
