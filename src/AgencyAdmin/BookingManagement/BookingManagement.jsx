@@ -21,51 +21,75 @@ import toast from "react-hot-toast";
 const INITIAL_BOOKINGS = [
   {
     id: 1,
-    customer: { name: "John Smith", type: "VIP", initial: "JS" },
-    car: { name: "Mercedes-Benz E-Class", type: "Luxury" },
-    dates: { from: "2026-02-12", to: "2026-02-15" },
-    amount: 450.0,
-    status: "Pending",
+    bookingId: "BK-1001",
+    customerName: "John Smith",
+    email: "john@example.com",
+    phone: "+1 234 567 8900",
+    vehicle: "Toyota Camry",
+    plateNumber: "ABC-1234",
+    color: "Silver",
+    dailyRate: "89.00",
+    days: "7",
+    insurance: "15.00",
+    tax: "63.00",
+    totalAmount: "701.00",
+    rentalDates: "Feb 20 - Feb 27, 2026",
+    status: "Active",
+    agentName: "Agent Mike",
   },
   {
     id: 2,
-    customer: { name: "Emma Wilson", type: "Regular", initial: "EW" },
-    car: { name: "Toyota Corolla", type: "Economy" },
-    dates: { from: "2026-02-10", to: "2026-02-14" },
-    amount: 180.0,
-    status: "Approved",
+    bookingId: "BK-1002",
+    customerName: "Sarah Johnson",
+    email: "sarah@example.com",
+    phone: "+1 987 654 3210",
+    vehicle: "Honda Accord",
+    plateNumber: "XYZ-9876",
+    color: "Black",
+    dailyRate: "95.00",
+    days: "5",
+    insurance: "20.00",
+    tax: "45.00",
+    totalAmount: "540.00",
+    rentalDates: "Feb 22 - Mar 1, 2026",
+    status: "Reserved",
+    agentName: "Agent Lisa",
   },
   {
     id: 3,
-    customer: { name: "Michael Brown", type: "VIP", initial: "MB" },
-    car: { name: "BMW X5", type: "SUV" },
-    dates: { from: "2026-02-11", to: "2026-02-13" },
-    amount: 320.0,
-    status: "Rejected",
+    bookingId: "BK-1003",
+    customerName: "Michael Brown",
+    email: "michael@example.com",
+    phone: "+1 555 123 4567",
+    vehicle: "BMW 3 Series",
+    plateNumber: "BMW-3333",
+    color: "Blue",
+    dailyRate: "120.00",
+    days: "4",
+    insurance: "25.00",
+    tax: "80.00",
+    totalAmount: "585.00",
+    rentalDates: "Feb 18 - Feb 25, 2026",
+    status: "Active",
+    agentName: "Agent Mike",
   },
   {
     id: 4,
-    customer: { name: "Sarah Davis", type: "Regular", initial: "SD" },
-    car: { name: "Volkswagen Golf", type: "Economy" },
-    dates: { from: "2026-02-09", to: "2026-02-11" },
-    amount: 280.0,
+    bookingId: "BK-1004",
+    customerName: "Emily Davis",
+    email: "emily@example.com",
+    phone: "+1 444 999 0000",
+    vehicle: "Mercedes C-Class",
+    plateNumber: "MB-2026",
+    color: "White",
+    dailyRate: "150.00",
+    days: "10",
+    insurance: "30.00",
+    tax: "120.00",
+    totalAmount: "1650.00",
+    rentalDates: "Feb 15 - Feb 22, 2026",
     status: "Completed",
-  },
-  {
-    id: 5,
-    customer: { name: "James Anderson", type: "Regular", initial: "JA" },
-    car: { name: "Audi A6", type: "Luxury" },
-    dates: { from: "2026-02-15", to: "2026-02-18" },
-    amount: 550.0,
-    status: "Pending",
-  },
-  {
-    id: 6,
-    customer: { name: "Linda Thompson", type: "VIP", initial: "LT" },
-    car: { name: "Porsche 911", type: "Sport" },
-    dates: { from: "2026-02-20", to: "2026-02-22" },
-    amount: 900.0,
-    status: "Approved",
+    agentName: "Agent Sarah",
   },
 ];
 
@@ -76,31 +100,11 @@ const BookingManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
 
-  const stats = [
-    {
-      title: "Total Bookings",
-      value: bookings.length,
-      icon: <BookOpen className="w-5 h-5 text-white" />,
-      color: "bg-[#4043F5]",
-    },
-    {
-      title: "Pending Approval",
-      value: bookings.filter((b) => b.status === "Pending").length,
-      icon: <Clock className="w-5 h-5 text-white" />,
-      color: "bg-[#F59E0B]",
-    },
-    {
-      title: "Total Revenue",
-      value: `$${bookings.reduce((acc, curr) => acc + curr.amount, 0).toLocaleString()}`,
-      icon: <DollarSign className="w-5 h-5 text-white" />,
-      color: "bg-[#10B981]",
-    },
-  ];
-
   const filteredBookings = bookings.filter((booking) => {
     const matchesSearch =
-      booking.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      booking.car.name.toLowerCase().includes(searchTerm.toLowerCase());
+      booking.customerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      booking.vehicle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      booking.bookingId.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus =
       statusFilter === "All Status" || booking.status === statusFilter;
     return matchesSearch && matchesStatus;
@@ -120,43 +124,21 @@ const BookingManagement = () => {
 
   return (
     <div className="py-8 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {stats.map((stat, index) => (
-          <div
-            key={index}
-            className="bg-white p-8 rounded-[1.5rem] border border-gray-50 flex items-center justify-between shadow-sm transition-all hover:shadow-md"
-          >
-            <div className="space-y-1">
-              <p className="text-gray-400 text-xs font-bold uppercase tracking-wider">
-                {stat.title}
-              </p>
-              <h3 className="text-3xl font-semibold text-[#111827]">
-                {stat.value}
-              </h3>
-            </div>
-            <div className={`p-4 rounded-2xl ${stat.color} shadow-lg`}>
-              {stat.icon}
-            </div>
-          </div>
-        ))}
-      </div>
+      {/* Stats Cards - Currently Hidden */}
 
       {/* Controls: Search & Filters */}
       <div className="flex flex-col md:flex-row gap-4">
-        {/* Search */}
         <div className="relative flex-1 group">
           <Search className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-[#3B82F6] transition-colors" />
           <input
             type="text"
-            placeholder="Search by customer or car..."
+            placeholder="Search bookings..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full h-14 pl-14 pr-6 bg-white border border-gray-100 rounded-full text-sm font-bold focus:outline-none focus:ring-4 focus:ring-[#3B82F6]/5 focus:border-[#3B82F6] transition-all shadow-sm"
           />
         </div>
 
-        {/* Status Filter */}
         <div className="relative min-w-[200px]">
           <Filter className="absolute left-6 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <select
@@ -165,139 +147,77 @@ const BookingManagement = () => {
             className="w-full h-14 pl-14 pr-12 bg-white border border-gray-100 rounded-full text-sm font-semibold text-gray-700 appearance-none focus:outline-none focus:ring-4 focus:ring-[#3B82F6]/5 shadow-sm cursor-pointer"
           >
             <option>All Status</option>
-            <option>Pending</option>
-            <option>Approved</option>
-            <option>Rejected</option>
+            <option>Active</option>
+            <option>Reserved</option>
             <option>Completed</option>
+            <option>Cancelled</option>
           </select>
           <ChevronDown className="absolute right-6 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
         </div>
       </div>
 
       {/* Bookings Table */}
-      <div className="bg-white rounded-[2.5rem] border border-gray-50 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+      <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
+        <div className="px-8 py-6 border-b border-gray-50 flex justify-between items-center">
+          <h2 className="text-xl font-bold text-[#111827]">All Bookings</h2>
+        </div>
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse">
+          <table className="w-full">
             <thead>
-              <tr className="bg-gray-50/50 border-b border-gray-100">
-                <th className="py-6 px-10 text-left text-xs font-semibold text-gray-400 uppercase tracking-[0.2em]">
-                  Customer
-                </th>
-                <th className="py-6 px-8 text-left text-xs font-semibold text-gray-400 uppercase tracking-[0.2em]">
-                  Vehicle Details
-                </th>
-                <th className="py-6 px-8 text-center text-xs font-semibold text-gray-400 uppercase tracking-[0.2em]">
-                  Booking Dates
-                </th>
-                <th className="py-6 px-8 text-center text-xs font-semibold text-gray-400 uppercase tracking-[0.2em]">
-                  Total Amount
-                </th>
-                <th className="py-6 px-8 text-center text-xs font-semibold text-gray-400 uppercase tracking-[0.2em]">
-                  Status
-                </th>
-                <th className="py-6 px-10 text-right text-xs font-semibold text-gray-400 uppercase tracking-[0.2em]">
-                  Actions
-                </th>
+              <tr className="text-[#374151] text-xs font-bold border-b border-gray-50">
+                <th className="py-6 px-8 text-left">Booking ID</th>
+                <th className="py-6 px-8 text-left">Customer Name</th>
+                <th className="py-6 px-8 text-left">Vehicle</th>
+                <th className="py-6 px-8 text-left">Rental Dates</th>
+                <th className="py-6 px-8 text-center">Status</th>
+                <th className="py-6 px-8 text-left">Agent Name</th>
+                <th className="py-6 px-8 text-right">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {filteredBookings.map((booking) => (
                 <tr
                   key={booking.id}
-                  className="group hover:bg-blue-50/30 transition-all duration-300"
+                  className="group hover:bg-gray-50/50 transition-colors"
                 >
-                  <td className="py-7 px-10">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white font-semibold text-sm shadow-lg shadow-blue-500/20">
-                        {booking.customer.initial}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-[#111827] text-base flex items-center gap-2">
-                          {booking.customer.name}
-                          {booking.customer.type === "VIP" && (
-                            <span className="bg-gradient-to-br from-[#FDC700] to-[#D08700] text-white text-[9px] px-2 py-0.5 rounded-full flex items-center gap-1 font-semibold shadow-sm">
-                              <Crown className="w-2.5 h-2.5" /> VIP
-                            </span>
-                          )}
-                        </p>
-                        <p className="text-gray-400 text-[10px] font-bold uppercase tracking-wider mt-0.5">
-                          #{booking.id.toString().padStart(4, "0")}
-                        </p>
-                      </div>
-                    </div>
+                  <td className="py-6 px-8 text-sm font-medium text-gray-500">
+                    {booking.bookingId}
                   </td>
-                  <td className="py-7 px-8">
-                    <p className="font-semibold text-gray-700 text-sm">
-                      {booking.car.name}
-                    </p>
-                    <p className="text-blue-500 text-[10px] font-semibold uppercase tracking-widest mt-0.5">
-                      {booking.car.type}
-                    </p>
+                  <td className="py-6 px-8 text-sm font-bold text-[#111827]">
+                    {booking.customerName}
                   </td>
-                  <td className="py-7 px-8 text-center">
-                    <div className="flex flex-col items-center">
-                      <p className="font-bold text-gray-700 text-xs">
-                        {booking.dates.from}
-                      </p>
-                      <div className="h-3 w-[1px] bg-gray-200 my-0.5" />
-                      <p className="font-bold text-gray-400 text-xs">
-                        {booking.dates.to}
-                      </p>
-                    </div>
+                  <td className="py-6 px-8 text-sm font-semibold text-gray-600">
+                    {booking.vehicle}
                   </td>
-                  <td className="py-7 px-8 text-center">
-                    <span className="text-[#111827] font-semibold text-lg tracking-tight">
-                      ${booking.amount.toFixed(2)}
-                    </span>
+                  <td className="py-6 px-8 text-sm font-semibold text-gray-600">
+                    {booking.rentalDates}
                   </td>
-                  <td className="py-7 px-8 text-center">
+                  <td className="py-6 px-8 text-center">
                     <span
-                      className={`px-4 py-2 rounded-full text-[10px] font-semibold uppercase tracking-wider border shadow-sm ${
-                        booking.status === "Pending"
-                          ? "bg-orange-50 text-orange-500 border-orange-100"
-                          : booking.status === "Approved"
-                            ? "bg-green-50 text-green-500 border-green-100"
-                            : booking.status === "Rejected"
-                              ? "bg-red-50 text-red-500 border-red-100"
-                              : "bg-blue-50 text-blue-500 border-blue-100"
+                      className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${
+                        booking.status === "Active"
+                          ? "bg-green-50 text-green-500"
+                          : booking.status === "Reserved"
+                            ? "bg-blue-50 text-blue-500"
+                            : booking.status === "Cancelled"
+                              ? "bg-red-50 text-red-500"
+                              : "bg-gray-100 text-gray-500"
                       }`}
                     >
                       {booking.status}
                     </span>
                   </td>
-                  <td className="py-7 px-10 text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <button
-                        onClick={() => handleViewDetails(booking)}
-                        className="p-3 bg-white border border-gray-100 text-gray-600 rounded-xl hover:bg-gray-50 hover:text-blue-600 transition-all shadow-sm group/btn"
-                        title="View Details"
-                      >
-                        <Eye className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
-                      </button>
-
-                      {booking.status === "Pending" && (
-                        <>
-                          <button
-                            onClick={() =>
-                              handleUpdateStatus(booking.id, "Approved")
-                            }
-                            className="p-3 bg-white border border-gray-100 text-gray-600 rounded-xl hover:bg-green-50 hover:text-green-600 transition-all shadow-sm group/btn"
-                            title="Approve"
-                          >
-                            <CheckCircle className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
-                          </button>
-                          <button
-                            onClick={() =>
-                              handleUpdateStatus(booking.id, "Rejected")
-                            }
-                            className="p-3 bg-white border border-gray-100 text-gray-600 rounded-xl hover:bg-red-50 hover:text-red-600 transition-all shadow-sm group/btn"
-                            title="Reject"
-                          >
-                            <XCircle className="w-4 h-4 group-hover/btn:scale-110 transition-transform" />
-                          </button>
-                        </>
-                      )}
-                    </div>
+                  <td className="py-6 px-8 text-sm font-semibold text-gray-600">
+                    {booking.agentName}
+                  </td>
+                  <td className="py-6 px-8 text-right">
+                    <button
+                      onClick={() => handleViewDetails(booking)}
+                      className="inline-flex items-center gap-2 text-[#4F46E5] hover:text-[#3730A3] font-bold text-sm transition-colors"
+                    >
+                      <Eye className="w-4 h-4" />
+                      View
+                    </button>
                   </td>
                 </tr>
               ))}
