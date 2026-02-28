@@ -16,7 +16,7 @@ import Quotation from "@/AgencyAdmin/Quotation/Quotation";
 import CustomerManagement from "@/AgencyAdmin/CustomerManagement/CustomerManagement";
 import AgencyPayment from "@/AgencyAdmin/Payment/Payment";
 import Reports from "@/AgencyAdmin/Reports/Reports";
-import Settings from "@/AgencyAdmin/Settings/Settings";
+import Settings from "@/AgencyAdmin/Settings2/Settings";
 
 const DashboardWrapper = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
