@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, Ban, Plus } from "lucide-react";
+import { Eye, Plus, Power } from "lucide-react";
 import AgencyDetailsModal from "./AgencyDetailsModal";
 import AddAgencyModal from "./AddAgencyModal";
 
@@ -11,48 +11,67 @@ const Agency = () => {
   const [agencies, setAgencies] = useState([
     {
       id: 1,
-      name: "Premium Car Rentals",
-      location: "Dhaka, Bangladesh",
-      totalCars: 45,
-      activeBookings: 23,
-      revenue: "$450,000",
+      name: "Premium Rentals NYC",
+      location: "New York, NY",
+      adminName: "Michael Johnson",
+      vehiclesCount: 245,
       status: "Active",
     },
     {
       id: 2,
-      name: "City Drive Rentals",
-      location: "Chittagong, Bangladesh",
-      totalCars: 32,
-      activeBookings: 18,
-      revenue: "$320,000",
+      name: "Coast Car Rental LA",
+      location: "Los Angeles, CA",
+      adminName: "Sarah Williams",
+      vehiclesCount: 198,
       status: "Active",
     },
     {
       id: 3,
-      name: "Luxury Auto Hire",
-      location: "Sylhet, Bangladesh",
-      totalCars: 28,
-      activeBookings: 15,
-      revenue: "$280,000",
+      name: "Metro Auto Chicago",
+      location: "Chicago, IL",
+      adminName: "David Martinez",
+      vehiclesCount: 167,
       status: "Active",
     },
     {
       id: 4,
-      name: "Quick Rent Services",
-      location: "Rajshahi, Bangladesh",
-      totalCars: 20,
-      activeBookings: 8,
-      revenue: "$150,000",
-      status: "Suspended",
+      name: "Sunset Rentals Miami",
+      location: "Miami, FL",
+      adminName: "Jessica Brown",
+      vehiclesCount: 152,
+      status: "Disabled",
     },
     {
       id: 5,
-      name: "Elite Vehicles",
-      location: "Khulna, Bangladesh",
-      totalCars: 38,
-      activeBookings: 20,
-      revenue: "$380,000",
+      name: "Liberty Cars Boston",
+      location: "Boston, MA",
+      adminName: "Robert Taylor",
+      vehiclesCount: 134,
       status: "Active",
+    },
+    {
+      id: 6,
+      name: "Golden Gate Rentals",
+      location: "San Francisco, CA",
+      adminName: "Emily Chen",
+      vehiclesCount: 189,
+      status: "Active",
+    },
+    {
+      id: 7,
+      name: "Desert Drive Phoenix",
+      location: "Phoenix, AZ",
+      adminName: "James Wilson",
+      vehiclesCount: 98,
+      status: "Active",
+    },
+    {
+      id: 8,
+      name: "Emerald City Auto",
+      location: "Seattle, WA",
+      adminName: "Amanda Lee",
+      vehiclesCount: 156,
+      status: "Disabled",
     },
   ]);
 
@@ -67,7 +86,7 @@ const Agency = () => {
         agency.id === id
           ? {
               ...agency,
-              status: agency.status === "Active" ? "Suspended" : "Active",
+              status: agency.status === "Active" ? "Disabled" : "Active",
             }
           : agency,
       ),
@@ -76,7 +95,7 @@ const Agency = () => {
     if (selectedAgency && selectedAgency.id === id) {
       setSelectedAgency((prev) => ({
         ...prev,
-        status: prev.status === "Active" ? "Suspended" : "Active",
+        status: prev.status === "Active" ? "Disabled" : "Active",
       }));
     }
   };
@@ -103,78 +122,72 @@ const Agency = () => {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-gray-100">
-                <th className="pb-4 pt-2 text-[#101828] font-bold text-sm">
+                <th className="pb-6 pt-2 text-[#9CA3AF] font-bold text-[11px] uppercase tracking-widest">
                   Agency Name
                 </th>
-                <th className="pb-4 pt-2 text-[#101828] font-bold text-sm">
+                <th className="pb-6 pt-2 text-[#9CA3AF] font-bold text-[11px] uppercase tracking-widest pl-4">
                   Location
                 </th>
-                <th className="pb-4 pt-2 text-[#101828] font-bold text-sm text-center">
-                  Total Cars
+                <th className="pb-6 pt-2 text-[#9CA3AF] font-bold text-[11px] uppercase tracking-widest pl-4">
+                  Admin Name
                 </th>
-                <th className="pb-4 pt-2 text-[#101828] font-bold text-sm text-center">
-                  Active Bookings
+                <th className="pb-6 pt-2 text-[#9CA3AF] font-bold text-[11px] uppercase tracking-widest text-center">
+                  Vehicles Count
                 </th>
-                <th className="pb-4 pt-2 text-[#101828] font-bold text-sm text-center">
-                  Revenue
-                </th>
-                <th className="pb-4 pt-2 text-[#101828] font-bold text-sm text-center">
+                <th className="pb-6 pt-2 text-[#9CA3AF] font-bold text-[11px] uppercase tracking-widest text-center">
                   Status
                 </th>
-                <th className="pb-4 pt-2 text-[#101828] font-bold text-sm text-center">
+                <th className="pb-6 pt-2 text-[#9CA3AF] font-bold text-[11px] uppercase tracking-widest text-center">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-100">
               {agencies.map((agency) => (
                 <tr
                   key={agency.id}
-                  className="hover:bg-gray-50/50 transition-colors"
+                  className="hover:bg-gray-50/50 transition-colors group"
                 >
-                  <td className="py-5 text-[#101828] font-bold text-base">
+                  <td className="py-7 text-[#111827] font-bold text-base leading-none">
                     {agency.name}
                   </td>
-                  <td className="py-5 text-[#4B5563] font-medium text-base">
+                  <td className="py-7 text-[#6B7280] font-medium text-base leading-none pl-4">
                     {agency.location}
                   </td>
-                  <td className="py-5 text-[#4B5563] font-medium text-base text-center">
-                    {agency.totalCars}
+                  <td className="py-7 text-[#6B7280] font-medium text-base leading-none pl-4">
+                    {agency.adminName}
                   </td>
-                  <td className="py-5 text-[#4B5563] font-medium text-base text-center">
-                    {agency.activeBookings}
+                  <td className="py-7 text-[#111827] font-bold text-base leading-none text-center">
+                    {agency.vehiclesCount}
                   </td>
-                  <td className="py-5 text-[#4B5563] font-medium text-base text-center">
-                    {agency.revenue}
-                  </td>
-                  <td className="py-5 text-center">
+                  <td className="py-7 text-center">
                     <span
-                      className={`px-4 py-1.5 rounded-lg text-sm font-semibold text-white ${
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold leading-none ${
                         agency.status === "Active"
-                          ? "bg-[#00C26F]"
-                          : "bg-[#D91B42]"
+                          ? "bg-[#DCFCE7] text-[#166534]"
+                          : "bg-[#FEE2E2] text-[#991B1B]"
                       }`}
                     >
                       {agency.status}
                     </span>
                   </td>
-                  <td className="py-5">
-                    <div className="flex items-center justify-center gap-3">
+                  <td className="py-7">
+                    <div className="flex items-center justify-center gap-6">
                       <button
                         onClick={() => handleViewDetails(agency)}
-                        className="p-2 border border-gray-200 rounded-xl hover:bg-gray-100 transition-colors text-gray-600"
+                        className="text-[#9CA3AF] hover:text-[#111827] transition-colors"
                       >
                         <Eye className="w-5 h-5" />
                       </button>
                       <button
                         onClick={() => handleToggleStatus(agency.id)}
-                        className={`p-2 border border-gray-200 rounded-xl transition-colors ${
+                        className={`transition-colors ${
                           agency.status === "Active"
-                            ? "hover:bg-red-50 hover:text-red-500 text-gray-600"
-                            : "hover:bg-green-50 hover:text-green-500 text-red-500"
+                            ? "text-[#F87171] hover:text-[#DC2626]"
+                            : "text-[#4ADE80] hover:text-[#16A34A]"
                         }`}
                       >
-                        <Ban className="w-5 h-5" />
+                        <Power className="w-5 h-5" />
                       </button>
                     </div>
                   </td>

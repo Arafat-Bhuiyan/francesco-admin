@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, Ban, Key } from "lucide-react";
+import { X, Power, Key } from "lucide-react";
 
 const AgencyDetailsModal = ({ isOpen, onClose, agency, onToggleStatus }) => {
   const [commission, setCommission] = useState("15");
@@ -8,8 +8,7 @@ const AgencyDetailsModal = ({ isOpen, onClose, agency, onToggleStatus }) => {
 
   // Mock admin data (since it's not in the main list)
   const adminInfo = {
-    adminName: "Karim Ahmed",
-    adminEmail: "karim@premiumcars.com",
+    adminEmail: "admin@agency.com",
     totalAgents: 8,
   };
 
@@ -51,26 +50,10 @@ const AgencyDetailsModal = ({ isOpen, onClose, agency, onToggleStatus }) => {
             </div>
             <div>
               <p className="text-[#667085] text-sm font-medium mb-1">
-                Total Cars
+                Vehicles Count
               </p>
               <p className="text-[#101828] text-base font-semibold">
-                {agency.totalCars}
-              </p>
-            </div>
-            <div>
-              <p className="text-[#667085] text-sm font-medium mb-1">
-                Active Bookings
-              </p>
-              <p className="text-[#101828] text-base font-semibold">
-                {agency.activeBookings}
-              </p>
-            </div>
-            <div>
-              <p className="text-[#667085] text-sm font-medium mb-1">
-                Total Revenue
-              </p>
-              <p className="text-[#101828] text-base font-semibold">
-                {agency.revenue}
+                {agency.vehiclesCount}
               </p>
             </div>
             <div>
@@ -97,7 +80,7 @@ const AgencyDetailsModal = ({ isOpen, onClose, agency, onToggleStatus }) => {
                 Admin Name
               </p>
               <p className="text-[#101828] text-base font-semibold">
-                {adminInfo.adminName}
+                {agency.adminName || "N/A"}
               </p>
             </div>
             <div>
@@ -143,8 +126,8 @@ const AgencyDetailsModal = ({ isOpen, onClose, agency, onToggleStatus }) => {
                 : "bg-[#00C26F] text-white hover:bg-[#00A860]"
             }`}
           >
-            <Ban className="w-5 h-5" />
-            {agency.status === "Active" ? "Suspend Agency" : "Activate Agency"}
+            <Power className="w-5 h-5" />
+            {agency.status === "Active" ? "Disable Agency" : "Activate Agency"}
           </button>
           <button className="flex-1 border border-gray-200 text-[#101828] flex items-center justify-center gap-2 py-4 rounded-xl font-bold hover:bg-gray-50 transition-all">
             <Key className="w-5 h-5" />
