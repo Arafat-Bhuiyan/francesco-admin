@@ -34,7 +34,7 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
           {/* Top Info Card */}
           <div className="bg-[#F8F9FF] rounded-3xl p-6 border border-[#E0E7FF] flex justify-between items-center">
             <div>
-              <h3 className="text-xl font-black text-gray-900 mb-1">
+              <h3 className="text-xl font-semibold text-gray-900 mb-1">
                 {payoutData.agencyName}
               </h3>
               <p className="text-gray-400 text-sm font-semibold">
@@ -112,7 +112,7 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
                 <p className="text-gray-500 font-semibold text-sm">
                   Gross Commission
                 </p>
-                <p className="text-[#10B981] font-black text-lg">
+                <p className="text-[#10B981] font-semibold text-lg">
                   ${payoutData.commissionAmount.toLocaleString()}
                 </p>
               </div>
@@ -120,12 +120,14 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
                 <p className="text-gray-500 font-semibold text-sm">
                   Processing Fee
                 </p>
-                <p className="text-[#EF4444] font-black text-lg">-$500</p>
+                <p className="text-[#EF4444] font-semibold text-lg">-$500</p>
               </div>
 
               <div className="bg-[#F0FDF4] p-5 rounded-2xl flex justify-between items-center mt-4">
-                <p className="text-gray-900 font-black text-base">Net Payout</p>
-                <p className="text-[#10B981] font-black text-2xl">$67,000</p>
+                <p className="text-gray-900 font-semibold text-base">
+                  Net Payout
+                </p>
+                <p className="text-[#10B981] font-semibold text-2xl">$67,000</p>
               </div>
             </div>
           </div>

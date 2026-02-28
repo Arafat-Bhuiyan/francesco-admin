@@ -205,7 +205,7 @@ const CustomerManagement = () => {
                   {/* Total Spent Column (Showing VIP status badge or Regular per image) */}
                   <td className="py-8 px-8 text-center">
                     {customer.isVIP ? (
-                      <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-yellow-500 to-amber-600 text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm">
+                      <div className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-gradient-to-r from-yellow-500 to-amber-600 text-white rounded-full text-[10px] font-semibold uppercase tracking-widest shadow-sm">
                         <Crown className="w-3 h-3 fill-white" /> VIP
                       </div>
                     ) : (

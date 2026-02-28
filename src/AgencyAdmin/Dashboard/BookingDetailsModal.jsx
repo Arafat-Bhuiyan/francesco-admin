@@ -123,7 +123,7 @@ const BookingDetailsModal = ({ isOpen, onClose, booking }) => {
                 <p className="text-gray-400">Discount</p>
                 <p className="text-[#28A745] font-bold">-$50</p>
               </div>
-              <div className="pt-3 border-t border-gray-100 flex justify-between items-center font-black">
+              <div className="pt-3 border-t border-gray-100 flex justify-between items-center font-semibold">
                 <p className="text-[#111827] text-base">Total Amount</p>
                 <p className="text-[#111827] text-xl">${booking.amount}</p>
               </div>

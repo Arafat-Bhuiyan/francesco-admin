@@ -100,7 +100,7 @@ const Payment = () => {
               <p className="text-gray-400 text-sm font-semibold mb-1">
                 {stat.title}
               </p>
-              <h3 className="text-3xl font-black text-gray-900 leading-none">
+              <h3 className="text-3xl font-semibold text-gray-900 leading-none">
                 {stat.value}
               </h3>
             </div>

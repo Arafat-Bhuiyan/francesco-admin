@@ -25,11 +25,11 @@ const ViewCustomerModal = ({ isOpen, onClose, customer, onRemoveVIP }) => {
                   {customer.name}
                 </h2>
                 {customer.isVIP ? (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-[#FDC700] to-[#D08700] text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-[#FDC700] to-[#D08700] text-white rounded-full text-[10px] font-semibold uppercase tracking-widest shadow-sm">
                     <Crown className="w-3 h-3 fill-white" /> VIP
                   </div>
                 ) : (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-[#A9EEB9] to-[#28A745] text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-sm">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-gradient-to-r from-[#A9EEB9] to-[#28A745] text-white rounded-full text-[10px] font-semibold uppercase tracking-widest shadow-sm">
                     Regular
                   </div>
                 )}
