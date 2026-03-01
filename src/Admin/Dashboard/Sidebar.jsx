@@ -40,7 +40,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
       label: "Admin & Agent Control",
       slug: "admin&agent-control",
     },
-    { icon: Users, label: "Customer Overview", slug: "customer-overview" },
+    { icon: Users, label: "User Management", slug: "customer-overview" },
     {
       icon: CreditCard,
       label: "Payments & Commission",

@@ -21,11 +21,10 @@ export default function AdminLayout() {
       return "Global Pricing Rules";
     if (location.pathname.startsWith("/admin/admin&agent-control"))
       return "Admin & Agent Control";
-    if (
-      location.pathname.startsWith("/admin/customer-overview") ||
-      location.pathname.startsWith("/admin/customer-management")
-    )
+    if (location.pathname.startsWith("/admin/customer-management"))
       return "Customer Overview";
+    if (location.pathname.startsWith("/admin/customer-overview"))
+      return "User Management";
     if (location.pathname.startsWith("/admin/payments&commission"))
       return "Payments & Commission";
     if (location.pathname.startsWith("/admin/settings")) return "Settings";
