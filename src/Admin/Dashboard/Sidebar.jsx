@@ -14,6 +14,7 @@ import {
   Wallet,
   BarChart2,
   TrendingUp,
+  Handshake,
 } from "lucide-react";
 import logo from "@/assets/img/logo.png";
 
@@ -41,6 +42,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
       slug: "admin&agent-control",
     },
     { icon: Users, label: "User Management", slug: "customer-overview" },
+    { icon: Handshake, label: "Operation Overview", slug: "operation" },
     {
       icon: CreditCard,
       label: "Payments & Commission",

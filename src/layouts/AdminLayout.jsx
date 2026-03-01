@@ -36,6 +36,8 @@ export default function AdminLayout() {
       return "Booking Management";
     if (location.pathname.startsWith("/admin/quotation-pricing"))
       return "Quotation & Pricing";
+    if (location.pathname.startsWith("/admin/operation"))
+      return "Operation Overview";
     if (location.pathname.startsWith("/admin/payments-deposits"))
       return "Payments & Deposits";
     if (location.pathname.startsWith("/admin/reports-analytics"))
@@ -76,6 +78,8 @@ export default function AdminLayout() {
       return "Track and manage all bookings and reservations";
     if (location.pathname.startsWith("/admin/quotation-pricing"))
       return "Manage rental quotes and pricing strategies";
+    if (location.pathname.startsWith("/admin/operation"))
+      return "Manage operation";
     if (location.pathname.startsWith("/admin/payments-deposits"))
       return "Track payments, deposits, and financial transactions";
     if (location.pathname.startsWith("/admin/reports-analytics"))

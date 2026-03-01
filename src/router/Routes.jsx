@@ -17,6 +17,7 @@ import CustomerManagement from "@/AgencyAdmin/CustomerManagement/CustomerManagem
 import AgencyPayment from "@/AgencyAdmin/Payment/Payment";
 import Reports from "@/AgencyAdmin/Reports/Reports";
 import Settings from "@/AgencyAdmin/Settings2/Settings";
+import Operation from "@/Admin/Operation/Operation";
 
 const DashboardWrapper = () => {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       { path: "global-pricing-rules", element: <GlobalPricing /> },
       { path: "admin&agent-control", element: <Admin_AgentControl /> },
       { path: "customer-overview", element: <CustomerOverview /> },
+      { path: "operation", element: <Operation /> },
       { path: "payments&commission", element: <Payment /> },
       { path: "settings", element: <TermsAndPolicies /> },
 
