@@ -1,6 +1,7 @@
 import React from "react";
 import { Building2, Car, TrendingUp, Calendar } from "lucide-react";
 import AdminActivityChart from "./AdminActivityChart";
+import TodayActivityList from "@/AgencyAdmin/Dashboard/TodayActivityList";
 
 const cards = [
   {
@@ -108,71 +109,11 @@ const MainDashboard = () => {
         })}
       </div>
 
+      {/* Today's Activity List */}
+      <TodayActivityList />
+
       {/* Chart Section */}
       <AdminActivityChart />
-
-      {/* Bottom Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Agency Performance */}
-        <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-8">
-          <h3 className="text-xl font-bold text-[#111827]">
-            Agency Performance
-          </h3>
-          <div className="space-y-6">
-            {performanceData.map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-center justify-between group"
-              >
-                <div className="space-y-1">
-                  <p className="font-bold text-[#111827] text-base group-hover:text-blue-600 transition-colors">
-                    {item.name}
-                  </p>
-                  <p className="text-gray-400 text-xs font-bold uppercase tracking-wider">
-                    {item.vehicles} vehicles · {item.active} active rentals
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-blue-600 font-extrabold text-lg">
-                    ${item.revenue}
-                  </p>
-                  <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">
-                    This month
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Recent System Activities */}
-        <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-8">
-          <h3 className="text-xl font-bold text-[#111827]">
-            Recent System Activities
-          </h3>
-          <div className="space-y-8 relative">
-            {/* Timeline Line */}
-            <div className="absolute left-[3px] top-2 bottom-2 w-0.5 bg-gray-50 lg:block hidden" />
-
-            {activityData.map((activity, idx) => (
-              <div key={idx} className="flex gap-6 relative group">
-                <div className="mt-1.5 w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_0_4px_rgba(59,130,246,0.1)] shrink-0 self-start z-10 group-hover:scale-125 transition-transform" />
-                <div className="space-y-1">
-                  <p className="font-bold text-[#111827] text-base leading-tight">
-                    {activity.title}
-                  </p>
-                  <p className="text-gray-400 text-xs font-bold uppercase tracking-wider leading-relaxed">
-                    {activity.detail}
-                  </p>
-                  <p className="text-gray-300 text-[10px] font-extrabold uppercase mt-1">
-                    {activity.time}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 };

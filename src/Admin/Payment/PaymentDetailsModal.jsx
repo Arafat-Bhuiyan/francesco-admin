@@ -10,9 +10,62 @@ import {
   Download,
   Clock,
 } from "lucide-react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+import toast from "react-hot-toast";
 
 const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
   if (!isOpen || !payoutData) return null;
+
+  const handleDownloadPDF = (payment) => {
+    const doc = new jsPDF();
+
+    // Header
+    doc.setFontSize(22);
+    doc.setTextColor(17, 24, 39);
+    doc.text("Payment Receipt", 105, 20, { align: "center" });
+
+    doc.setFontSize(10);
+    doc.setTextColor(107, 114, 128);
+    doc.text(`Generated on: ${new Date().toLocaleDateString()}`, 105, 28, {
+      align: "center",
+    });
+
+    // Agency Info
+    doc.setFontSize(12);
+    doc.setTextColor(17, 24, 39);
+    doc.text("Payout Details", 14, 45);
+
+    autoTable(doc, {
+      startY: 50,
+      head: [["Field", "Value"]],
+      body: [
+        ["Agency Name", payment.agencyName],
+        ["Transaction ID", "TXN-2026-02-001234"],
+        ["Total Revenue", `$${payment.revenue.toLocaleString()}`],
+        ["Commission Rate", `${payment.commissionPercent}%`],
+        ["Commission Amount", `$${payment.commissionAmount.toLocaleString()}`],
+        ["Status", "Completed"],
+        ["Payout Date", "2026-02-05"],
+      ],
+      theme: "grid",
+      headStyles: { fillColor: [16, 185, 129], textColor: 255 },
+      styles: { fontSize: 10, cellPadding: 6 },
+    });
+
+    // Footer
+    const finalY = doc.lastAutoTable.finalY + 20;
+    doc.setFontSize(10);
+    doc.setTextColor(107, 114, 128);
+    doc.text("Thank you for partnering with Francesco.", 105, finalY, {
+      align: "center",
+    });
+
+    doc.save(
+      `receipt-${payment.agencyName.replace(/\s+/g, "-").toLowerCase()}.pdf`,
+    );
+    toast.success("Receipt downloaded successfully!");
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 overflow-y-auto">
@@ -200,9 +253,11 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
             </div>
           </div>
 
-          {/* Action Buttons */}
           <div className="grid grid-cols-2 gap-4">
-            <button className="bg-black text-white hover:bg-gray-800 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm transition-all shadow-lg shadow-black/10">
+            <button
+              onClick={() => handleDownloadPDF(payoutData)}
+              className="bg-black text-white hover:bg-gray-800 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm transition-all shadow-lg shadow-black/10"
+            >
               <Download className="w-4 h-4" /> Download Receipt
             </button>
             <button className="bg-white text-gray-900 border border-gray-200 hover:border-gray-900 p-4 rounded-2xl flex items-center justify-center gap-2 font-bold text-sm transition-all">

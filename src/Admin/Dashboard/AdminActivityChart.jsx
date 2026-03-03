@@ -20,6 +20,7 @@ const dailyData = [
   { name: "Sun", checkIns: 6, checkOuts: 9 },
 ];
 
+/*
 const weeklyData = [
   { name: "Week 1", checkIns: 24, checkOuts: 18 },
   { name: "Week 2", checkIns: 32, checkOuts: 25 },
@@ -35,6 +36,7 @@ const monthlyData = [
   { name: "May", checkIns: 160, checkOuts: 140 },
   { name: "Jun", checkIns: 175, checkOuts: 155 },
 ];
+*/
 
 const AdminActivityChart = () => {
   const [activeTab, setActiveTab] = useState("Daily");
@@ -43,10 +45,12 @@ const AdminActivityChart = () => {
     switch (activeTab) {
       case "Daily":
         return dailyData;
+      /*
       case "Weekly":
         return weeklyData;
       case "Monthly":
         return monthlyData;
+      */
       default:
         return dailyData;
     }
@@ -56,10 +60,12 @@ const AdminActivityChart = () => {
     switch (activeTab) {
       case "Daily":
         return { domain: [0, 12], ticks: [0, 3, 6, 9, 12] };
+      /*
       case "Weekly":
         return { domain: [0, 50], ticks: [0, 10, 20, 30, 40, 50] };
       case "Monthly":
         return { domain: [0, 200], ticks: [0, 50, 100, 150, 200] };
+      */
       default:
         return { domain: [0, 12], ticks: [0, 3, 6, 9, 12] };
     }
@@ -75,7 +81,7 @@ const AdminActivityChart = () => {
           Check-in vs Check-out Overview
         </h2>
         <div className="flex bg-gray-100 p-1 rounded-2xl w-full sm:w-auto">
-          {["Daily", "Weekly", "Monthly"].map((tab) => (
+          {["Daily" /*, "Weekly", "Monthly"*/].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
