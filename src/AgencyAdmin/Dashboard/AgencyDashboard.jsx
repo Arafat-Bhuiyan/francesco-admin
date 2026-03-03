@@ -87,12 +87,10 @@ const AgencyDashboard = () => {
           </div>
         ))}
       </div>
-
-      {/* Activity Overview Chart */}
-      <VehicleActivityChart />
-
       {/* Today's Activity List */}
       <TodayActivityList />
+      {/* Activity Overview Chart */}
+      <VehicleActivityChart />
     </div>
   );
 };

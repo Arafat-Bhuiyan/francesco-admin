@@ -6,6 +6,8 @@ const activities = [
     id: 1,
     customer: "John Smith",
     car: "Toyota Camry",
+    date: "03 Mar 2026",
+    rentalDays: "3 Days",
     checkInTime: "09:00 AM",
     checkOutTime: "05:00 PM",
     status: "Completed",
@@ -15,6 +17,8 @@ const activities = [
     id: 2,
     customer: "Sarah Johnson",
     car: "Honda Accord",
+    date: "03 Mar 2026",
+    rentalDays: "5 Days",
     checkInTime: "10:30 AM",
     checkOutTime: "06:30 PM",
     status: "Completed",
@@ -24,6 +28,8 @@ const activities = [
     id: 3,
     customer: "Michael Brown",
     car: "BMW 3 Series",
+    date: "03 Mar 2026",
+    rentalDays: "2 Days",
     checkInTime: "00:00 AM",
     checkOutTime: "00:00 AM",
     status: "Pending",
@@ -33,6 +39,8 @@ const activities = [
     id: 4,
     customer: "Jessica Martinez",
     car: "Audi A4",
+    date: "03 Mar 2026",
+    rentalDays: "7 Days",
     checkInTime: "01:00 PM",
     checkOutTime: "09:00 AM",
     status: "Completed",
@@ -42,6 +50,8 @@ const activities = [
     id: 5,
     customer: "James Anderson",
     car: "Tesla Model 3",
+    date: "03 Mar 2026",
+    rentalDays: "4 Days",
     checkInTime: "03:30 PM",
     checkOutTime: "11:30 AM",
     status: "In Progress",
@@ -55,7 +65,9 @@ const TodayActivityList = () => {
   return (
     <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm mt-8 overflow-visible">
       <div className="p-8 flex justify-between items-center bg-white rounded-t-[2rem]">
-        <h2 className="text-xl font-bold text-[#111827]">Today's Check-ins / Today's Check-outs</h2>
+        <h2 className="text-xl font-bold text-[#111827]">
+          Today's Check-ins / Today's Check-outs
+        </h2>
 
         <div className="relative inline-block text-left group">
           <button className="flex items-center gap-2 px-6 py-2.5 bg-gray-50 hover:bg-gray-100 text-[#111827] rounded-xl transition-all text-sm font-bold border border-gray-100 shadow-sm">
@@ -94,21 +106,40 @@ const TodayActivityList = () => {
         {activities.map((activity) => (
           <div
             key={activity.id}
-            className="flex items-center justify-between p-6 bg-gray-50/50 rounded-2xl hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100"
+            className="grid grid-cols-4 gap-4 items-center p-6 bg-gray-50/50 rounded-2xl hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100"
           >
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">
+              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg flex-shrink-0">
                 {activity.customer[0]}
               </div>
-              <div>
-                <h4 className="font-bold text-[#111827]">
+              <div className="min-w-0">
+                <h4 className="font-bold text-[#111827] truncate">
                   {activity.customer}
                 </h4>
-                <p className="text-gray-400 text-sm font-semibold">
+                <p className="text-gray-400 text-sm font-semibold truncate">
                   {activity.car}
                 </p>
               </div>
             </div>
+
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-gray-400 text-[10px] font-bold uppercase tracking-wider">
+                Date
+              </span>
+              <span className="text-sm font-bold text-[#111827]">
+                {activity.date}
+              </span>
+            </div>
+
+            <div className="flex flex-col items-center gap-1">
+              <span className="text-gray-400 text-[10px] font-bold uppercase tracking-wider">
+                Rental Days
+              </span>
+              <span className="text-sm font-bold text-[#111827]">
+                {activity.rentalDays}
+              </span>
+            </div>
+
             <div className="flex flex-col items-end gap-2">
               <span className="text-sm font-bold text-[#111827]">
                 {filter === "Check-in"

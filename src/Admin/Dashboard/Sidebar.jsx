@@ -36,11 +36,11 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
       label: "Global Pricing Rules",
       slug: "global-pricing-rules",
     },
-    {
-      icon: UserCog,
-      label: "Admin & Agent Control",
-      slug: "admin&agent-control",
-    },
+    // {
+    //   icon: UserCog,
+    //   label: "Admin & Agent Control",
+    //   slug: "admin&agent-control",
+    // },
     { icon: Users, label: "User Management", slug: "customer-overview" },
     { icon: Handshake, label: "Operation Overview", slug: "operation" },
     {

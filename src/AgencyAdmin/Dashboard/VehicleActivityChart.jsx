@@ -1,156 +1,306 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Legend,
-} from "recharts";
+  ChevronLeft,
+  ChevronRight,
+  Settings,
+  Calendar as CalendarIcon,
+  Info,
+} from "lucide-react";
+import {
+  format,
+  addMonths,
+  subMonths,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  getDate,
+  isSameMonth,
+  isToday,
+} from "date-fns";
 
-const dailyData = [
-  { name: "Mon", checkIns: 4, checkOuts: 3 },
-  { name: "Tue", checkIns: 6, checkOuts: 4 },
-  { name: "Wed", checkIns: 5, checkOuts: 7 },
-  { name: "Thu", checkIns: 8, checkOuts: 5 },
-  { name: "Fri", checkIns: 7, checkOuts: 6 },
-  { name: "Sat", checkIns: 10, checkOuts: 8 },
-  { name: "Sun", checkIns: 6, checkOuts: 9 },
+const vehicles = [
+  { id: 1, name: "Toyota Camry", plate: "NY-2849", category: "B" },
+  { id: 2, name: "Honda Accord", plate: "CA-9382", category: "B" },
+  { id: 3, name: "BMW 3 Series", plate: "TX-1029", category: "C" },
+  { id: 4, name: "Audi A4", plate: "FL-5832", category: "D" },
+  { id: 5, name: "Tesla Model 3", plate: "WA-8821", category: "D" },
+  { id: 6, name: "Mercedes C-Class", plate: "NV-4721", category: "D" },
+  { id: 7, name: "Ford F-150", plate: "MI-3920", category: "E" },
+  { id: 8, name: "Jeep Wrangler", plate: "CO-2291", category: "E" },
+  { id: 9, name: "Volvo XC90", plate: "OR-7742", category: "F" },
+  { id: 10, name: "Lexus RX", plate: "AZ-1102", category: "H" },
 ];
 
-const weeklyData = [
-  { name: "Week 1", checkIns: 24, checkOuts: 18 },
-  { name: "Week 2", checkIns: 32, checkOuts: 25 },
-  { name: "Week 3", checkIns: 28, checkOuts: 35 },
-  { name: "Week 4", checkIns: 40, checkOuts: 30 },
+const mockActivities = [
+  // id 1
+  { vehicleId: 1, start: 1, end: 18, status: "booked" },
+  { vehicleId: 1, start: 19, end: 19, status: "maintenance" },
+  { vehicleId: 1, start: 24, end: 31, status: "booked" },
+  // id 2
+  { vehicleId: 2, start: 4, end: 6, status: "maintenance" },
+  { vehicleId: 2, start: 23, end: 28, status: "booked" },
+  // id 3
+  { vehicleId: 3, start: 4, end: 7, status: "maintenance" },
+  { vehicleId: 3, start: 12, end: 15, status: "booked" },
+  { vehicleId: 3, start: 25, end: 27, status: "booked" },
+  // id 4
+  { vehicleId: 4, start: 1, end: 10, status: "available" },
+  { vehicleId: 4, start: 11, end: 20, status: "available" },
+  { vehicleId: 4, start: 21, end: 31, status: "available" },
+  // id 5
+  { vehicleId: 5, start: 1, end: 22, status: "available" },
+  // id 6
+  { vehicleId: 6, start: 15, end: 20, status: "maintenance" },
+  // id 7
+  { vehicleId: 7, start: 5, end: 15, status: "maintenance" },
+  { vehicleId: 7, start: 18, end: 25, status: "available" },
 ];
 
-const monthlyData = [
-  { name: "Jan", checkIns: 120, checkOuts: 95 },
-  { name: "Feb", checkIns: 110, checkOuts: 88 },
-  { name: "Mar", checkIns: 145, checkOuts: 120 },
-  { name: "Apr", checkIns: 130, checkOuts: 115 },
-  { name: "May", checkIns: 160, checkOuts: 140 },
-  { name: "Jun", checkIns: 175, checkOuts: 155 },
-];
+const Legend = () => (
+  <div className="flex items-center gap-6 mt-6 px-4">
+    <div className="flex items-center gap-2">
+      <div className="w-4 h-4 rounded-md bg-[#4ADE80]"></div>
+      <span className="text-sm font-bold text-gray-500">Available</span>
+    </div>
+    <div className="flex items-center gap-2">
+      <div className="w-4 h-4 rounded-md bg-[#F87171]"></div>
+      <span className="text-sm font-bold text-gray-500">Booked</span>
+    </div>
+    <div className="flex items-center gap-2">
+      <div className="w-4 h-4 rounded-md bg-[#FACC15]"></div>
+      <span className="text-sm font-bold text-gray-500">Maintenance</span>
+    </div>
+  </div>
+);
 
 const VehicleActivityChart = () => {
-  const [activeTab, setActiveTab] = useState("Daily");
+  const [currentDate, setCurrentDate] = useState(new Date());
 
-  const getData = () => {
-    switch (activeTab) {
-      case "Daily":
-        return dailyData;
-      case "Weekly":
-        return weeklyData;
-      case "Monthly":
-        return monthlyData;
+  const daysInMonth = useMemo(() => {
+    const start = startOfMonth(currentDate);
+    const end = endOfMonth(currentDate);
+    return eachDayOfInterval({ start, end });
+  }, [currentDate]);
+
+  const monthYearLabel = format(currentDate, "MMMM - yyyy");
+
+  const handlePrevMonth = () => setCurrentDate(subMonths(currentDate, 1));
+  const handleNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case "booked":
+        return "bg-[#F87171]"; // Red
+      case "available":
+        return "bg-[#4ADE80]"; // Green
+      case "maintenance":
+        return "bg-[#FACC15]"; // Yellow
       default:
-        return dailyData;
+        return "bg-gray-200";
     }
   };
-
-  const getYAxisProps = () => {
-    switch (activeTab) {
-      case "Daily":
-        return { domain: [0, 12], ticks: [0, 3, 6, 9, 12] };
-      case "Weekly":
-        return { domain: [0, 50], ticks: [0, 10, 20, 30, 40, 50] };
-      case "Monthly":
-        return { domain: [0, 200], ticks: [0, 50, 100, 150, 200] };
-      default:
-        return { domain: [0, 12], ticks: [0, 3, 6, 9, 12] };
-    }
-  };
-
-  const chartData = getData();
-  const yAxisProps = getYAxisProps();
 
   return (
-    <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm mt-8">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h2 className="text-xl font-bold text-[#111827]">
-          Vehicle Activity Overview
-        </h2>
-        <div className="flex bg-gray-100 p-1 rounded-2xl w-full sm:w-auto">
-          {["Daily", "Weekly", "Monthly"].map((tab) => (
+    <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm mt-8 overflow-hidden">
+      {/* Header */}
+      <div className="p-8 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center bg-white border-b border-gray-50 gap-4">
+        <div>
+          <h2 className="text-xl font-bold text-[#111827]">
+            Fleet Management Monthly Timeline
+          </h2>
+          <div className="flex items-center gap-3 mt-1">
+            <span className="flex items-center gap-1.5 text-gray-400 text-sm font-medium">
+              <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+              {vehicles.length} Vehicles monitored
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <div className="flex items-center bg-gray-50/80 backdrop-blur-sm p-1.5 rounded-2xl border border-gray-100 shadow-sm w-full md:w-auto justify-between">
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`flex-1 sm:flex-none px-6 py-2 rounded-xl text-sm font-bold transition-all ${
-                activeTab === tab
-                  ? "bg-[#167FF3] text-white shadow-sm"
-                  : "text-gray-500 hover:bg-white"
-              }`}
+              onClick={handlePrevMonth}
+              className="p-2 hover:bg-white hover:shadow-sm rounded-xl transition-all text-gray-600 active:scale-95"
             >
-              {tab}
+              <ChevronLeft size={18} />
             </button>
-          ))}
+            <div className="px-6 flex items-center gap-2 select-none">
+              <CalendarIcon size={16} className="text-blue-500" />
+              <span className="text-sm font-bold text-[#111827] min-w-[140px] text-center">
+                {monthYearLabel}
+              </span>
+            </div>
+            <button
+              onClick={handleNextMonth}
+              className="p-2 hover:bg-white hover:shadow-sm rounded-xl transition-all text-gray-600 active:scale-95"
+            >
+              <ChevronRight size={18} />
+            </button>
+          </div>
+
+          <button className="p-3 bg-gray-50 hover:bg-gray-100 rounded-2xl border border-gray-100 text-gray-400 transition-colors hidden sm:block">
+            <Settings size={20} />
+          </button>
         </div>
       </div>
 
-      <div className="h-[400px] w-full mt-4">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            data={chartData}
-            margin={{ top: 20, right: 30, left: 0, bottom: 0 }}
-          >
-            <CartesianGrid
-              strokeDasharray="3 3"
-              vertical={false}
-              stroke="#E5E7EB"
-            />
-            <XAxis
-              dataKey="name"
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: "#9CA3AF", fontSize: 13, fontWeight: 500 }}
-              dy={15}
-            />
-            <YAxis
-              axisLine={false}
-              tickLine={false}
-              tick={{ fill: "#9CA3AF", fontSize: 13, fontWeight: 500 }}
-              {...yAxisProps}
-            />
-            <Tooltip
-              cursor={{ fill: "#F9FAFB" }}
-              contentStyle={{
-                borderRadius: "16px",
-                border: "none",
-                boxShadow: "0 10px 15px -3px rgb(0 0 0 / 0.1)",
-                padding: "12px",
+      {/* Timeline Grid */}
+      <div className="overflow-x-auto relative scrollbar-hide">
+        <div className="min-w-[1400px]">
+          {/* Calendar Header */}
+          <div className="flex border-b border-gray-100 sticky top-0 z-20">
+            {/* Left Header Spacer */}
+            <div className="w-[450px] flex-shrink-0 grid grid-cols-[60px_1fr_120px] bg-[#F9FAFB] sticky left-0 z-30 border-r border-gray-100">
+              <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-center border-r border-gray-200/50">
+                C/LS
+              </div>
+              <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider pl-6">
+                Veicolo / Descrizione
+              </div>
+              <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-center">
+                Status
+              </div>
+            </div>
+
+            {/* Days Header */}
+            <div
+              className="flex-1 grid bg-[#F9FAFB]"
+              style={{
+                gridTemplateColumns: `repeat(${daysInMonth.length}, 1fr)`,
               }}
-            />
-            <Legend
-              verticalAlign="bottom"
-              align="center"
-              iconType="square"
-              wrapperStyle={{ paddingTop: "30px" }}
-              formatter={(value) => (
-                <span
-                  className={`text-sm font-bold capitalize ${value === "checkIns" ? "text-[#3B82F6]" : "text-[#EC4899]"}`}
+            >
+              {daysInMonth.map((day) => {
+                const dateNum = getDate(day);
+                const isTodayDate = isToday(day);
+                const dayName = format(day, "eee"); // "Mon", "Tue"...
+                const isWeekend = dayName === "Sat" || dayName === "Sun";
+
+                return (
+                  <div
+                    key={day.toString()}
+                    className={`p-3 text-center border-r border-gray-200/50 last:border-0 flex flex-col gap-0.5 ${isWeekend ? "bg-gray-200/30" : ""}`}
+                  >
+                    <span className="text-[10px] font-bold text-gray-400 uppercase">
+                      {dayName[0]}
+                    </span>
+                    <span
+                      className={`text-xs font-black transition-colors ${isTodayDate ? "text-blue-600" : "text-[#111827]"}`}
+                    >
+                      {dateNum.toString().padStart(2, "0")}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Vehicle Rows */}
+          <div className="bg-white">
+            {vehicles.map((vehicle) => {
+              const vehicleActivities = mockActivities.filter(
+                (a) => a.vehicleId === vehicle.id,
+              );
+
+              return (
+                <div
+                  key={vehicle.id}
+                  className="group flex border-b border-gray-100 hover:bg-blue-50/5 transition-colors last:border-0 relative"
                 >
-                  {value === "checkIns" ? "Check-ins" : "Check-outs"}
-                </span>
-              )}
-            />
-            <Bar
-              dataKey="checkIns"
-              fill="#3B82F6"
-              radius={[6, 6, 0, 0]}
-              barSize={activeTab === "Daily" ? 45 : 60}
-            />
-            <Bar
-              dataKey="checkOuts"
-              fill="#EC4899"
-              radius={[6, 6, 0, 0]}
-              barSize={activeTab === "Daily" ? 45 : 60}
-            />
-          </BarChart>
-        </ResponsiveContainer>
+                  {/* Left Column: Fixed Vehicle Details */}
+                  <div className="w-[450px] flex-shrink-0 grid grid-cols-[60px_1fr_120px] bg-white sticky left-0 z-10 border-r border-gray-100">
+                    <div className="p-4 border-r border-gray-100 flex items-center justify-center">
+                      <span className="text-[10px] font-black text-gray-500 bg-gray-50 border border-gray-100 w-8 h-8 flex items-center justify-center rounded-lg uppercase">
+                        {vehicle.category}
+                      </span>
+                    </div>
+                    <div className="p-4 flex flex-col justify-center min-w-0 pl-6">
+                      <span className="text-sm font-bold text-[#111827] truncate group-hover:text-blue-600 transition-colors uppercase tracking-tight">
+                        {vehicle.plate}
+                      </span>
+                      <span className="text-[11px] font-semibold text-gray-400 mt-0.5 truncate uppercase">
+                        {vehicle.name}
+                      </span>
+                    </div>
+                    <div className="p-4 flex items-center justify-center gap-2">
+                      <div
+                        className={`w-2 h-2 rounded-full ${vehicle.id % 3 === 0 ? "bg-orange-400" : "bg-green-400"}`}
+                      ></div>
+                      <span className="text-[10px] font-bold text-gray-500 uppercase">
+                        {vehicle.id % 3 === 0 ? "In Shop" : "Active"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right Column: Timeline Activity */}
+                  <div
+                    className="flex-1 grid relative isolate"
+                    style={{
+                      gridTemplateColumns: `repeat(${daysInMonth.length}, 1fr)`,
+                    }}
+                  >
+                    {/* Background Grid Lines */}
+                    {daysInMonth.map((day) => {
+                      const dayName = format(day, "eee");
+                      const isWeekend = dayName === "Sat" || dayName === "Sun";
+                      return (
+                        <div
+                          key={day.toString()}
+                          className={`border-r border-gray-100/60 last:border-0 h-full ${isWeekend ? "bg-gray-50/50" : ""}`}
+                        ></div>
+                      );
+                    })}
+
+                    {/* Activity Bars Overlay */}
+                    <div className="absolute inset-0 p-3 flex items-center pointer-events-none">
+                      <div className="relative h-12 w-full">
+                        {vehicleActivities.map((activity, idx) => {
+                          const startPos =
+                            ((activity.start - 1) / daysInMonth.length) * 100;
+                          const width =
+                            ((activity.end - activity.start + 1) /
+                              daysInMonth.length) *
+                            100;
+
+                          return (
+                            <div
+                              key={idx}
+                              className={`absolute top-0 bottom-0 rounded-xl shadow-sm border-[1.5px] border-white/40 transition-all pointer-events-auto cursor-pointer hover:brightness-105 active:scale-[0.99] group/bar flex items-center px-3 z-10 ${getStatusColor(activity.status)}`}
+                              style={{
+                                left: `${startPos}%`,
+                                width: `${width}%`,
+                              }}
+                            >
+                              {/* End Indicators like in the image */}
+                              <div className="absolute left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/30"></div>
+                              <div className="absolute right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/30"></div>
+
+                              <div className="opacity-0 group-hover/bar:opacity-100 absolute inset-0 bg-white/10 flex items-center justify-center transition-all rounded-xl backdrop-blur-[1px]">
+                                <Info
+                                  size={14}
+                                  className="text-white drop-shadow-sm"
+                                />
+                              </div>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Footer / Legend */}
+      <div className="p-8 border-t border-gray-100 bg-white flex flex-col sm:flex-row justify-between items-center gap-6">
+        <Legend />
+        <div className="flex items-center gap-2">
+          <button className="px-5 py-2.5 bg-[#111827] text-white text-xs font-bold rounded-xl hover:bg-gray-800 transition-all shadow-lg active:scale-95 uppercase tracking-widest">
+            Export View
+          </button>
+        </div>
       </div>
     </div>
   );
