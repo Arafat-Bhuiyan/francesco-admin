@@ -94,7 +94,7 @@ const Payment = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-6 rounded-[1.5rem] shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-gray-100 flex justify-between items-center h-32"
+            className="bg-white p-6 rounded-md shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] border border-gray-100 flex justify-between items-center h-32"
           >
             <div>
               <p className="text-gray-400 text-sm font-semibold mb-1">
@@ -110,7 +110,7 @@ const Payment = () => {
       </div>
 
       {/* Table Section */}
-      <div className="bg-white rounded-[2rem] shadow-[0_2px_20px_-5px_rgba(0,0,0,0.1)] border border-gray-100 p-10 mb-8">
+      <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.1)] border border-gray-100 p-10 mb-8">
         <h2 className="text-xl font-extrabold text-[#111827] mb-8">
           Agency Payout Details
         </h2>
@@ -182,7 +182,7 @@ const Payment = () => {
       </div>
 
       {/* Revenue Insights Banner */}
-      <div className="bg-[#EFFAF3] border border-[#D1FAE5] rounded-3xl p-6 flex items-start gap-4">
+      <div className="bg-[#EFFAF3] border border-[#D1FAE5] rounded-md p-6 flex items-start gap-4">
         <div className="bg-white p-2.5 rounded-xl shadow-sm">
           <TrendingUp className="w-6 h-6 text-[#10B981]" />
         </div>

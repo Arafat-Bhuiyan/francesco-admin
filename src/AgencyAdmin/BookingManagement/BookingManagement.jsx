@@ -157,7 +157,7 @@ const BookingManagement = () => {
       </div>
 
       {/* Bookings Table */}
-      <div className="bg-white rounded-3xl border border-gray-100 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-md border border-gray-100 overflow-hidden shadow-sm">
         <div className="px-8 py-6 border-b border-gray-50 flex justify-between items-center">
           <h2 className="text-xl font-bold text-[#111827]">All Bookings</h2>
         </div>
@@ -194,15 +194,14 @@ const BookingManagement = () => {
                   </td>
                   <td className="py-6 px-8 text-center">
                     <span
-                      className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${
-                        booking.status === "Active"
+                      className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${booking.status === "Active"
                           ? "bg-green-50 text-green-500"
                           : booking.status === "Reserved"
                             ? "bg-blue-50 text-blue-500"
                             : booking.status === "Cancelled"
                               ? "bg-red-50 text-red-500"
                               : "bg-gray-100 text-gray-500"
-                      }`}
+                        }`}
                     >
                       {booking.status}
                     </span>

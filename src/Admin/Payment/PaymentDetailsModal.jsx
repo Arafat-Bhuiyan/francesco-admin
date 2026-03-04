@@ -85,7 +85,7 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
 
         <div className="p-8 space-y-8 overflow-y-auto max-h-[80vh]">
           {/* Top Info Card */}
-          <div className="bg-[#F8F9FF] rounded-3xl p-6 border border-[#E0E7FF] flex justify-between items-center">
+          <div className="bg-[#F8F9FF] rounded-md p-6 border border-[#E0E7FF] flex justify-between items-center">
             <div>
               <h3 className="text-xl font-semibold text-gray-900 mb-1">
                 {payoutData.agencyName}
@@ -101,7 +101,7 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
 
           {/* Period & Date */}
           <div className="grid grid-cols-2 gap-4">
-            <div className="bg-white border border-gray-100 p-5 rounded-3xl flex items-center gap-4">
+            <div className="bg-white border border-gray-100 p-5 rounded-md flex items-center gap-4">
               <div className="bg-blue-50 p-3 rounded-2xl">
                 <Calendar className="w-5 h-5 text-blue-500" />
               </div>
@@ -114,7 +114,7 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
                 </p>
               </div>
             </div>
-            <div className="bg-white border border-gray-100 p-5 rounded-3xl flex items-center gap-4">
+            <div className="bg-white border border-gray-100 p-5 rounded-md flex items-center gap-4">
               <div className="bg-green-50 p-3 rounded-2xl">
                 <CheckCircle2 className="w-5 h-5 text-green-500" />
               </div>
@@ -193,7 +193,7 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
                 Bank Details
               </h4>
             </div>
-            <div className="bg-[#F9FAFB] p-5 rounded-3xl space-y-4">
+            <div className="bg-[#F9FAFB] p-5 rounded-md space-y-4">
               <div className="flex justify-between items-center">
                 <p className="text-gray-500 font-semibold text-sm">Bank Name</p>
                 <p className="text-gray-900 font-extrabold text-sm">
@@ -225,7 +225,7 @@ const PaymentDetailsModal = ({ isOpen, onClose, payoutData }) => {
                 Transaction Information
               </h4>
             </div>
-            <div className="bg-[#F9FAFB] p-5 rounded-3xl space-y-4">
+            <div className="bg-[#F9FAFB] p-5 rounded-md space-y-4">
               <div className="flex justify-between items-center">
                 <p className="text-gray-500 font-semibold text-sm">
                   Transaction ID

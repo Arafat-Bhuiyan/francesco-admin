@@ -31,7 +31,7 @@ const BookingDetailsModal = ({ isOpen, onClose, booking }) => {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-all duration-300">
       <div
-        className="bg-white rounded-[2rem] shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
+        className="bg-white rounded-md shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

@@ -63,7 +63,7 @@ const TodayActivityList = () => {
   const [filter, setFilter] = useState("Check-in");
 
   return (
-    <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm mt-8 overflow-visible">
+    <div className="bg-white rounded-md border border-gray-100 shadow-sm mt-8 overflow-visible">
       <div className="p-8 flex justify-between items-center bg-white rounded-t-[2rem]">
         <h2 className="text-xl font-bold text-[#111827]">
           Today's Check-ins / Today's Check-outs
@@ -79,21 +79,19 @@ const TodayActivityList = () => {
             <div className="py-2 px-1">
               <button
                 onClick={() => setFilter("Check-in")}
-                className={`w-full text-left px-4 py-2 text-sm font-bold rounded-xl transition-colors ${
-                  filter === "Check-in"
+                className={`w-full text-left px-4 py-2 text-sm font-bold rounded-xl transition-colors ${filter === "Check-in"
                     ? "bg-blue-50 text-blue-600"
                     : "text-gray-600 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 Check-in
               </button>
               <button
                 onClick={() => setFilter("Check-out")}
-                className={`w-full text-left px-4 py-2 text-sm font-bold rounded-xl transition-colors ${
-                  filter === "Check-out"
+                className={`w-full text-left px-4 py-2 text-sm font-bold rounded-xl transition-colors ${filter === "Check-out"
                     ? "bg-blue-50 text-blue-600"
                     : "text-gray-600 hover:bg-gray-50"
-                }`}
+                  }`}
               >
                 Check-out
               </button>

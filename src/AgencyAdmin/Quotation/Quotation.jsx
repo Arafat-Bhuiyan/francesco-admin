@@ -125,7 +125,7 @@ const Quotation = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-8 rounded-[1.5rem] border border-gray-50 flex items-center justify-between shadow-sm transition-all hover:shadow-md"
+            className="bg-white p-8 rounded-md border border-gray-50 flex items-center justify-between shadow-sm transition-all hover:shadow-md"
           >
             <div className="space-y-1">
               <p className="text-gray-400 text-xs font-bold uppercase tracking-wider">
@@ -173,7 +173,7 @@ const Quotation = () => {
       </div>
 
       {/* Quotations Table */}
-      <div className="bg-white rounded-[2rem] border border-gray-100 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-md border border-gray-100 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>

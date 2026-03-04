@@ -161,7 +161,7 @@ const VehicleActivityChart = () => {
   };
 
   return (
-    <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm mt-8 overflow-hidden">
+    <div className="bg-white rounded-md border border-gray-100 shadow-sm mt-8 overflow-hidden">
       {/* Header */}
       <div className="p-8 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center bg-white border-b border-gray-50 gap-4">
         <div>

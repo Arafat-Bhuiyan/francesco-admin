@@ -3,7 +3,7 @@ import { Crown, BadgeCheck, Clock, CircleSlash } from "lucide-react";
 
 const CustomersTable = ({ customers, onSuspend, onToggleVIP }) => {
   return (
-    <div className="bg-white rounded-[2rem] border border-gray-100 p-10 shadow-sm animate-in fade-in duration-500">
+    <div className="bg-white rounded-md border border-gray-100 p-10 shadow-sm animate-in fade-in duration-500">
       <h2 className="text-xl font-extrabold text-[#111827] mb-8 uppercase tracking-tight">
         All Customers List
       </h2>
@@ -93,11 +93,10 @@ const CustomersTable = ({ customers, onSuspend, onToggleVIP }) => {
                   <div className="flex items-center justify-center gap-3">
                     <button
                       onClick={() => onSuspend(customer.id)}
-                      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl transition-all text-xs font-bold border ${
-                        customer.isSuspended
+                      className={`flex items-center gap-2 px-5 py-2.5 rounded-xl transition-all text-xs font-bold border ${customer.isSuspended
                           ? "bg-red-500 text-white border-red-500 hover:bg-red-600 shadow-md shadow-red-100"
                           : "bg-white border-gray-200 text-[#111827] hover:border-blue-600 hover:text-blue-600 shadow-sm"
-                      }`}
+                        }`}
                     >
                       <CircleSlash className="w-4 h-4" />
                       {customer.isSuspended ? "Unsuspend" : "Suspend"}

@@ -43,7 +43,7 @@ const AgentsTable = () => {
 
   return (
     <>
-      <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500 overflow-hidden p-8">
+      <div className="bg-white rounded-md border border-gray-100 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500 overflow-hidden p-8">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
             <thead>

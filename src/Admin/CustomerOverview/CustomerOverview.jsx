@@ -117,9 +117,9 @@ const CustomerOverview = () => {
       customers.map((customer) =>
         customer.id === id
           ? {
-              ...customer,
-              vipStatus: customer.vipStatus === "VIP" ? "Regular" : "VIP",
-            }
+            ...customer,
+            vipStatus: customer.vipStatus === "VIP" ? "Regular" : "VIP",
+          }
           : customer,
       ),
     );
@@ -145,7 +145,7 @@ const CustomerOverview = () => {
           return (
             <div
               key={idx}
-              className="bg-white p-8 rounded-[2rem] border border-gray-100 flex items-center justify-between shadow-sm hover:shadow-md transition-all group"
+              className="bg-white p-8 rounded-md border border-gray-100 flex items-center justify-between shadow-sm hover:shadow-md transition-all group"
             >
               <div className="space-y-2">
                 <h3 className="text-gray-400 text-sm font-bold tracking-tight">
@@ -176,11 +176,10 @@ const CustomerOverview = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center gap-3 px-8 py-5 font-bold text-sm ${
-                  isActive
+                className={`flex items-center gap-3 px-8 py-5 font-bold text-sm ${isActive
                     ? "text-[#D3037F] border-b border-[#D3037F]"
                     : "text-gray-400"
-                }`}
+                  }`}
               >
                 <Icon className="w-5 h-5" />
                 {tab.label}

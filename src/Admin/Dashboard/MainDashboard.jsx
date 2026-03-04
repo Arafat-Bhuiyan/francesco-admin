@@ -91,7 +91,7 @@ const MainDashboard = () => {
           return (
             <div
               key={idx}
-              className="bg-white p-8 rounded-[2rem] border border-gray-100 flex items-center justify-between shadow-sm hover:shadow-md transition-all group"
+              className="bg-white p-8 rounded-md border border-gray-100 flex items-center justify-between shadow-sm hover:shadow-md transition-all group"
             >
               <div className="space-y-2">
                 <h3 className="text-gray-400 text-sm font-bold tracking-tight">

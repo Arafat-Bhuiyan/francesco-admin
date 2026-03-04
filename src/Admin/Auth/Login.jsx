@@ -8,7 +8,6 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [show, setShow] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,13 +24,14 @@ export default function Login() {
       navigate("/admin", { replace: true });
     } else {
       alert(
-        "Invalid credentials. \nSuper Admin: superadmin@admin.com / superadmin123 \nAgency Admin: agencyadmin@admin.com / agencyadmin123",
+        "Invalid credentials. \nSuper Admin: superadmin@admin.com / 123 \nAgency Admin: agencyadmin@admin.com / 123",
       );
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white p-4 font-['Outfit',sans-serif]">
+    <div className="min-h-screen flex items-center justify-center bg-white p-4 ">
+      {/* font-['Outfit',sans-serif] */}
       <div className="w-full bg-gradient-to-br from-[#63CBFF]/20 to-[#4043F5]/20 max-w-2xl rounded-lg">
         {/* Logo Section */}
         <div className="flex items-center justify-center gap-1">
@@ -76,29 +76,6 @@ export default function Login() {
                 {show ? <EyeOff size={20} /> : <Eye size={20} />}
               </button>
             </div>
-          </div>
-
-          {/* Remember & Forgot */}
-          <div className="flex items-center justify-between px-2">
-            <label className="flex items-center gap-2 cursor-pointer group">
-              <div className="relative flex items-center justify-center">
-                <input
-                  type="checkbox"
-                  checked={rememberMe}
-                  onChange={() => setRememberMe(!rememberMe)}
-                  className="w-4 h-4 rounded border-[#63CBFF]/50 text-[#4043F5] focus:ring-[#63CBFF] cursor-pointer"
-                />
-              </div>
-              <span className="text-xs font-semibold text-gray-600 group-hover:text-gray-900 transition-colors">
-                Remember me
-              </span>
-            </label>
-            <button
-              type="button"
-              className="text-xs font-bold text-gray-700 hover:text-black transition-colors"
-            >
-              Forgot password?
-            </button>
           </div>
 
           {/* Login Button */}

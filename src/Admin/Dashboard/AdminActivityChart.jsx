@@ -75,7 +75,7 @@ const AdminActivityChart = () => {
   const yAxisProps = getYAxisProps();
 
   return (
-    <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
+    <div className="bg-white p-8 rounded-md border border-gray-100 shadow-sm">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <h2 className="text-xl font-bold text-[#111827]">
           Check-in vs Check-out Overview
@@ -85,11 +85,10 @@ const AdminActivityChart = () => {
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`flex-1 sm:flex-none px-6 py-2 rounded-xl text-sm font-bold transition-all ${
-                activeTab === tab
+              className={`flex-1 sm:flex-none px-6 py-2 rounded-xl text-sm font-bold transition-all ${activeTab === tab
                   ? "bg-[#167FF3] text-white shadow-sm"
                   : "text-gray-500 hover:bg-white"
-              }`}
+                }`}
             >
               {tab}
             </button>

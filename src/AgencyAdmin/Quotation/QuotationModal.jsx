@@ -108,7 +108,7 @@ const QuotationModal = ({ isOpen, onClose, quotation }) => {
           </div>
 
           {/* Quotation Summary Card */}
-          <div className="bg-gray-50/50 rounded-[2rem] p-8 border border-gray-50 space-y-6">
+          <div className="bg-gray-50/50 rounded-md p-8 border border-gray-50 space-y-6">
             <h3 className="text-base font-bold text-[#111827]">
               Quotation Summary
             </h3>

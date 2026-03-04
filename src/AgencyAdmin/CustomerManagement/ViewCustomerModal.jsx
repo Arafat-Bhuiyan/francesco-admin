@@ -6,7 +6,7 @@ const ViewCustomerModal = ({ isOpen, onClose, customer }) => {
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white w-full max-w-xl rounded-[2rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="bg-white w-full max-w-4xl rounded-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="flex items-center justify-between px-8 py-6">
           <h2 className="text-xl font-bold text-[#111827]">Customer Profile</h2>
@@ -175,11 +175,10 @@ const ViewCustomerModal = ({ isOpen, onClose, customer }) => {
                     </p>
                   </div>
                   <span
-                    className={`px-3 py-1 rounded-md text-[10px] font-bold ${
-                      booking.status === "Active"
-                        ? "bg-green-50 text-green-500"
-                        : "bg-gray-100 text-gray-400"
-                    }`}
+                    className={`px-3 py-1 rounded-md text-[10px] font-bold ${booking.status === "Active"
+                      ? "bg-green-50 text-green-500"
+                      : "bg-gray-100 text-gray-400"
+                      }`}
                   >
                     {booking.status}
                   </span>

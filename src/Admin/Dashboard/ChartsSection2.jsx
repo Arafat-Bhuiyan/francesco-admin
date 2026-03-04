@@ -103,7 +103,7 @@ const ChartsSection2 = () => {
 
   return (
     <div className="w-full mb-10">
-      <div className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
+      <div className="bg-white p-8 rounded-md border border-gray-100 shadow-sm">
         <h3 className="text-[#101828] text-xl font-bold mb-8">
           Agency Performance Comparison
         </h3>

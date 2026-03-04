@@ -107,7 +107,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
   };
 
   return (
-    <div className="w-full h-screen relative border-r border-black/10 flex flex-col justify-between items-start bg-gradient-to-b from-[#F277B1] to-[#D3037F]">
+    <div className="w-92 h-screen relative border-r border-black/10 flex flex-col justify-between items-start bg-gradient-to-b from-[#F277B1] to-[#D3037F]">
       <div className="w-full flex flex-col items-start justify-start">
         {/* Logo */}
         <div className="w-full flex flex-col items-center justify-center p-6 mb-4">
@@ -115,7 +115,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
         </div>
 
         {/* Navigation */}
-        <nav className="w-full px-4">
+        <nav className="w-full px-2">
           <ul className="w-full">
             {menuItems.map((item, index) => {
               const Icon = item.icon;
@@ -129,8 +129,8 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
                       `flex items-center h-14 pl-6 py-3 text-start text-base font-normal transition-all mb-2 gap-2.5 ${location.pathname === to ||
                         (item.slug !== "dashboard" &&
                           location.pathname.startsWith(to))
-                        ? "self-stretch px-4 py-3 bg-gradient-to-b from-[#91A7EF] to-[#5184F6] rounded-3xl shadow-[0px_4px_4px_0px_rgba(51,50,50,0.21)] backdrop-blur-sm text-white"
-                        : "text-[#ffffff] hover:text-white hover:bg-white/10 rounded-3xl"
+                        ? "self-stretch px-4 py-3 bg-gradient-to-b from-[#91A7EF] to-[#5184F6] rounded-full shadow-[0px_4px_4px_0px_rgba(51,50,50,0.21)] backdrop-blur-sm text-white"
+                        : "text-[#ffffff] hover:text-white hover:bg-white/10 rounded-full"
                       }`
                     }
                   >

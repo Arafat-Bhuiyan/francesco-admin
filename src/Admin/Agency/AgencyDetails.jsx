@@ -26,7 +26,7 @@ const AgencyDetails = () => {
 
   return (
     <div className="p-6 bg-[#FBFBFB] min-h-screen flex justify-center items-start">
-      <div className="bg-white rounded-[2rem] border border-gray-100 shadow-xl w-full max-w-2xl overflow-hidden relative p-10">
+      <div className="bg-white rounded-md border border-gray-100 shadow-xl w-full max-w-2xl overflow-hidden relative p-10">
         {/* Close Button */}
         <button
           onClick={() => navigate("/admin/agency-management")}

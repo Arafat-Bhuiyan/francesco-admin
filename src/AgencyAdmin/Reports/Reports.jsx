@@ -63,7 +63,7 @@ const Reports = () => {
         {STATS.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-8 rounded-[2rem] border border-gray-50 shadow-sm space-y-4 hover:shadow-md transition-all group"
+            className="bg-white p-8 rounded-md border border-gray-50 shadow-sm space-y-4 hover:shadow-md transition-all group"
           >
             <div className="flex items-center gap-3">
               <div className={`p-2.5 rounded-xl ${stat.bgColor}`}>
@@ -88,13 +88,13 @@ const Reports = () => {
       </div>
 
       {/* Revenue Trend Chart */}
-      <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-2">
+      <div className="bg-white p-10 rounded-md border border-gray-100 shadow-sm space-y-2">
         <h2 className="text-xl font-bold text-[#111827]">Revenue Trend</h2>
         <RevenueTrendChart />
       </div>
 
       {/* Booking Trends Chart */}
-      <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-2">
+      <div className="bg-white p-10 rounded-md border border-gray-100 shadow-sm space-y-2">
         <h2 className="text-xl font-bold text-[#111827]">Booking Trends</h2>
         <BookingTrendsChart />
       </div>

@@ -37,7 +37,7 @@ const Settings = () => {
         {/* Left Column (Main Info) */}
         <div className="lg:col-span-2 space-y-10">
           {/* Agency Information Card */}
-          <div className="bg-white p-10 rounded-[2.5rem] border border-gray-100 shadow-sm space-y-10 hover:shadow-md transition-shadow duration-300">
+          <div className="bg-white p-10 rounded-md border border-gray-100 shadow-sm space-y-10 hover:shadow-md transition-shadow duration-300">
             <h3 className="text-xl font-extrabold text-[#111827] tracking-tight">
               Agency Information
             </h3>
@@ -304,7 +304,7 @@ const Settings = () => {
           </span>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-[#F9FAFB] p-8 rounded-[2rem] space-y-6 border border-gray-50">
+          <div className="bg-[#F9FAFB] p-8 rounded-md space-y-6 border border-gray-50">
             <div className="space-y-2">
               <p className="text-[#111827] font-bold text-base">
                 Cargo API Configuration
@@ -333,7 +333,7 @@ const Settings = () => {
             </div>
           </div>
 
-          <div className="bg-[#F9FAFB] p-8 rounded-[2rem] space-y-6 border border-gray-50">
+          <div className="bg-[#F9FAFB] p-8 rounded-md space-y-6 border border-gray-50">
             <div className="space-y-2">
               <p className="text-[#111827] font-bold text-base">
                 Pricing Configuration
@@ -369,7 +369,7 @@ const Settings = () => {
       <div className="flex justify-center pt-4">
         <button
           onClick={() => toast.success("Changes saved successfully!")}
-          className="px-12 py-5 bg-blue-600 text-white rounded-[1.5rem] font-bold text-sm flex items-center gap-3 shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-100"
+          className="px-12 py-5 bg-blue-600 text-white rounded-md font-bold text-sm flex items-center gap-3 shadow-[0_20px_50px_rgba(37,99,235,0.3)] hover:bg-blue-700 transition-all hover:scale-[1.02] active:scale-100"
         >
           <Save className="w-5 h-5" /> Save Changes
         </button>
