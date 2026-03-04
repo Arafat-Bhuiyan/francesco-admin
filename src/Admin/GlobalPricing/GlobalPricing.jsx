@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 
 const PricingCard = ({ icon: Icon, title, iconBg, iconColor, children }) => (
-  <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm transition-all hover:shadow-md">
+  <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm transition-all hover:shadow-md">
     <div className="flex items-center gap-3 mb-6">
       <div
         className="p-2 rounded-lg"
@@ -162,7 +162,7 @@ const GlobalPricing = () => {
       </div>
 
       {/* Important Note Box */}
-      <div className="bg-[#EFF6FF] border border-[#BFDBFE] p-6 rounded-[1.5rem] flex gap-4">
+      <div className="bg-[#EFF6FF] border border-[#BFDBFE] p-6 rounded-md flex gap-4">
         <div className="text-[#2563EB]">
           <Info className="w-6 h-6" />
         </div>

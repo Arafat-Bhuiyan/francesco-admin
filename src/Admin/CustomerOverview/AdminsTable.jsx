@@ -42,16 +42,16 @@ const AdminsTable = () => {
       prevData.map((admin) =>
         admin.id === id
           ? {
-              ...admin,
-              status: admin.status === "Active" ? "Inactive" : "Active",
-            }
+            ...admin,
+            status: admin.status === "Active" ? "Inactive" : "Active",
+          }
           : admin,
       ),
     );
   };
 
   return (
-    <div className="bg-white rounded-[2rem] border border-gray-100 p-10 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500">
+    <div className="bg-white rounded-md border border-gray-100 p-10 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500">
       <table className="w-full text-left border-collapse">
         <thead>
           <tr className="border-b border-gray-100">
@@ -94,9 +94,8 @@ const AdminsTable = () => {
               </td>
               <td className="py-5">
                 <span
-                  className={`px-3 py-1 rounded-lg text-xs font-bold text-white transition-all ${
-                    admin.status === "Active" ? "bg-[#00C26F]" : "bg-[#94A3B8]"
-                  }`}
+                  className={`px-3 py-1 rounded-lg text-xs font-bold text-white transition-all ${admin.status === "Active" ? "bg-[#00C26F]" : "bg-[#94A3B8]"
+                    }`}
                 >
                   {admin.status}
                 </span>
@@ -107,11 +106,10 @@ const AdminsTable = () => {
               <td className="py-5">
                 <button
                   onClick={() => handleToggleStatus(admin.id)}
-                  className={`flex items-center gap-2 px-4 py-2 border rounded-xl font-bold text-sm transition-all shadow-sm ${
-                    admin.status === "Active"
+                  className={`flex items-center gap-2 px-4 py-2 border rounded-xl font-bold text-sm transition-all shadow-sm ${admin.status === "Active"
                       ? "border-gray-200 text-[#101828] hover:bg-red-50 hover:border-red-100 hover:text-red-600"
                       : "border-[#00C26F]/20 bg-[#00C26F]/5 text-[#00C26F] hover:bg-[#00C26F] hover:text-white"
-                  }`}
+                    }`}
                 >
                   {admin.status === "Active" ? (
                     <>

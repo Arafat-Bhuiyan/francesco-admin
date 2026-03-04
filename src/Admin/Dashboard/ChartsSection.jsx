@@ -132,7 +132,7 @@ const ChartsSection = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-10">
       {/* Booking Growth Chart */}
-      <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+      <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm">
         <h3 className="text-[#101828] text-lg font-bold mb-6">
           Monthly Booking Growth
         </h3>
@@ -157,7 +157,7 @@ const ChartsSection = () => {
       </div>
 
       {/* Revenue Growth Chart */}
-      <div className="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+      <div className="bg-white p-6 rounded-md border border-gray-100 shadow-sm">
         <h3 className="text-[#101828] text-lg font-bold mb-6">
           Revenue Growth
         </h3>

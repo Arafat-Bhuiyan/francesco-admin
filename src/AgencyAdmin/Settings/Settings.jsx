@@ -33,17 +33,16 @@ const Settings = () => {
   return (
     <div className="py-8 flex flex-col md:flex-row gap-8 items-start min-h-[800px]">
       {/* Sidebar Tabs */}
-      <div className="w-full md:w-72 bg-white rounded-[2rem] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 shrink-0">
+      <div className="w-full md:w-72 bg-white rounded-md p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 shrink-0">
         <div className="space-y-2">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`w-full flex items-center justify-between px-6 py-4 rounded-full transition-all duration-300 group ${
-                activeTab === tab.id
+              className={`w-full flex items-center justify-between px-6 py-4 rounded-full transition-all duration-300 group ${activeTab === tab.id
                   ? "bg-gradient-to-r from-[#91A7EF] to-[#5184F6] text-white shadow-lg shadow-indigo-500/20"
                   : "text-gray-400 hover:bg-gray-50 hover:text-gray-600"
-              }`}
+                }`}
             >
               <div className="flex items-center gap-4">
                 <span

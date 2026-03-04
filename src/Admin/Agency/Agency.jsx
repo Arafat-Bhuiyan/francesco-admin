@@ -85,9 +85,9 @@ const Agency = () => {
       prev.map((agency) =>
         agency.id === id
           ? {
-              ...agency,
-              status: agency.status === "Active" ? "Disabled" : "Active",
-            }
+            ...agency,
+            status: agency.status === "Active" ? "Disabled" : "Active",
+          }
           : agency,
       ),
     );
@@ -115,7 +115,7 @@ const Agency = () => {
           <Plus className="w-5 h-5" /> Add New Agency
         </button>
       </div>
-      <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden p-8">
+      <div className="bg-white rounded-md border border-gray-100 shadow-sm overflow-hidden p-8">
         <h2 className="text-[#101828] text-xl font-bold mb-8">All Agencies</h2>
 
         <div className="overflow-x-auto">
@@ -162,11 +162,10 @@ const Agency = () => {
                   </td>
                   <td className="py-7 text-center">
                     <span
-                      className={`px-3 py-1.5 rounded-lg text-xs font-bold leading-none ${
-                        agency.status === "Active"
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold leading-none ${agency.status === "Active"
                           ? "bg-[#DCFCE7] text-[#166534]"
                           : "bg-[#FEE2E2] text-[#991B1B]"
-                      }`}
+                        }`}
                     >
                       {agency.status}
                     </span>
@@ -181,11 +180,10 @@ const Agency = () => {
                       </button>
                       <button
                         onClick={() => handleToggleStatus(agency.id)}
-                        className={`transition-colors ${
-                          agency.status === "Active"
+                        className={`transition-colors ${agency.status === "Active"
                             ? "text-[#F87171] hover:text-[#DC2626]"
                             : "text-[#4ADE80] hover:text-[#16A34A]"
-                        }`}
+                          }`}
                       >
                         <Power className="w-5 h-5" />
                       </button>

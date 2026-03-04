@@ -15,7 +15,7 @@ const AgencyDetailsModal = ({ isOpen, onClose, agency, onToggleStatus }) => {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
       <div
-        className="bg-white rounded-[2rem] border border-gray-100 shadow-2xl w-full max-w-2xl overflow-hidden relative p-10 animate-in fade-in zoom-in duration-300"
+        className="bg-white rounded-md border border-gray-100 shadow-2xl w-full max-w-2xl overflow-hidden relative p-10 animate-in fade-in zoom-in duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -120,11 +120,10 @@ const AgencyDetailsModal = ({ isOpen, onClose, agency, onToggleStatus }) => {
         <div className="flex gap-4">
           <button
             onClick={() => onToggleStatus(agency.id)}
-            className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold transition-all ${
-              agency.status === "Active"
+            className={`flex-1 flex items-center justify-center gap-2 py-4 rounded-xl font-bold transition-all ${agency.status === "Active"
                 ? "bg-[#D91B42] text-white hover:bg-[#C0183A]"
                 : "bg-[#00C26F] text-white hover:bg-[#00A860]"
-            }`}
+              }`}
           >
             <Power className="w-5 h-5" />
             {agency.status === "Active" ? "Disable Agency" : "Activate Agency"}

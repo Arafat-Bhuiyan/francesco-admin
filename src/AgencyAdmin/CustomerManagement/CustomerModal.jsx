@@ -34,7 +34,7 @@ const CustomerModal = ({ isOpen, onClose, customer, onUpdate }) => {
 
   return (
     <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-white w-full max-w-lg rounded-[2rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="bg-white w-full max-w-lg rounded-md shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
         {/* Header */}
         <div className="px-10 py-8 border-b border-gray-50 flex justify-between items-center bg-gray-50/30">
           <h2 className="text-2xl font-semibold text-[#111827]">

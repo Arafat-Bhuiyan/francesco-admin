@@ -62,7 +62,7 @@ export default function General() {
       <Toaster position="top-right" />
 
       {/* Main Content Card */}
-      <div className="bg-white rounded-[2rem] shadow-[0_2px_20px_-5px_rgba(0,0,0,0.1)] border border-gray-100 p-10">
+      <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.1)] border border-gray-100 p-10">
         <div className="flex items-center gap-3 mb-8">
           <div className="bg-gray-100 p-2.5 rounded-xl">
             <Building2 className="w-6 h-6 text-gray-700" />

@@ -227,7 +227,7 @@ const CarModal = ({ isOpen, onClose, onSave, carToEdit }) => {
             </label>
             <div
               onClick={() => fileInputRef.current.click()}
-              className="w-full h-40 border-2 border-dashed border-gray-200 rounded-[1.5rem] flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-[#3B82F6] hover:bg-blue-50/10 transition-all overflow-hidden relative group"
+              className="w-full h-40 border-2 border-dashed border-gray-200 rounded-md flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-[#3B82F6] hover:bg-blue-50/10 transition-all overflow-hidden relative group"
             >
               {formData.image ? (
                 <div className="absolute inset-0 w-full h-full">
@@ -276,7 +276,7 @@ const CarModal = ({ isOpen, onClose, onSave, carToEdit }) => {
             </button>
             <button
               type="submit"
-              className="px-12 py-4 bg-[#3B82F6] text-white rounded-full font-extrabold hover:bg-blue-600 transition-all text-base shadow-lg shadow-blue-500/20"
+              className="bg-gradient-to-r from-[#63CBFF] to-[#167FF3] text-white px-8 py-3.5 rounded-full font-extrabold flex items-center gap-2 shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all active:scale-[0.98]"
             >
               {carToEdit ? "Save Changes" : "Add New Car"}
             </button>

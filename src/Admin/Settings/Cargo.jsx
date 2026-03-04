@@ -21,14 +21,12 @@ const Switch = ({ enabled, onChange, label, sublabel }) => (
     </div>
     <button
       onClick={() => onChange(!enabled)}
-      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-        enabled ? "bg-[#2A98FF]" : "bg-gray-200"
-      }`}
+      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${enabled ? "bg-[#2A98FF]" : "bg-gray-200"
+        }`}
     >
       <span
-        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-          enabled ? "translate-x-5" : "translate-x-0"
-        }`}
+        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${enabled ? "translate-x-5" : "translate-x-0"
+          }`}
       />
     </button>
   </div>
@@ -103,7 +101,7 @@ export default function Cargo() {
       <Toaster position="top-right" />
 
       {/* General Cargo Settings */}
-      <div className="bg-white rounded-[2rem] shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
+      <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
         <div className="flex items-center gap-3 mb-6">
           <Package className="w-5 h-5 text-gray-700" />
           <h3 className="text-base font-extrabold text-gray-900">
@@ -136,7 +134,7 @@ export default function Cargo() {
       </div>
 
       {/* Carrier Settings */}
-      <div className="bg-white rounded-[2rem] shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
+      <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
         <div className="flex items-center gap-3 mb-6">
           <Truck className="w-5 h-5 text-gray-700" />
           <h3 className="text-base font-extrabold text-gray-900">
@@ -167,7 +165,7 @@ export default function Cargo() {
       </div>
 
       {/* Weight & Dimensions Limits */}
-      <div className="bg-white rounded-[2rem] shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
+      <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
         <div className="flex items-center gap-3 mb-6">
           <Scale className="w-5 h-5 text-gray-700" />
           <h3 className="text-base font-extrabold text-gray-900">
@@ -206,7 +204,7 @@ export default function Cargo() {
       </div>
 
       {/* Pricing Settings */}
-      <div className="bg-white rounded-[2rem] shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
+      <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
         <div className="flex items-center gap-3 mb-6">
           <DollarSign className="w-5 h-5 text-gray-700" />
           <h3 className="text-base font-extrabold text-gray-900">
@@ -269,7 +267,7 @@ export default function Cargo() {
       </div>
 
       {/* Delivery Options */}
-      <div className="bg-white rounded-[2rem] shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
+      <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
         <div className="flex items-center gap-3 mb-6">
           <Clock className="w-5 h-5 text-gray-700" />
           <h3 className="text-base font-extrabold text-gray-900">

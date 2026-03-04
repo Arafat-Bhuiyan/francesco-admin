@@ -61,7 +61,7 @@ const AddAgencyModal = ({ isOpen, onClose, onAdd }) => {
 
   return (
     <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/40 backdrop-blur-[2px]">
-      <div className="bg-white w-full max-w-[800px] max-h-[90vh] rounded-[2rem] shadow-2xl overflow-y-auto animate-in fade-in zoom-in duration-300">
+      <div className="bg-white w-full max-w-[800px] max-h-[90vh] rounded-md shadow-2xl overflow-y-auto animate-in fade-in zoom-in duration-300">
         {/* Header */}
         <div className="px-10 pt-10 pb-6 sticky top-0 bg-white z-10">
           <div className="flex justify-between items-center mb-6">
@@ -205,7 +205,7 @@ const AddAgencyModal = ({ isOpen, onClose, onAdd }) => {
                 onChange={handleChange}
                 placeholder="Write your terms and conditions here"
                 rows={5}
-                className="w-full px-8 py-6 rounded-[2rem] border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium resize-none"
+                className="w-full px-8 py-6 rounded-md border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium resize-none"
               />
             </div>
 
@@ -220,7 +220,7 @@ const AddAgencyModal = ({ isOpen, onClose, onAdd }) => {
                 onChange={handleChange}
                 placeholder="Write your privacy policy here"
                 rows={5}
-                className="w-full px-8 py-6 rounded-[2rem] border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium resize-none"
+                className="w-full px-8 py-6 rounded-md border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium resize-none"
               />
             </div>
           </div>

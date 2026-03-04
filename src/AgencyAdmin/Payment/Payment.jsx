@@ -134,7 +134,7 @@ const Payment = () => {
         {STATS.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-8 rounded-[1.5rem] border border-gray-50 shadow-sm flex flex-col justify-center gap-2 hover:shadow-md transition-all"
+            className="bg-white p-8 rounded-md border border-gray-50 shadow-sm flex flex-col justify-center gap-2 hover:shadow-md transition-all"
           >
             <p className="text-gray-400 text-sm font-medium">{stat.label}</p>
             <h3 className={`text-3xl font-bold ${stat.color}`}>{stat.value}</h3>
@@ -143,7 +143,7 @@ const Payment = () => {
       </div>
 
       {/* Payment Table */}
-      <div className="bg-white rounded-[2rem] border border-gray-100 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-md border border-gray-100 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
@@ -198,11 +198,10 @@ const Payment = () => {
                   <td className="py-8 px-8">
                     <div className="flex flex-col items-center gap-1">
                       <span
-                        className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${
-                          p.paymentStatus === "Paid"
-                            ? "bg-green-50 text-[#28A745]"
-                            : "bg-orange-50 text-[#F59E0B]"
-                        }`}
+                        className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${p.paymentStatus === "Paid"
+                          ? "bg-green-50 text-[#28A745]"
+                          : "bg-orange-50 text-[#F59E0B]"
+                          }`}
                       >
                         {p.paymentStatus}
                       </span>
@@ -244,7 +243,7 @@ const Payment = () => {
       </div>
 
       {/* Recent Activity Section */}
-      <div className="bg-white rounded-[2rem] border border-gray-100 p-10 shadow-sm space-y-8">
+      <div className="bg-white rounded-md border border-gray-100 p-10 shadow-sm space-y-8">
         <h2 className="text-xl font-bold text-[#111827]">
           Recent Payment Activity
         </h2>

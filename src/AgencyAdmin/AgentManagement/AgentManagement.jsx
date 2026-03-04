@@ -137,7 +137,7 @@ const AgentManagement = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-8 rounded-[1.5rem] border border-gray-50 flex items-center justify-between shadow-sm"
+            className="bg-white p-8 rounded-md border border-gray-50 flex items-center justify-between shadow-sm"
           >
             <div className="space-y-1">
               <p className="text-gray-400 text-xs font-bold">{stat.title}</p>
@@ -153,7 +153,7 @@ const AgentManagement = () => {
       </div>
 
       {/* Agents Table */}
-      <div className="bg-white rounded-[2rem] border border-gray-100 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-md border border-gray-100 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
@@ -218,11 +218,10 @@ const AgentManagement = () => {
                   </td>
                   <td className="py-6 px-8 text-center">
                     <span
-                      className={`px-4 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${
-                        agent.status === "Active"
-                          ? "bg-[#F0FDF4] text-[#15803D]"
-                          : "bg-[#FEF2F2] text-[#991B1B]"
-                      }`}
+                      className={`px-4 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${agent.status === "Active"
+                        ? "bg-[#F0FDF4] text-[#15803D]"
+                        : "bg-[#FEF2F2] text-[#991B1B]"
+                        }`}
                     >
                       {agent.status}
                     </span>

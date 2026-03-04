@@ -69,7 +69,7 @@ const AgencyDashboard = () => {
         {stats.map((stat, index) => (
           <div
             key={index}
-            className="bg-white p-8 rounded-[2rem] shadow-sm border border-gray-100 flex justify-between items-start hover:shadow-md transition-all h-[160px]"
+            className="bg-white p-8 rounded-md shadow-sm border border-gray-100 flex justify-between items-start hover:shadow-md transition-all h-[160px]"
           >
             <div className="flex flex-col h-full justify-between py-1">
               <p className="text-gray-400 text-sm font-semibold tracking-tight">

@@ -178,7 +178,7 @@ const CustomerManagement = () => {
       </div>
 
       {/* Table Container */}
-      <div className="bg-white rounded-[1.5rem] border border-gray-100 overflow-hidden shadow-sm">
+      <div className="bg-white rounded-md border border-gray-100 overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
