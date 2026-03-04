@@ -126,12 +126,11 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
                   <NavLink
                     to={to}
                     className={() =>
-                      `flex items-center h-14 pl-6 py-3 text-start text-base font-normal transition-all mb-2 gap-2.5 ${
-                        location.pathname === to ||
+                      `flex items-center h-14 pl-6 py-3 text-start text-base font-normal transition-all mb-2 gap-2.5 ${location.pathname === to ||
                         (item.slug !== "dashboard" &&
                           location.pathname.startsWith(to))
-                          ? "self-stretch px-4 py-3 bg-gradient-to-b from-[#91A7EF] to-[#5184F6] rounded-3xl shadow-[0px_4px_4px_0px_rgba(51,50,50,0.21)] backdrop-blur-sm text-white"
-                          : "text-[#ffffff] hover:text-white hover:bg-white/10 rounded-3xl"
+                        ? "self-stretch px-4 py-3 bg-gradient-to-b from-[#91A7EF] to-[#5184F6] rounded-3xl shadow-[0px_4px_4px_0px_rgba(51,50,50,0.21)] backdrop-blur-sm text-white"
+                        : "text-[#ffffff] hover:text-white hover:bg-white/10 rounded-3xl"
                       }`
                     }
                   >
