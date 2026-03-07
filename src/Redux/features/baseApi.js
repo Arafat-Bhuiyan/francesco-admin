@@ -66,6 +66,33 @@ export const baseApi = createApi({
             invalidatesTags: ["cars"],
         }),
 
+
+        //agent list
+        agentList: builder.query({
+            query: () => "agency-admin/agents/list/",
+            providesTags: ["agents"]
+        }),
+
+        //add new agent
+        addNewAgent: builder.mutation({
+            query: (agentData) => ({
+                url: "agency-admin/agents/",
+                method: "POST",
+                body: agentData
+            }),
+            invalidatesTags: ["agents"]
+        }),
+
+        //edit agent
+        updateAgentDetails: builder.mutation({
+            query: ({ id, data }) => ({
+                url: `agency-admin/agents/${id}/`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["agents"],
+        }),
+
     }),
 })
 
@@ -76,7 +103,13 @@ export const {
     //get cars
     useCarListMutation,
     useAddNewCarMutation,
-
     //edit car
     useUpdateCarDetailsMutation,
+
+    //agent list
+    useAgentListQuery,
+    //add new agent
+    useAddNewAgentMutation,
+    //edit agent
+    useUpdateAgentDetailsMutation,
 } = baseApi

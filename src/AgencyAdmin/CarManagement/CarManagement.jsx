@@ -111,7 +111,7 @@ const CarManagement = () => {
       </div>
 
       {isFetching ? (
-        <div className="flex flex-col items-center justify-center py-20">
+        <div className="flex flex-col items-center justify-center mx-auto py-20">
           <Loader2 className="w-12 h-12 text-blue-500 animate-spin mb-4" />
           <p className="text-gray-500 font-medium">Loading fleet data...</p>
         </div>
@@ -152,7 +152,7 @@ const CarCard = ({ car, onEdit }) => {
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all group">
+    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all group">
       <div className="relative h-48 p-2">
         <img
           src={car?.featured_image}
