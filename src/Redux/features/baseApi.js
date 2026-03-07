@@ -25,7 +25,7 @@ export const baseApi = createApi({
         },
     }),
 
-    tagTypes: ["cars"],
+    tagTypes: ["cars", "agents", "bookings"],
 
     endpoints: (builder) => ({
 
@@ -93,6 +93,18 @@ export const baseApi = createApi({
             invalidatesTags: ["agents"],
         }),
 
+
+        //booking management
+        bookingList: builder.query({
+            query: () => "agency-admin/bookings/",
+            providesTags: ["bookings"]
+        }),
+
+        //booking details
+        bookingDetails: builder.query({
+            query: (bookingId) => `agency-admin/bookings/${bookingId}/`,
+        }),
+
     }),
 })
 
@@ -112,4 +124,9 @@ export const {
     useAddNewAgentMutation,
     //edit agent
     useUpdateAgentDetailsMutation,
+
+    //booking list
+    useBookingListQuery,
+    //booking details
+    useBookingDetailsQuery,
 } = baseApi
