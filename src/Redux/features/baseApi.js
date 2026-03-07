@@ -25,7 +25,7 @@ export const baseApi = createApi({
         },
     }),
 
-    tagTypes: ["cars", "agents", "bookings"],
+    tagTypes: ["cars", "agents", "bookings", "quotationPricing"],
 
     endpoints: (builder) => ({
 
@@ -105,6 +105,17 @@ export const baseApi = createApi({
             query: (bookingId) => `agency-admin/bookings/${bookingId}/`,
         }),
 
+        //quotation pricing
+        quotationPricing: builder.query({
+            query: () => "agency-admin/quotations/",
+            providesTags: ["quotationPricing"]
+        }),
+
+        //details
+        quotationDetails: builder.query({
+            query: (quotationId) => `agency-admin/quotations/${quotationId}/`,
+        }),
+
     }),
 })
 
@@ -129,4 +140,10 @@ export const {
     useBookingListQuery,
     //booking details
     useBookingDetailsQuery,
+
+    //quotation pricing
+    useQuotationPricingQuery,
+    //quotation details
+    useQuotationDetailsQuery,
+
 } = baseApi
