@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Sidebar } from "@/Admin/Dashboard/Sidebar";
 import Header from "@/Admin/Dashboard/Header";
+import Cookies from "js-cookie";
 
 export default function AdminLayout() {
   const location = useLocation();
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const role = user.role || "Super Admin";
+  // const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const role = Cookies.get("role") || "{}";
+  // const role = user.role || "Super Admin";
 
   const getTitle = () => {
-    const isAgency = role === "Agency Admin";
+    const isAgency = role === "agency_admin";
 
     if (location.pathname === "/admin") {
       return isAgency ? "Agency Dashboard" : "Overview Dashboard";
@@ -49,7 +51,7 @@ export default function AdminLayout() {
   };
 
   const getSubtitle = () => {
-    const isAgency = role === "Agency Admin";
+    const isAgency = role === "agency_admin";
 
     if (location.pathname === "/admin") {
       return isAgency

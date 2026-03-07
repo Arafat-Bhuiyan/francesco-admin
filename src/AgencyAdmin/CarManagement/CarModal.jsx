@@ -227,14 +227,14 @@ const CarModal = ({ isOpen, onClose, onSave, carToEdit }) => {
             </label>
             <div
               onClick={() => fileInputRef.current.click()}
-              className="w-full h-40 border-2 border-dashed border-gray-200 rounded-md flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-[#3B82F6] hover:bg-blue-50/10 transition-all overflow-hidden relative group"
+              className="w-full h-60 flex flex-col items-center w-1/2 justify-center gap-3 cursor-pointer hover:border-[#3B82F6] hover:bg-blue-50/10 transition-all overflow-hidden relative group"
             >
               {formData.image ? (
                 <div className="absolute inset-0 w-full h-full">
                   <img
                     src={formData.image}
                     alt="Preview"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full rounded-md object-cover"
                   />
                   <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                     <p className="text-white font-bold text-sm">

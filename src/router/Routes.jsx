@@ -18,11 +18,11 @@ import AgencyPayment from "@/AgencyAdmin/Payment/Payment";
 import Reports from "@/AgencyAdmin/Reports/Reports";
 import Settings from "@/AgencyAdmin/Settings2/Settings";
 import Operation from "@/Admin/Operation/Operation";
+import Cookies from "js-cookie";
 
 const DashboardWrapper = () => {
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const role = user.role || "Super Admin";
-  return role === "Super Admin" ? <MainDashboard /> : <AgencyDashboard />;
+  const role = Cookies.get("role") || "Super Admin";
+  return role === "agency_admin" ? <AgencyDashboard /> : <MainDashboard />;
 };
 
 const router = createBrowserRouter([

@@ -1,4 +1,4 @@
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   Users,
   Settings,
@@ -17,13 +17,15 @@ import {
   Handshake,
 } from "lucide-react";
 import logo from "@/assets/img/logo.png";
+import Cookies from "js-cookie";
 
 export const Sidebar = ({ currentComponent, onMenuClick }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const role = user.role || "Super Admin";
-
+  // const user = JSON.parse(localStorage.getItem("user") || "{}");
+  // const role = user.role || "Super Admin";
+  const role = Cookies.get("role");
+  console.log(role)
   const adminMenuItems = [
     {
       icon: LayoutDashboard,
@@ -36,11 +38,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
       label: "Global Pricing Rules",
       slug: "global-pricing-rules",
     },
-    // {
-    //   icon: UserCog,
-    //   label: "Admin & Agent Control",
-    //   slug: "admin&agent-control",
-    // },
+
     { icon: Users, label: "User Management", slug: "customer-overview" },
     { icon: Handshake, label: "Operation Overview", slug: "operation" },
     {
@@ -111,7 +109,9 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
       <div className="w-full flex flex-col items-start justify-start">
         {/* Logo */}
         <div className="w-full flex flex-col items-center justify-center p-6 mb-4">
-          <img src={logo} alt="Logo" />
+          <Link to="/admin">
+            <img src={logo} alt="Logo" />
+          </Link>
         </div>
 
         {/* Navigation */}

@@ -339,7 +339,7 @@ const CarManagement = () => {
       </div>
 
       {/* Filter Toolbar */}
-      <div className="flex flex-col sm:flex-row gap-4 bg-gray-50/50 p-4 rounded-[2rem]">
+      <div className="flex flex-col sm:flex-row gap-4 bg-gray-50/50  rounded-[2rem]">
         <div className="relative flex-1 group">
           <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
           <input

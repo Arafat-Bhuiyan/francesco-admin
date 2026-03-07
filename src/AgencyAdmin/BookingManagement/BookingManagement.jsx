@@ -165,13 +165,13 @@ const BookingManagement = () => {
           <table className="w-full">
             <thead>
               <tr className="text-[#374151] text-xs font-bold border-b border-gray-50">
-                <th className="py-6 px-8 text-left">Booking ID</th>
-                <th className="py-6 px-8 text-left">Customer Name</th>
-                <th className="py-6 px-8 text-left">Vehicle</th>
-                <th className="py-6 px-8 text-left">Rental Dates</th>
-                <th className="py-6 px-8 text-center">Status</th>
-                <th className="py-6 px-8 text-left">Agent Name</th>
-                <th className="py-6 px-8 text-right">Action</th>
+                <th className="py-6 px-8 text-left text-base">Booking ID</th>
+                <th className="py-6 px-8 text-left text-base">Customer Name</th>
+                <th className="py-6 px-8 text-left text-base">Vehicle</th>
+                <th className="py-6 px-8 text-left text-base">Rental Dates</th>
+                <th className="py-6 px-8 text-center text-base">Status</th>
+                <th className="py-6 px-8 text-left text-base">Agent Name</th>
+                <th className="py-6 px-8 text-right text-base">Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
@@ -195,12 +195,12 @@ const BookingManagement = () => {
                   <td className="py-6 px-8 text-center">
                     <span
                       className={`px-4 py-1.5 rounded-full text-[11px] font-bold uppercase tracking-wider ${booking.status === "Active"
-                          ? "bg-green-50 text-green-500"
-                          : booking.status === "Reserved"
-                            ? "bg-blue-50 text-blue-500"
-                            : booking.status === "Cancelled"
-                              ? "bg-red-50 text-red-500"
-                              : "bg-gray-100 text-gray-500"
+                        ? "bg-green-50 text-green-500"
+                        : booking.status === "Reserved"
+                          ? "bg-blue-50 text-blue-500"
+                          : booking.status === "Cancelled"
+                            ? "bg-red-50 text-red-500"
+                            : "bg-gray-100 text-gray-500"
                         }`}
                     >
                       {booking.status}

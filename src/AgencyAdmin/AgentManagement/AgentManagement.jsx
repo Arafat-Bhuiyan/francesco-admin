@@ -158,22 +158,22 @@ const AgentManagement = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr className="border-b border-gray-50">
-                <th className="py-6 px-8 text-left text-base font-semibold text-[#111827]">
+                <th className="p-4 px-6 text-left text-base font-semibold text-[#111827]">
                   Customer
                 </th>
-                <th className="py-6 px-8 text-left text-base font-semibold text-[#111827]">
+                <th className="p-4 px-6 text-left text-base font-semibold text-[#111827]">
                   Contact
                 </th>
-                <th className="py-6 px-8 text-center text-base font-semibold text-[#111827]">
+                <th className="p-4 px-6 text-center text-base font-semibold text-[#111827]">
                   Assigned Cars
                 </th>
-                <th className="py-6 px-8 text-center text-base font-semibold text-[#111827]">
+                <th className="p-4 px-6 text-center text-base font-semibold text-[#111827]">
                   Active Bookings
                 </th>
-                <th className="py-6 px-8 text-center text-base font-semibold text-[#111827]">
+                <th className="p-4 px-6 text-center text-base font-semibold text-[#111827]">
                   Status
                 </th>
-                <th className="py-6 px-8 text-right text-base font-semibold text-[#111827]">
+                <th className="p-4 px-6 text-right text-base font-semibold text-[#111827]">
                   Action
                 </th>
               </tr>
@@ -184,7 +184,7 @@ const AgentManagement = () => {
                   key={agent.id}
                   className="group hover:bg-gray-50/50 transition-colors border-b last:border-0 border-gray-50"
                 >
-                  <td className="py-6 px-8">
+                  <td className="p-4 px-6">
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-full bg-[#E0E7FF] flex items-center justify-center text-[#4F46E5] font-semibold text-sm">
                         {agent.name
@@ -193,16 +193,16 @@ const AgentManagement = () => {
                           .join("")}
                       </div>
                       <div>
-                        <p className="font-extrabold text-[#111827]">
+                        <p className="font-semibold text-sm text-[#111827]">
                           {agent.name}
                         </p>
-                        <p className="text-gray-400 text-[10px] font-bold">
+                        <p className="text-gray-400 text-xs font-bold">
                           ID: {agent.id}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className="py-6 px-8">
+                  <td className="p-4 px-6">
                     <p className="font-bold text-gray-700 text-sm tracking-tight">
                       {agent.email}
                     </p>
@@ -210,15 +210,15 @@ const AgentManagement = () => {
                       {agent.phone}
                     </p>
                   </td>
-                  <td className="py-6 px-8 text-center font-bold text-gray-600">
+                  <td className="p-4 px-6 text-center text-sm font-bold text-gray-600">
                     {agent.assignedCars}
                   </td>
-                  <td className="py-6 px-8 text-center font-semibold text-[#111827]">
+                  <td className="p-4 px-6 text-center text-sm font-semibold text-[#111827]">
                     {agent.activeBookings}
                   </td>
-                  <td className="py-6 px-8 text-center">
+                  <td className="p-4 px-6 text-sm text-center">
                     <span
-                      className={`px-4 py-1.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${agent.status === "Active"
+                      className={`px-4 py-1.5 rounded-full  text-xs font-semibold uppercase tracking-wider ${agent.status === "Active"
                         ? "bg-[#F0FDF4] text-[#15803D]"
                         : "bg-[#FEF2F2] text-[#991B1B]"
                         }`}
@@ -226,7 +226,7 @@ const AgentManagement = () => {
                       {agent.status}
                     </span>
                   </td>
-                  <td className="py-6 px-8 text-right">
+                  <td className="p-4 px-6 text-right">
                     <button
                       onClick={() => handleEdit(agent)}
                       className="p-2 border border-blue-100 bg-blue-50/50 text-[#3B82F6] rounded-lg hover:bg-[#3B82F6] hover:text-white transition-all shadow-sm"
