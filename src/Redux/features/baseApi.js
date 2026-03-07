@@ -56,6 +56,16 @@ export const baseApi = createApi({
             invalidatesTags: ["cars"]
         }),
 
+        //edit car
+        updateCarDetails: builder.mutation({
+            query: ({ cardId, carUpdateData }) => ({
+                url: `agency-admin/cars/${cardId}/`,
+                method: "PATCH",
+                body: carUpdateData,
+            }),
+            invalidatesTags: ["cars"],
+        }),
+
     }),
 })
 
@@ -66,4 +76,7 @@ export const {
     //get cars
     useCarListMutation,
     useAddNewCarMutation,
+
+    //edit car
+    useUpdateCarDetailsMutation,
 } = baseApi
