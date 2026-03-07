@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import Cookies from 'js-cookie';
 
 export const baseApi = createApi({
     reducerPath: 'baseApi',
@@ -15,7 +16,7 @@ export const baseApi = createApi({
             ];
 
             if (!authEndpoints.includes(endpoint)) {
-                const token = localStorage.getItem("access_token");
+                const token = Cookies.get("access_token");
                 if (token) {
                     headers.set("Authorization", `Bearer ${token}`);
                 }
@@ -24,6 +25,7 @@ export const baseApi = createApi({
         },
     }),
 
+    tagTypes: ["cars"],
 
     endpoints: (builder) => ({
 
@@ -35,11 +37,33 @@ export const baseApi = createApi({
                 body: loginData
 
             })
-        })
+        }),
+
+
+        //get car
+        carList: builder.mutation({
+            query: () => "agency-admin/cars/",
+            providesTags: ["cars"]
+        }),
+
+        //add new car
+        addNewCar: builder.mutation({
+            query: (carData) => ({
+                url: "agency-admin/cars/",
+                method: "POST",
+                body: carData
+            }),
+            invalidatesTags: ["cars"]
+        }),
+
     }),
 })
 
 
 export const {
     useLoggedInUserMutation,
+
+    //get cars
+    useCarListMutation,
+    useAddNewCarMutation,
 } = baseApi

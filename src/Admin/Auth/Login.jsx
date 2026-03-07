@@ -20,7 +20,6 @@ export default function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const onSubmit = async (data) => {
     try {
       const response = await loggedInUser(data).unwrap();
