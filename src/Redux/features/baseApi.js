@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import Cookies from 'js-cookie';
+import { url } from 'zod';
 
 export const baseApi = createApi({
     reducerPath: 'baseApi',
@@ -25,7 +26,7 @@ export const baseApi = createApi({
         },
     }),
 
-    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite"],
+    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite", "settings"],
 
     endpoints: (builder) => ({
 
@@ -136,6 +137,21 @@ export const baseApi = createApi({
         //report and analytics
         reportAnalytics: builder.query({
             query: () => "agency-admin/reports-analytics/"
+        }),
+
+        //settings
+        settingsInfo: builder.query({
+            query: () => "agency-admin/settings/",
+            providesTags: "settings"
+        }),
+
+        updateSettings: builder.mutation({
+            query: ({ settingsData }) => ({
+                url: "agency-admin/settings/",
+                method: "PATCH",
+                body: settingsData
+            }),
+            invalidatesTags: ["settings"]
         })
 
 
@@ -179,5 +195,10 @@ export const {
 
     //report 
     useReportAnalyticsQuery,
+
+    //settings
+    useSettingsInfoQuery,
+    useUpdateSettingsMutation,
+
 
 } = baseApi
