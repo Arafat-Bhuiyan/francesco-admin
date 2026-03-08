@@ -25,7 +25,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
   // const user = JSON.parse(localStorage.getItem("user") || "{}");
   // const role = user.role || "Super Admin";
   const role = Cookies.get("role");
-  console.log(role)
+
   const adminMenuItems = [
     {
       icon: LayoutDashboard,
