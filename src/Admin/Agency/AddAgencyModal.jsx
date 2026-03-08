@@ -1,243 +1,129 @@
-import React, { useState, useRef } from "react";
-import { X, Upload } from "lucide-react";
-import toast from "react-hot-toast";
 
-const AddAgencyModal = ({ isOpen, onClose, onAdd }) => {
-  const fileInputRef = useRef(null);
-  const [logo, setLogo] = useState(null);
+import React, { useState } from "react";
+import { X, Upload, Loader2 } from "lucide-react";
+import { useAddNewAgencyMutation } from "@/redux/features/baseApi";
+import { toast } from "react-hot-toast";
+
+const AddAgencyModal = ({ isOpen, onClose }) => {
+  const [addNewAgency, { isLoading }] = useAddNewAgencyMutation();
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     location: "",
     phone: "",
-    password: "",
-    terms: "",
-    privacy: "",
+    admin_name: "",
+    admin_email: "",
+    admin_password: "",
+    commission_rate: "15",
+    terms_and_conditions: "",
+    privacy_policy: "",
   });
+  const [logo, setLogo] = useState(null);
 
-  if (!isOpen) return null;
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const handleLogoChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      setLogo(url);
+  const handleFileChange = (e) => {
+    setLogo(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Create FormData object
+    const data = new FormData();
+    Object.keys(formData).forEach((key) => data.append(key, formData[key]));
+    if (logo) data.append("logo", logo);
+
+    try {
+      await addNewAgency(data).unwrap();
+      toast.success("Agency added successfully!");
+      onClose();
+      // Reset form
+      setFormData({ name: "", location: "", phone: "", admin_name: "", admin_email: "", admin_password: "", commission_rate: "15", terms_and_conditions: "", privacy_policy: "" });
+      setLogo(null);
+    } catch (err) {
+      toast.error(err?.data?.message || "Failed to add agency");
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newAgency = {
-      id: Date.now(),
-      name: formData.name,
-      adminName: formData.name, // Using name as admin name for now
-      location: formData.location || "New York, NY",
-      vehiclesCount: 0,
-      activeBookings: 0,
-      revenue: "$0",
-      status: "Active",
-      logo: logo,
-      ...formData,
-    };
-    onAdd(newAgency);
-    setFormData({
-      name: "",
-      email: "",
-      location: "",
-      phone: "",
-      password: "",
-      terms: "",
-      privacy: "",
-    });
-    setLogo(null);
-    onClose();
-    toast.success("Agency added successfully!");
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/40 backdrop-blur-[2px]">
-      <div className="bg-white w-full max-w-[800px] max-h-[90vh] rounded-md shadow-2xl overflow-y-auto animate-in fade-in zoom-in duration-300">
-        {/* Header */}
-        <div className="px-10 pt-10 pb-6 sticky top-0 bg-white z-10">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-[#101828] text-2xl font-bold">
-              Add New Agency
-            </h2>
-            <button
-              onClick={onClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-            >
-              <X className="w-6 h-6 text-gray-400" />
-            </button>
-          </div>
-          <div className="h-[1px] bg-gray-100 w-full"></div>
-        </div>
+    <div className="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-y-auto relative p-8 animate-in fade-in zoom-in duration-200">
+        <button onClick={onClose} className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"><X /></button>
 
-        {/* Form */}
-        <form onSubmit={handleSubmit} className="px-10 pb-10 space-y-8">
-          {/* Logo Upload */}
-          <div className="flex flex-col items-center justify-center py-4">
-            <div
-              onClick={() => fileInputRef.current?.click()}
-              className="w-32 h-32 rounded-2xl border-2 border-dashed border-blue-100 bg-blue-50/30 flex flex-col items-center justify-center gap-2 cursor-pointer hover:bg-blue-50 transition-all overflow-hidden"
-            >
-              {logo ? (
-                <img
-                  src={logo}
-                  alt="Preview"
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <>
-                  <Upload
-                    className="w-10 h-10 text-blue-400"
-                    strokeWidth={1.5}
-                  />
-                </>
-              )}
-            </div>
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleLogoChange}
-              className="hidden"
-              accept="image/*"
-            />
-            <p className="mt-4 text-gray-500 font-bold text-sm tracking-tight text-center">
-              Upload Agency Logo
-            </p>
-          </div>
+        <h2 className="text-2xl font-bold text-[#101828] mb-8">Add New Agency</h2>
 
-          <div className="space-y-6">
-            {/* Full Name */}
-            <div>
-              <label className="block text-[#111827] font-bold text-base mb-3 ml-1">
-                Full Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Enter agency full name"
-                className="w-full px-8 py-4 rounded-full border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium"
-                required
-              />
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Left Column */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Agency Name</label>
+                <input name="name" required onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3" placeholder="e.g. Premium Rentals" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Location</label>
+                <input name="location" required onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3" placeholder="City, Country" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Phone Number</label>
+                <input name="phone" required onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3" placeholder="+1..." />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Commission Rate (%)</label>
+                <input name="commission_rate" type="number" value={formData.commission_rate} onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Agency Logo</label>
+                <div className="flex items-center justify-center w-full">
+                  <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-200 border-dashed rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100">
+                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                      <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                      <p className="text-xs text-gray-500">{logo ? logo.name : "Click to upload logo"}</p>
+                    </div>
+                    <input type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
+                  </label>
+                </div>
+              </div>
             </div>
 
-            {/* Email */}
-            <div>
-              <label className="block text-[#111827] font-bold text-base mb-3 ml-1">
-                Email
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="agency@admin.com"
-                className="w-full px-8 py-4 rounded-full border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium"
-                required
-              />
-            </div>
-
-            {/* Location */}
-            <div>
-              <label className="block text-[#111827] font-bold text-base mb-3 ml-1">
-                Location
-              </label>
-              <input
-                type="text"
-                name="location"
-                value={formData.location}
-                onChange={handleChange}
-                placeholder="agency@admin.com"
-                className="w-full px-8 py-4 rounded-full border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium"
-                required
-              />
-            </div>
-
-            {/* Phone */}
-            <div>
-              <label className="block text-[#111827] font-bold text-base mb-3 ml-1">
-                Phone
-              </label>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Enter your agent name"
-                className="w-full px-8 py-4 rounded-full border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium"
-                required
-              />
-            </div>
-
-            {/* Password */}
-            <div>
-              <label className="block text-[#111827] font-bold text-base mb-3 ml-1">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                placeholder="************"
-                className="w-full px-8 py-4 rounded-full border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium"
-                required
-              />
-            </div>
-
-            {/* Terms & Conditions */}
-            <div>
-              <label className="block text-[#111827] font-bold text-base mb-3 ml-1">
-                Add Trams & Condition
-              </label>
-              <textarea
-                name="terms"
-                value={formData.terms}
-                onChange={handleChange}
-                placeholder="Write your terms and conditions here"
-                rows={5}
-                className="w-full px-8 py-6 rounded-md border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium resize-none"
-              />
-            </div>
-
-            {/* Privacy Policy */}
-            <div>
-              <label className="block text-[#111827] font-bold text-base mb-3 ml-1">
-                Add Privacy Policy
-              </label>
-              <textarea
-                name="privacy"
-                value={formData.privacy}
-                onChange={handleChange}
-                placeholder="Write your privacy policy here"
-                rows={5}
-                className="w-full px-8 py-6 rounded-md border border-gray-100 bg-white focus:outline-none focus:ring-4 focus:ring-blue-500/5 focus:border-blue-400 transition-all placeholder:text-gray-300 text-[#111827] text-sm font-medium resize-none"
-              />
+            {/* Right Column (Admin Info) */}
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Admin Full Name</label>
+                <input name="admin_name" required onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Admin Email</label>
+                <input name="admin_email" type="email" required onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Admin Password</label>
+                <input name="admin_password" type="password" required onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Terms & Conditions</label>
+                <textarea name="terms_and_conditions" rows={3} onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3 resize-none" />
+              </div>
+              <div>
+                <label className="block text-sm font-bold text-gray-700 mb-2">Privacy Policy</label>
+                <textarea name="privacy_policy" rows={3} onChange={handleChange} className="w-full bg-gray-50 border-none rounded-xl px-4 py-3 resize-none" />
+              </div>
             </div>
           </div>
 
-          <div className="pt-8 border-t border-gray-100 flex justify-end gap-5">
-            <button
-              type="button"
-              onClick={onClose}
-              className="px-14 py-4 rounded-full border border-gray-200 font-bold text-gray-500 hover:bg-gray-50 transition-all active:scale-[0.98]"
-            >
-              Cancel
-            </button>
+          <div className="flex justify-end gap-4 pt-4">
+            <button type="button" onClick={onClose} className="px-8 py-3 text-gray-500 font-bold">Cancel</button>
             <button
               type="submit"
-              className="bg-gradient-to-r from-blue-400 to-blue-600 text-white px-14 py-4 rounded-full font-bold shadow-lg shadow-blue-500/20 hover:scale-[1.02] transition-all hover:shadow-xl active:scale-[0.98]"
+              disabled={isLoading}
+              className="bg-[#167FF3] text-white px-10 py-3 rounded-full font-bold shadow-lg flex items-center gap-2"
             >
-              Add Agent
+              {isLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+              {isLoading ? "Creating..." : "Create Agency"}
             </button>
           </div>
         </form>

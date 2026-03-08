@@ -10,7 +10,7 @@ import {
   Info,
   Loader2,
 } from "lucide-react";
-import { useCreateGlobalPricingRulesQuery, useUpdateGlobalPricingRulesMutation } from "@/redux/features/baseApi";
+import { useGlobalPricingRulesQuery, useUpdateGlobalPricingRulesMutation } from "@/redux/features/baseApi";
 import { toast } from "react-hot-toast";
 
 const PricingCard = ({ icon: Icon, title, iconBg, iconColor, children }) => (
@@ -39,7 +39,7 @@ const GlobalPricing = () => {
     cancellation_policy: "",
   });
 
-  const { data: globalPricingRules, isLoading: isFetching } = useCreateGlobalPricingRulesQuery();
+  const { data: globalPricingRules, isLoading: isFetching } = useGlobalPricingRulesQuery();
   const [updateGlobalPricingRules, { isLoading: isUpdating }] = useUpdateGlobalPricingRulesMutation();
 
   useEffect(() => {

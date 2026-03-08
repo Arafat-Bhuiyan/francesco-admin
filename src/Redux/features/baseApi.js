@@ -170,7 +170,7 @@ export const baseApi = createApi({
 
         //agency management
         getAgencyList: builder.query({
-            query: () => "",
+            query: () => "super-admin/agencies/list/",
             providesTags: ["agencyList"]
         }),
 
@@ -184,9 +184,34 @@ export const baseApi = createApi({
             invalidatesTags: ["agencyList"]
         }),
 
+        //active toggle Agency or disabled
+        toggleAgencyStatus: builder.mutation({
+            query: ({ id, suspend }) => ({
+                url: `super-admin/agencies/${id}/toggle-status/`,
+                method: "PATCH",
+                body: { suspend },
+            }),
+            invalidatesTags: ["agencyList"]
+        }),
+
+        //agency details
+        agencyDetails: builder.query({
+            query: (id) => `super-admin/agencies/${id}/`,
+            providesTags: ["agencyList"]
+        }),
+
+        //comission
+        updateCommission: builder.mutation({
+            query: ({ id, commissionData }) => ({
+                url: `super-admin/agencies/${id}/commission/`,
+                method: "PATCH",
+                body: commissionData,
+            }),
+            invalidatesTags: ["agencyList"]
+        }),
 
         //global pricing rules
-        CreateGlobalPricingRules: builder.query({
+        globalPricingRules: builder.query({
             query: () => "super-admin/global-pricing-rules/",
             providesTags: ["globalPricingRules"]
         }),
@@ -263,10 +288,13 @@ export const {
     //agency management
     useGetAgencyListQuery,
     useAddNewAgencyMutation,
+    useToggleAgencyStatusMutation,
+    useAgencyDetailsQuery,
+    useUpdateCommissionMutation,
 
 
     //global pricing rules
-    useCreateGlobalPricingRulesQuery,
+    useGlobalPricingRulesQuery,
     useUpdateGlobalPricingRulesMutation,
 
 
