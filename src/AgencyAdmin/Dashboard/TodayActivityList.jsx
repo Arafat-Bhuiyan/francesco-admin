@@ -1,157 +1,119 @@
 import React, { useState } from "react";
-import { ChevronDown } from "lucide-react";
+import { ArrowUpRight, ArrowDownLeft, Car } from "lucide-react";
 
-const activities = [
-  {
-    id: 1,
-    customer: "John Smith",
-    car: "Toyota Camry",
-    date: "03 Mar 2026",
-    rentalDays: "3 Days",
-    checkInTime: "09:00 AM",
-    checkOutTime: "05:00 PM",
-    status: "Completed",
-    statusColor: "bg-green-100 text-green-600",
-  },
-  {
-    id: 2,
-    customer: "Sarah Johnson",
-    car: "Honda Accord",
-    date: "03 Mar 2026",
-    rentalDays: "5 Days",
-    checkInTime: "10:30 AM",
-    checkOutTime: "06:30 PM",
-    status: "Completed",
-    statusColor: "bg-green-100 text-green-600",
-  },
-  {
-    id: 3,
-    customer: "Michael Brown",
-    car: "BMW 3 Series",
-    date: "03 Mar 2026",
-    rentalDays: "2 Days",
-    checkInTime: "00:00 AM",
-    checkOutTime: "00:00 AM",
-    status: "Pending",
-    statusColor: "bg-orange-100 text-orange-600",
-  },
-  {
-    id: 4,
-    customer: "Jessica Martinez",
-    car: "Audi A4",
-    date: "03 Mar 2026",
-    rentalDays: "7 Days",
-    checkInTime: "01:00 PM",
-    checkOutTime: "09:00 AM",
-    status: "Completed",
-    statusColor: "bg-green-100 text-green-600",
-  },
-  {
-    id: 5,
-    customer: "James Anderson",
-    car: "Tesla Model 3",
-    date: "03 Mar 2026",
-    rentalDays: "4 Days",
-    checkInTime: "03:30 PM",
-    checkOutTime: "11:30 AM",
-    status: "In Progress",
-    statusColor: "bg-blue-100 text-blue-600",
-  },
-];
+const TodayActivityList = ({ activities }) => {
+  const [activeTab, setActiveTab] = useState("all");
 
-const TodayActivityList = () => {
-  const [filter, setFilter] = useState("Check-in");
+  const checkins = activities?.checkin || [];
+  const checkouts = activities?.checkout || [];
+
+  // Filtering Logic
+  const getFilteredData = () => {
+    const checkinData = checkins.map((item) => ({ ...item, type: "checkin" }));
+    const checkoutData = checkouts.map((item) => ({ ...item, type: "checkout" }));
+
+    if (activeTab === "checkin") return checkinData;
+    if (activeTab === "checkout") return checkoutData;
+    return [...checkinData, ...checkoutData];
+  };
+
+  const filteredActivities = getFilteredData();
 
   return (
-    <div className="bg-white rounded-md border border-gray-100 shadow-sm mt-8 overflow-visible">
-      <div className="p-8 flex justify-between items-center bg-white rounded-t-[2rem]">
-        <h2 className="text-xl font-bold text-[#111827]">
-          Today's Check-ins / Today's Check-outs
-        </h2>
+    <div className="bg-white rounded-md shadow-sm border border-gray-100 overflow-hidden">
+      {/* Design Header */}
+      <div className="p-8 border-b border-gray-50 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+          <h3 className="text-xl font-bold text-[#111827]">
+            Today's Activity
+          </h3>
+          <p className="text-gray-400 text-xs font-bold uppercase tracking-widest mt-1">
+            Real-time fleet movement
+          </p>
+        </div>
 
-        <div className="relative inline-block text-left group">
-          <button className="flex items-center gap-2 px-6 py-2.5 bg-gray-50 hover:bg-gray-100 text-[#111827] rounded-xl transition-all text-sm font-bold border border-gray-100 shadow-sm">
-            {filter}
-            <ChevronDown className="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors" />
-          </button>
-
-          <div className="absolute right-0 mt-2 w-48 origin-top-right bg-white border border-gray-100 rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-            <div className="py-2 px-1">
-              <button
-                onClick={() => setFilter("Check-in")}
-                className={`w-full text-left px-4 py-2 text-sm font-bold rounded-xl transition-colors ${filter === "Check-in"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-gray-600 hover:bg-gray-50"
-                  }`}
-              >
-                Check-in
-              </button>
-              <button
-                onClick={() => setFilter("Check-out")}
-                className={`w-full text-left px-4 py-2 text-sm font-bold rounded-xl transition-colors ${filter === "Check-out"
-                  ? "bg-blue-50 text-blue-600"
-                  : "text-gray-600 hover:bg-gray-50"
-                  }`}
-              >
-                Check-out
-              </button>
-            </div>
-          </div>
+        {/* Filter Buttons */}
+        <div className="flex bg-gray-100 p-1.5 rounded-2xl">
+          {["all", "checkin", "checkout"].map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-widest transition-all ${activeTab === tab
+                ? "bg-white text-blue-600 shadow-sm"
+                : "text-gray-400 hover:text-gray-600"
+                }`}
+            >
+              {tab === "all" ? "All" : tab === "checkin" ? "Check In" : "Check Out"}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="px-8 pb-8 space-y-4">
-        {activities.map((activity) => (
-          <div
-            key={activity.id}
-            className="grid grid-cols-4 gap-4 items-center p-6 bg-gray-50/50 rounded-2xl hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100"
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg flex-shrink-0">
-                {activity.customer[0]}
+      {/* Activity List */}
+      <div className="divide-y divide-gray-50">
+        {filteredActivities.length > 0 ? (
+          filteredActivities.map((activity, index) => (
+            <div
+              key={index}
+              className="p-8 flex items-center justify-between hover:bg-gray-50/50 transition-all group"
+            >
+              <div className="flex items-center gap-6">
+                <div
+                  className={`p-4 rounded-2xl ${activity.type === "checkin"
+                    ? "bg-emerald-50 text-emerald-600"
+                    : "bg-blue-50 text-blue-600"
+                    }`}
+                >
+                  {activity.type === "checkin" ? (
+                    <ArrowDownLeft className="w-6 h-6" />
+                  ) : (
+                    <ArrowUpRight className="w-6 h-6" />
+                  )}
+                </div>
+                <div>
+                  <h4 className="text-lg font-extrabold text-[#111827]">
+                    {activity.vehicle_name}
+                  </h4>
+                  <div className="flex items-center gap-3 mt-1">
+                    <span
+                      className={`text-[10px] font-bold uppercase tracking-[0.2em] ${activity.type === "checkin"
+                        ? "text-emerald-500"
+                        : "text-blue-500"
+                        }`}
+                    >
+                      {activity.type === "checkin" ? "Incoming" : "Outgoing"}
+                    </span>
+                    <span className="w-1 h-1 rounded-full bg-gray-300" />
+                    <span className="text-gray-400 text-xs font-bold">
+                      {activity.rental_days} Days Trip
+                    </span>
+                  </div>
+                </div>
               </div>
-              <div className="min-w-0">
-                <h4 className="font-bold text-[#111827] truncate">
-                  {activity.customer}
-                </h4>
-                <p className="text-gray-400 text-sm font-semibold truncate">
-                  {activity.car}
+
+              <div className="flex flex-col items-end gap-2">
+                <span
+                  className={`px-4 py-1.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest ${activity.status_display === "approved"
+                    ? "bg-emerald-100 text-emerald-700"
+                    : "bg-orange-100 text-orange-700"
+                    }`}
+                >
+                  {activity.status_display}
+                </span>
+                <p className="text-gray-400 text-[10px] font-bold uppercase tracking-tighter">
+                  {activity.date}
                 </p>
               </div>
             </div>
-
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-gray-400 text-[10px] font-bold uppercase tracking-wider">
-                Date
-              </span>
-              <span className="text-sm font-bold text-[#111827]">
-                {activity.date}
-              </span>
-            </div>
-
-            <div className="flex flex-col items-center gap-1">
-              <span className="text-gray-400 text-[10px] font-bold uppercase tracking-wider">
-                Rental Days
-              </span>
-              <span className="text-sm font-bold text-[#111827]">
-                {activity.rentalDays}
-              </span>
-            </div>
-
-            <div className="flex flex-col items-end gap-2">
-              <span className="text-sm font-bold text-[#111827]">
-                {filter === "Check-in"
-                  ? activity.checkInTime
-                  : activity.checkOutTime}
-              </span>
-              <span
-                className={`px-4 py-1.5 rounded-xl text-xs font-bold uppercase tracking-wider ${activity.statusColor}`}
-              >
-                {activity.status}
-              </span>
-            </div>
+          ))
+        ) : (
+          <div className="py-20 text-center">
+            <Car className="w-12 h-12 text-gray-200 mx-auto mb-4" />
+            <p className="text-gray-400 text-xs font-bold uppercase tracking-widest">
+              No activity found for {activeTab}
+            </p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

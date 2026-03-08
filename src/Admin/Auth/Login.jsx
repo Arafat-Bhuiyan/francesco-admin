@@ -23,7 +23,7 @@ export default function Login() {
   const onSubmit = async (data) => {
     try {
       const response = await loggedInUser(data).unwrap();
-      // Success Feedback
+      console.log(response, "login")
       toast.success(response?.message || "Login successful!");
 
       // Store Credentials securely

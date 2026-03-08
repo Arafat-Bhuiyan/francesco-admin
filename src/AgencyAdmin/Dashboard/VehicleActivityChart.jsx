@@ -1,3 +1,365 @@
+// import React, { useState, useMemo } from "react";
+// import {
+//   ChevronLeft,
+//   ChevronRight,
+//   Settings,
+//   Calendar as CalendarIcon,
+//   Info,
+// } from "lucide-react";
+// import {
+//   format,
+//   addMonths,
+//   subMonths,
+//   startOfMonth,
+//   endOfMonth,
+//   eachDayOfInterval,
+//   getDate,
+//   isSameMonth,
+//   isToday,
+// } from "date-fns";
+// import jsPDF from "jspdf";
+// import autoTable from "jspdf-autotable";
+// import toast from "react-hot-toast";
+
+// const vehicles = [
+//   { id: 1, name: "Toyota Camry", plate: "NY-2849", category: "B" },
+//   { id: 2, name: "Honda Accord", plate: "CA-9382", category: "B" },
+//   { id: 3, name: "BMW 3 Series", plate: "TX-1029", category: "C" },
+//   { id: 4, name: "Audi A4", plate: "FL-5832", category: "D" },
+//   { id: 5, name: "Tesla Model 3", plate: "WA-8821", category: "D" },
+//   { id: 6, name: "Mercedes C-Class", plate: "NV-4721", category: "D" },
+//   { id: 7, name: "Ford F-150", plate: "MI-3920", category: "E" },
+//   { id: 8, name: "Jeep Wrangler", plate: "CO-2291", category: "E" },
+//   { id: 9, name: "Volvo XC90", plate: "OR-7742", category: "F" },
+//   { id: 10, name: "Lexus RX", plate: "AZ-1102", category: "H" },
+// ];
+
+// const mockActivities = [
+//   // id 1
+//   { vehicleId: 1, start: 1, end: 18, status: "booked" },
+//   { vehicleId: 1, start: 19, end: 19, status: "maintenance" },
+//   { vehicleId: 1, start: 24, end: 31, status: "booked" },
+//   // id 2
+//   { vehicleId: 2, start: 4, end: 6, status: "maintenance" },
+//   { vehicleId: 2, start: 23, end: 28, status: "booked" },
+//   // id 3
+//   { vehicleId: 3, start: 4, end: 7, status: "maintenance" },
+//   { vehicleId: 3, start: 12, end: 15, status: "booked" },
+//   { vehicleId: 3, start: 25, end: 27, status: "booked" },
+//   // id 4
+//   { vehicleId: 4, start: 1, end: 10, status: "available" },
+//   { vehicleId: 4, start: 11, end: 20, status: "available" },
+//   { vehicleId: 4, start: 21, end: 31, status: "available" },
+//   // id 5
+//   { vehicleId: 5, start: 1, end: 22, status: "available" },
+//   // id 6
+//   { vehicleId: 6, start: 15, end: 20, status: "maintenance" },
+//   // id 7
+//   { vehicleId: 7, start: 5, end: 15, status: "maintenance" },
+//   { vehicleId: 7, start: 18, end: 25, status: "available" },
+// ];
+
+// const Legend = () => (
+//   <div className="flex items-center gap-6 mt-6 px-4">
+//     <div className="flex items-center gap-2">
+//       <div className="w-4 h-4 rounded-md bg-[#4ADE80]"></div>
+//       <span className="text-sm font-bold text-gray-500">Available</span>
+//     </div>
+//     <div className="flex items-center gap-2">
+//       <div className="w-4 h-4 rounded-md bg-[#F87171]"></div>
+//       <span className="text-sm font-bold text-gray-500">Booked</span>
+//     </div>
+//     <div className="flex items-center gap-2">
+//       <div className="w-4 h-4 rounded-md bg-[#FACC15]"></div>
+//       <span className="text-sm font-bold text-gray-500">Maintenance</span>
+//     </div>
+//   </div>
+// );
+
+// const VehicleActivityChart = () => {
+//   const [currentDate, setCurrentDate] = useState(new Date());
+
+//   const daysInMonth = useMemo(() => {
+//     const start = startOfMonth(currentDate);
+//     const end = endOfMonth(currentDate);
+//     return eachDayOfInterval({ start, end });
+//   }, [currentDate]);
+
+//   const monthYearLabel = format(currentDate, "MMMM - yyyy");
+
+//   const handlePrevMonth = () => setCurrentDate(subMonths(currentDate, 1));
+//   const handleNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
+
+//   const handleExportPDF = () => {
+//     const doc = new jsPDF();
+
+//     // Header
+//     doc.setFontSize(20);
+//     doc.setTextColor(17, 24, 39);
+//     doc.text("Fleet Management Report", 105, 15, { align: "center" });
+
+//     doc.setFontSize(12);
+//     doc.setTextColor(107, 114, 128);
+//     doc.text(`Timeline for ${monthYearLabel}`, 105, 22, { align: "center" });
+
+//     doc.setFontSize(10);
+//     doc.text(`Report Generated: ${format(new Date(), "PPpp")}`, 105, 29, {
+//       align: "center",
+//     });
+
+//     // Table Data
+//     const tableData = vehicles.map((vehicle) => {
+//       const totalActivities = mockActivities.filter(
+//         (a) => a.vehicleId === vehicle.id,
+//       ).length;
+//       return [
+//         vehicle.category,
+//         vehicle.plate,
+//         vehicle.name,
+//         `${totalActivities} Assigned`,
+//       ];
+//     });
+
+//     autoTable(doc, {
+//       startY: 40,
+//       head: [["CAT", "PLATE", "VEHICLE NAME", "ACTIVITIES"]],
+//       body: tableData,
+//       theme: "grid",
+//       headStyles: {
+//         fillColor: [17, 24, 39],
+//         textColor: 255,
+//         fontStyle: "bold",
+//       },
+//       styles: { fontSize: 9, cellPadding: 4 },
+//       columnStyles: {
+//         0: { halign: "center" },
+//       },
+//     });
+
+//     const finalY = doc.lastAutoTable.finalY + 15;
+//     doc.setFontSize(10);
+//     doc.setTextColor(156, 163, 175);
+//     doc.text("Generated by Francesco Fleet Management System", 105, finalY, {
+//       align: "center",
+//     });
+
+//     doc.save(`Fleet-Report-${format(currentDate, "MMM-yyyy")}.pdf`);
+//     toast.success("Fleet report exported successfully!");
+//   };
+
+//   const getStatusColor = (status) => {
+//     switch (status) {
+//       case "booked":
+//         return "bg-[#F87171]"; // Red
+//       case "available":
+//         return "bg-[#4ADE80]"; // Green
+//       case "maintenance":
+//         return "bg-[#FACC15]"; // Yellow
+//       default:
+//         return "bg-gray-200";
+//     }
+//   };
+
+//   return (
+//     <div className="bg-white rounded-md border border-gray-100 shadow-sm mt-8 overflow-hidden">
+//       {/* Header */}
+//       <div className="p-8 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center bg-white border-b border-gray-50 gap-4">
+//         <div>
+//           <h2 className="text-xl font-bold text-[#111827]">
+//             Vehicle Activity Overview
+//           </h2>
+//           <div className="flex items-center gap-3 mt-1">
+//             <span className="flex items-center gap-1.5 text-gray-400 text-sm font-medium">
+//               <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
+//               {vehicles.length} Vehicles monitored
+//             </span>
+//           </div>
+//         </div>
+
+//         <div className="flex items-center gap-4 w-full md:w-auto">
+//           <div className="flex items-center bg-gray-50/80 backdrop-blur-sm p-1.5 rounded-2xl border border-gray-100 shadow-sm w-full md:w-auto justify-between">
+//             <button
+//               onClick={handlePrevMonth}
+//               className="p-2 hover:bg-white hover:shadow-sm rounded-xl transition-all text-gray-600 active:scale-95"
+//             >
+//               <ChevronLeft size={18} />
+//             </button>
+//             <div className="px-6 flex items-center gap-2 select-none">
+//               <CalendarIcon size={16} className="text-blue-500" />
+//               <span className="text-sm font-bold text-[#111827] min-w-[140px] text-center">
+//                 {monthYearLabel}
+//               </span>
+//             </div>
+//             <button
+//               onClick={handleNextMonth}
+//               className="p-2 hover:bg-white hover:shadow-sm rounded-xl transition-all text-gray-600 active:scale-95"
+//             >
+//               <ChevronRight size={18} />
+//             </button>
+//           </div>
+
+//           <button className="p-3 bg-gray-50 hover:bg-gray-100 rounded-2xl border border-gray-100 text-gray-400 transition-colors hidden sm:block">
+//             <Settings size={20} />
+//           </button>
+//         </div>
+//       </div>
+
+//       {/* Timeline Grid */}
+//       <div className="overflow-x-auto relative scrollbar-hide">
+//         <div className="min-w-[1400px]">
+//           {/* Calendar Header */}
+//           <div className="flex border-b border-gray-100 sticky top-0 z-20">
+//             {/* Left Header Spacer */}
+//             <div className="w-[330px] flex-shrink-0 grid grid-cols-[60px_1fr] bg-[#F9FAFB] sticky left-0 z-30 border-r border-gray-100">
+//               <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-center border-r border-gray-200/50">
+//                 C/LS
+//               </div>
+//               <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider pl-6">
+//                 Veicolo / Descrizione
+//               </div>
+//             </div>
+
+//             {/* Days Header */}
+//             <div
+//               className="flex-1 grid bg-[#F9FAFB]"
+//               style={{
+//                 gridTemplateColumns: `repeat(${daysInMonth.length}, 1fr)`,
+//               }}
+//             >
+//               {daysInMonth.map((day) => {
+//                 const dateNum = getDate(day);
+//                 const isTodayDate = isToday(day);
+//                 const dayName = format(day, "eee"); // "Mon", "Tue"...
+//                 const isWeekend = dayName === "Sat" || dayName === "Sun";
+
+//                 return (
+//                   <div
+//                     key={day.toString()}
+//                     className={`p-3 text-center border-r border-gray-200/50 last:border-0 flex flex-col gap-0.5 ${isWeekend ? "bg-gray-200/30" : ""}`}
+//                   >
+//                     <span className="text-[10px] font-bold text-gray-400 uppercase">
+//                       {dayName[0]}
+//                     </span>
+//                     <span
+//                       className={`text-xs font-black transition-colors ${isTodayDate ? "text-blue-600" : "text-[#111827]"}`}
+//                     >
+//                       {dateNum.toString().padStart(2, "0")}
+//                     </span>
+//                   </div>
+//                 );
+//               })}
+//             </div>
+//           </div>
+
+//           {/* Vehicle Rows */}
+//           <div className="bg-white">
+//             {vehicles.map((vehicle) => {
+//               const vehicleActivities = mockActivities.filter(
+//                 (a) => a.vehicleId === vehicle.id,
+//               );
+
+//               return (
+//                 <div
+//                   key={vehicle.id}
+//                   className="group flex border-b border-gray-100 hover:bg-blue-50/5 transition-colors last:border-0 relative"
+//                 >
+//                   {/* Left Column: Fixed Vehicle Details */}
+//                   <div className="w-[330px] flex-shrink-0 grid grid-cols-[60px_1fr] bg-white sticky left-0 z-10 border-r border-gray-100">
+//                     <div className="p-4 border-r border-gray-100 flex items-center justify-center">
+//                       <span className="text-[10px] font-black text-gray-500 bg-gray-50 border border-gray-100 w-8 h-8 flex items-center justify-center rounded-lg uppercase">
+//                         {vehicle.category}
+//                       </span>
+//                     </div>
+//                     <div className="p-4 flex flex-col justify-center min-w-0 pl-6">
+//                       <span className="text-sm font-bold text-[#111827] truncate group-hover:text-blue-600 transition-colors uppercase tracking-tight">
+//                         {vehicle.plate}
+//                       </span>
+//                       <span className="text-[11px] font-semibold text-gray-400 mt-0.5 truncate uppercase">
+//                         {vehicle.name}
+//                       </span>
+//                     </div>
+//                   </div>
+
+//                   {/* Right Column: Timeline Activity */}
+//                   <div
+//                     className="flex-1 grid relative isolate"
+//                     style={{
+//                       gridTemplateColumns: `repeat(${daysInMonth.length}, 1fr)`,
+//                     }}
+//                   >
+//                     {/* Background Grid Lines */}
+//                     {daysInMonth.map((day) => {
+//                       const dayName = format(day, "eee");
+//                       const isWeekend = dayName === "Sat" || dayName === "Sun";
+//                       return (
+//                         <div
+//                           key={day.toString()}
+//                           className={`border-r border-gray-100/60 last:border-0 h-full ${isWeekend ? "bg-gray-50/50" : ""}`}
+//                         ></div>
+//                       );
+//                     })}
+
+//                     {/* Activity Bars Overlay */}
+//                     <div className="absolute inset-0 p-3 flex items-center pointer-events-none">
+//                       <div className="relative h-12 w-full">
+//                         {vehicleActivities.map((activity, idx) => {
+//                           const startPos =
+//                             ((activity.start - 1) / daysInMonth.length) * 100;
+//                           const width =
+//                             ((activity.end - activity.start + 1) /
+//                               daysInMonth.length) *
+//                             100;
+
+//                           return (
+//                             <div
+//                               key={idx}
+//                               className={`absolute top-0 bottom-0 rounded-xl shadow-sm border-[1.5px] border-white/40 transition-all pointer-events-auto cursor-pointer hover:brightness-105 active:scale-[0.99] group/bar flex items-center px-3 z-10 ${getStatusColor(activity.status)}`}
+//                               style={{
+//                                 left: `${startPos}%`,
+//                                 width: `${width}%`,
+//                               }}
+//                             >
+//                               {/* End Indicators like in the image */}
+//                               <div className="absolute left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/30"></div>
+//                               <div className="absolute right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/30"></div>
+
+//                               <div className="opacity-0 group-hover/bar:opacity-100 absolute inset-0 bg-white/10 flex items-center justify-center transition-all rounded-xl backdrop-blur-[1px]">
+//                                 <Info
+//                                   size={14}
+//                                   className="text-white drop-shadow-sm"
+//                                 />
+//                               </div>
+//                             </div>
+//                           );
+//                         })}
+//                       </div>
+//                     </div>
+//                   </div>
+//                 </div>
+//               );
+//             })}
+//           </div>
+//         </div>
+//       </div>
+
+//       {/* Footer / Legend */}
+//       <div className="p-8 border-t border-gray-100 bg-white flex flex-col sm:flex-row justify-between items-center gap-6">
+//         <Legend />
+//         <div className="flex items-center gap-2">
+//           <button
+//             onClick={handleExportPDF}
+//             className="px-5 py-2.5 bg-[#111827] text-white text-xs font-bold rounded-xl hover:bg-gray-800 transition-all shadow-lg active:scale-95 uppercase tracking-widest"
+//           >
+//             Export View
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default VehicleActivityChart;
+
 import React, { useState, useMemo } from "react";
 import {
   ChevronLeft,
@@ -14,70 +376,31 @@ import {
   endOfMonth,
   eachDayOfInterval,
   getDate,
-  isSameMonth,
   isToday,
+  parseISO,
+  differenceInDays,
 } from "date-fns";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import toast from "react-hot-toast";
 
-const vehicles = [
-  { id: 1, name: "Toyota Camry", plate: "NY-2849", category: "B" },
-  { id: 2, name: "Honda Accord", plate: "CA-9382", category: "B" },
-  { id: 3, name: "BMW 3 Series", plate: "TX-1029", category: "C" },
-  { id: 4, name: "Audi A4", plate: "FL-5832", category: "D" },
-  { id: 5, name: "Tesla Model 3", plate: "WA-8821", category: "D" },
-  { id: 6, name: "Mercedes C-Class", plate: "NV-4721", category: "D" },
-  { id: 7, name: "Ford F-150", plate: "MI-3920", category: "E" },
-  { id: 8, name: "Jeep Wrangler", plate: "CO-2291", category: "E" },
-  { id: 9, name: "Volvo XC90", plate: "OR-7742", category: "F" },
-  { id: 10, name: "Lexus RX", plate: "AZ-1102", category: "H" },
-];
-
-const mockActivities = [
-  // id 1
-  { vehicleId: 1, start: 1, end: 18, status: "booked" },
-  { vehicleId: 1, start: 19, end: 19, status: "maintenance" },
-  { vehicleId: 1, start: 24, end: 31, status: "booked" },
-  // id 2
-  { vehicleId: 2, start: 4, end: 6, status: "maintenance" },
-  { vehicleId: 2, start: 23, end: 28, status: "booked" },
-  // id 3
-  { vehicleId: 3, start: 4, end: 7, status: "maintenance" },
-  { vehicleId: 3, start: 12, end: 15, status: "booked" },
-  { vehicleId: 3, start: 25, end: 27, status: "booked" },
-  // id 4
-  { vehicleId: 4, start: 1, end: 10, status: "available" },
-  { vehicleId: 4, start: 11, end: 20, status: "available" },
-  { vehicleId: 4, start: 21, end: 31, status: "available" },
-  // id 5
-  { vehicleId: 5, start: 1, end: 22, status: "available" },
-  // id 6
-  { vehicleId: 6, start: 15, end: 20, status: "maintenance" },
-  // id 7
-  { vehicleId: 7, start: 5, end: 15, status: "maintenance" },
-  { vehicleId: 7, start: 18, end: 25, status: "available" },
-];
-
 const Legend = () => (
   <div className="flex items-center gap-6 mt-6 px-4">
     <div className="flex items-center gap-2">
       <div className="w-4 h-4 rounded-md bg-[#4ADE80]"></div>
-      <span className="text-sm font-bold text-gray-500">Available</span>
-    </div>
-    <div className="flex items-center gap-2">
-      <div className="w-4 h-4 rounded-md bg-[#F87171]"></div>
-      <span className="text-sm font-bold text-gray-500">Booked</span>
+      <span className="text-sm font-bold text-gray-500">Approved</span>
     </div>
     <div className="flex items-center gap-2">
       <div className="w-4 h-4 rounded-md bg-[#FACC15]"></div>
-      <span className="text-sm font-bold text-gray-500">Maintenance</span>
+      <span className="text-sm font-bold text-gray-500">Pending/Maintenance</span>
     </div>
   </div>
 );
 
-const VehicleActivityChart = () => {
+const VehicleActivityChart = ({ data }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+
+  const vehicles = data?.vehicles || [];
 
   const daysInMonth = useMemo(() => {
     const start = startOfMonth(currentDate);
@@ -90,74 +413,46 @@ const VehicleActivityChart = () => {
   const handlePrevMonth = () => setCurrentDate(subMonths(currentDate, 1));
   const handleNextMonth = () => setCurrentDate(addMonths(currentDate, 1));
 
-  const handleExportPDF = () => {
-    const doc = new jsPDF();
+  const calculateBarStyles = (startDateStr, endDateStr) => {
+    try {
+      const start = parseISO(startDateStr);
+      const end = parseISO(endDateStr);
+      const monthStart = startOfMonth(currentDate);
+      const monthEnd = endOfMonth(currentDate);
 
-    // Header
-    doc.setFontSize(20);
-    doc.setTextColor(17, 24, 39);
-    doc.text("Fleet Management Report", 105, 15, { align: "center" });
+      if (end < monthStart || start > monthEnd) return null;
 
-    doc.setFontSize(12);
-    doc.setTextColor(107, 114, 128);
-    doc.text(`Timeline for ${monthYearLabel}`, 105, 22, { align: "center" });
+      const effectiveStart = start < monthStart ? monthStart : start;
+      const effectiveEnd = end > monthEnd ? monthEnd : end;
 
-    doc.setFontSize(10);
-    doc.text(`Report Generated: ${format(new Date(), "PPpp")}`, 105, 29, {
-      align: "center",
-    });
+      const leftOffset = differenceInDays(effectiveStart, monthStart);
+      const duration = differenceInDays(effectiveEnd, effectiveStart) + 1;
 
-    // Table Data
-    const tableData = vehicles.map((vehicle) => {
-      const totalActivities = mockActivities.filter(
-        (a) => a.vehicleId === vehicle.id,
-      ).length;
-      return [
-        vehicle.category,
-        vehicle.plate,
-        vehicle.name,
-        `${totalActivities} Assigned`,
-      ];
-    });
+      const leftPercent = (leftOffset / daysInMonth.length) * 100;
+      const widthPercent = (duration / daysInMonth.length) * 100;
 
-    autoTable(doc, {
-      startY: 40,
-      head: [["CAT", "PLATE", "VEHICLE NAME", "ACTIVITIES"]],
-      body: tableData,
-      theme: "grid",
-      headStyles: {
-        fillColor: [17, 24, 39],
-        textColor: 255,
-        fontStyle: "bold",
-      },
-      styles: { fontSize: 9, cellPadding: 4 },
-      columnStyles: {
-        0: { halign: "center" },
-      },
-    });
-
-    const finalY = doc.lastAutoTable.finalY + 15;
-    doc.setFontSize(10);
-    doc.setTextColor(156, 163, 175);
-    doc.text("Generated by Francesco Fleet Management System", 105, finalY, {
-      align: "center",
-    });
-
-    doc.save(`Fleet-Report-${format(currentDate, "MMM-yyyy")}.pdf`);
-    toast.success("Fleet report exported successfully!");
+      return { left: `${leftPercent}%`, width: `${widthPercent}%` };
+    } catch (e) {
+      return null;
+    }
   };
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case "booked":
-        return "bg-[#F87171]"; // Red
-      case "available":
-        return "bg-[#4ADE80]"; // Green
-      case "maintenance":
-        return "bg-[#FACC15]"; // Yellow
-      default:
-        return "bg-gray-200";
+  const getStatusColor = (color) => {
+    switch (color) {
+      case "green": return "bg-[#4ADE80]";
+      case "yellow": return "bg-[#FACC15]";
+      case "red": return "bg-[#F87171]";
+      default: return "bg-blue-500";
     }
+  };
+
+  const handleExportPDF = () => {
+    const doc = new jsPDF();
+    doc.text(`Fleet Activity - ${monthYearLabel}`, 10, 10);
+    const tableData = vehicles.map(v => [v.license_plate || "N/A", v.description, `${v.periods?.length || 0} Bookings`]);
+    autoTable(doc, { head: [['Plate', 'Vehicle', 'Activities']], body: tableData });
+    doc.save(`fleet-report-${monthYearLabel}.pdf`);
+    toast.success("Report Exported");
   };
 
   return (
@@ -165,86 +460,49 @@ const VehicleActivityChart = () => {
       {/* Header */}
       <div className="p-8 pb-6 flex flex-col md:flex-row justify-between items-start md:items-center bg-white border-b border-gray-50 gap-4">
         <div>
-          <h2 className="text-xl font-bold text-[#111827]">
-            Vehicle Activity Overview
-          </h2>
+          <h2 className="text-xl font-bold text-[#111827]">Vehicle Activity Overview</h2>
           <div className="flex items-center gap-3 mt-1">
             <span className="flex items-center gap-1.5 text-gray-400 text-sm font-medium">
               <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-              {vehicles.length} Vehicles monitored
+              {data?.vehicles_count || 0} Vehicles monitored
             </span>
           </div>
         </div>
 
         <div className="flex items-center gap-4 w-full md:w-auto">
           <div className="flex items-center bg-gray-50/80 backdrop-blur-sm p-1.5 rounded-2xl border border-gray-100 shadow-sm w-full md:w-auto justify-between">
-            <button
-              onClick={handlePrevMonth}
-              className="p-2 hover:bg-white hover:shadow-sm rounded-xl transition-all text-gray-600 active:scale-95"
-            >
+            <button onClick={handlePrevMonth} className="p-2 hover:bg-white hover:shadow-sm rounded-xl transition-all text-gray-600 active:scale-95">
               <ChevronLeft size={18} />
             </button>
             <div className="px-6 flex items-center gap-2 select-none">
               <CalendarIcon size={16} className="text-blue-500" />
-              <span className="text-sm font-bold text-[#111827] min-w-[140px] text-center">
-                {monthYearLabel}
-              </span>
+              <span className="text-sm font-bold text-[#111827] min-w-[140px] text-center">{monthYearLabel}</span>
             </div>
-            <button
-              onClick={handleNextMonth}
-              className="p-2 hover:bg-white hover:shadow-sm rounded-xl transition-all text-gray-600 active:scale-95"
-            >
+            <button onClick={handleNextMonth} className="p-2 hover:bg-white hover:shadow-sm rounded-xl transition-all text-gray-600 active:scale-95">
               <ChevronRight size={18} />
             </button>
           </div>
-
-          <button className="p-3 bg-gray-50 hover:bg-gray-100 rounded-2xl border border-gray-100 text-gray-400 transition-colors hidden sm:block">
-            <Settings size={20} />
-          </button>
         </div>
       </div>
 
-      {/* Timeline Grid */}
       <div className="overflow-x-auto relative scrollbar-hide">
         <div className="min-w-[1400px]">
           {/* Calendar Header */}
           <div className="flex border-b border-gray-100 sticky top-0 z-20">
-            {/* Left Header Spacer */}
             <div className="w-[330px] flex-shrink-0 grid grid-cols-[60px_1fr] bg-[#F9FAFB] sticky left-0 z-30 border-r border-gray-100">
-              <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-center border-r border-gray-200/50">
-                C/LS
-              </div>
-              <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider pl-6">
-                Veicolo / Descrizione
-              </div>
+              <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider text-center border-r border-gray-200/50">PLAT</div>
+              <div className="p-4 text-[10px] font-bold text-gray-400 uppercase tracking-wider pl-6">Veicolo / Descrizione</div>
             </div>
 
-            {/* Days Header */}
-            <div
-              className="flex-1 grid bg-[#F9FAFB]"
-              style={{
-                gridTemplateColumns: `repeat(${daysInMonth.length}, 1fr)`,
-              }}
-            >
+            <div className="flex-1 grid bg-[#F9FAFB]" style={{ gridTemplateColumns: `repeat(${daysInMonth.length}, 1fr)` }}>
               {daysInMonth.map((day) => {
                 const dateNum = getDate(day);
-                const isTodayDate = isToday(day);
-                const dayName = format(day, "eee"); // "Mon", "Tue"...
-                const isWeekend = dayName === "Sat" || dayName === "Sun";
-
+                const dayLabel = format(day, "eee");
+                const isWeekend = dayLabel === "Sat" || dayLabel === "Sun";
                 return (
-                  <div
-                    key={day.toString()}
-                    className={`p-3 text-center border-r border-gray-200/50 last:border-0 flex flex-col gap-0.5 ${isWeekend ? "bg-gray-200/30" : ""}`}
-                  >
-                    <span className="text-[10px] font-bold text-gray-400 uppercase">
-                      {dayName[0]}
-                    </span>
-                    <span
-                      className={`text-xs font-black transition-colors ${isTodayDate ? "text-blue-600" : "text-[#111827]"}`}
-                    >
-                      {dateNum.toString().padStart(2, "0")}
-                    </span>
+                  <div key={day.toString()} className={`p-3 text-center border-r border-gray-200/50 last:border-0 flex flex-col gap-0.5 ${isWeekend ? "bg-gray-200/30" : ""}`}>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase">{dayLabel[0]}</span>
+                    <span className={`text-xs font-black ${isToday(day) ? "text-blue-600" : "text-[#111827]"}`}>{dateNum.toString().padStart(2, "0")}</span>
                   </div>
                 );
               })}
@@ -253,106 +511,64 @@ const VehicleActivityChart = () => {
 
           {/* Vehicle Rows */}
           <div className="bg-white">
-            {vehicles.map((vehicle) => {
-              const vehicleActivities = mockActivities.filter(
-                (a) => a.vehicleId === vehicle.id,
-              );
-
-              return (
-                <div
-                  key={vehicle.id}
-                  className="group flex border-b border-gray-100 hover:bg-blue-50/5 transition-colors last:border-0 relative"
-                >
-                  {/* Left Column: Fixed Vehicle Details */}
-                  <div className="w-[330px] flex-shrink-0 grid grid-cols-[60px_1fr] bg-white sticky left-0 z-10 border-r border-gray-100">
-                    <div className="p-4 border-r border-gray-100 flex items-center justify-center">
-                      <span className="text-[10px] font-black text-gray-500 bg-gray-50 border border-gray-100 w-8 h-8 flex items-center justify-center rounded-lg uppercase">
-                        {vehicle.category}
-                      </span>
-                    </div>
-                    <div className="p-4 flex flex-col justify-center min-w-0 pl-6">
-                      <span className="text-sm font-bold text-[#111827] truncate group-hover:text-blue-600 transition-colors uppercase tracking-tight">
-                        {vehicle.plate}
-                      </span>
-                      <span className="text-[11px] font-semibold text-gray-400 mt-0.5 truncate uppercase">
-                        {vehicle.name}
-                      </span>
-                    </div>
+            {vehicles.map((vehicle, idx) => (
+              <div key={idx} className="group flex border-b border-gray-100 hover:bg-blue-50/5 transition-colors last:border-0 relative">
+                <div className="w-[330px] flex-shrink-0 grid grid-cols-[60px_1fr] bg-white sticky left-0 z-10 border-r border-gray-100">
+                  <div className="p-4 border-r border-gray-100 flex items-center justify-center">
+                    <span className="text-[10px] font-black text-gray-500 bg-gray-50 border border-gray-100 w-8 h-8 flex items-center justify-center rounded-lg uppercase">
+                      {vehicle.license_plate?.substring(0, 2) || "NA"}
+                    </span>
                   </div>
+                  <div className="p-4 flex flex-col justify-center min-w-0 pl-6">
+                    <span className="text-sm font-bold text-[#111827] truncate group-hover:text-blue-600 transition-colors uppercase tracking-tight">
+                      {vehicle.license_plate || "No Plate"}
+                    </span>
+                    <span className="text-[11px] font-semibold text-gray-400 mt-0.5 truncate uppercase">
+                      {vehicle.description}
+                    </span>
+                  </div>
+                </div>
 
-                  {/* Right Column: Timeline Activity */}
-                  <div
-                    className="flex-1 grid relative isolate"
-                    style={{
-                      gridTemplateColumns: `repeat(${daysInMonth.length}, 1fr)`,
-                    }}
-                  >
-                    {/* Background Grid Lines */}
-                    {daysInMonth.map((day) => {
-                      const dayName = format(day, "eee");
-                      const isWeekend = dayName === "Sat" || dayName === "Sun";
-                      return (
-                        <div
-                          key={day.toString()}
-                          className={`border-r border-gray-100/60 last:border-0 h-full ${isWeekend ? "bg-gray-50/50" : ""}`}
-                        ></div>
-                      );
-                    })}
+                <div className="flex-1 grid relative isolate" style={{ gridTemplateColumns: `repeat(${daysInMonth.length}, 1fr)` }}>
+                  {daysInMonth.map((day) => {
+                    const dName = format(day, "eee");
+                    const isWeekend = dName === "Sat" || dName === "Sun";
+                    return (
+                      <div key={day.toString()} className={`border-r border-gray-100/60 last:border-0 h-full ${isWeekend ? "bg-gray-50/50" : ""}`} />
+                    );
+                  })}
 
-                    {/* Activity Bars Overlay */}
-                    <div className="absolute inset-0 p-3 flex items-center pointer-events-none">
-                      <div className="relative h-12 w-full">
-                        {vehicleActivities.map((activity, idx) => {
-                          const startPos =
-                            ((activity.start - 1) / daysInMonth.length) * 100;
-                          const width =
-                            ((activity.end - activity.start + 1) /
-                              daysInMonth.length) *
-                            100;
+                  <div className="absolute inset-0 p-3 flex items-center pointer-events-none">
+                    <div className="relative h-12 w-full">
+                      {vehicle.periods?.map((period, pIdx) => {
+                        const style = calculateBarStyles(period.start, period.end);
+                        if (!style) return null;
 
-                          return (
-                            <div
-                              key={idx}
-                              className={`absolute top-0 bottom-0 rounded-xl shadow-sm border-[1.5px] border-white/40 transition-all pointer-events-auto cursor-pointer hover:brightness-105 active:scale-[0.99] group/bar flex items-center px-3 z-10 ${getStatusColor(activity.status)}`}
-                              style={{
-                                left: `${startPos}%`,
-                                width: `${width}%`,
-                              }}
-                            >
-                              {/* End Indicators like in the image */}
-                              <div className="absolute left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/30"></div>
-                              <div className="absolute right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/30"></div>
-
-                              <div className="opacity-0 group-hover/bar:opacity-100 absolute inset-0 bg-white/10 flex items-center justify-center transition-all rounded-xl backdrop-blur-[1px]">
-                                <Info
-                                  size={14}
-                                  className="text-white drop-shadow-sm"
-                                />
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
+                        return (
+                          <div
+                            key={pIdx}
+                            className={`absolute top-0 bottom-0 rounded-xl shadow-sm border-[1.5px] border-white/40 pointer-events-auto cursor-pointer flex items-center px-3 z-10 ${getStatusColor(period.color)}`}
+                            style={style}
+                          >
+                            <div className="absolute left-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/30"></div>
+                            <div className="absolute right-1 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-white/30"></div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Footer / Legend */}
       <div className="p-8 border-t border-gray-100 bg-white flex flex-col sm:flex-row justify-between items-center gap-6">
         <Legend />
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleExportPDF}
-            className="px-5 py-2.5 bg-[#111827] text-white text-xs font-bold rounded-xl hover:bg-gray-800 transition-all shadow-lg active:scale-95 uppercase tracking-widest"
-          >
-            Export View
-          </button>
-        </div>
+        <button onClick={handleExportPDF} className="px-5 py-2.5 bg-[#111827] text-white text-xs font-bold rounded-xl hover:bg-gray-800 transition-all shadow-lg uppercase tracking-widest">
+          Export View
+        </button>
       </div>
     </div>
   );

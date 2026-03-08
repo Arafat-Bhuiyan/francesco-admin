@@ -19,6 +19,8 @@ import Reports from "@/AgencyAdmin/Reports/Reports";
 import Settings from "@/AgencyAdmin/Settings2/Settings";
 import Operation from "@/Admin/Operation/Operation";
 import Cookies from "js-cookie";
+import { NotFound } from "@/NotFound/NotFound";
+import { ErrorComponent } from "@/layouts/ErrorPage";
 
 const DashboardWrapper = () => {
   const role = Cookies.get("role") || "Super Admin";
@@ -35,9 +37,13 @@ const router = createBrowserRouter([
     element: <Login />,
   },
   {
+    path: "*",
+    element: <NotFound />
+  },
+  {
     path: "/admin",
     element: <AdminLayout />,
-    errorElement: <h2>Route not found</h2>,
+    errorElement: <ErrorComponent />,
     children: [
       {
         index: true,

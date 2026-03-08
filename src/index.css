@@ -4,6 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+#root {
+  font-family: 'Montserrat', sans-serif;
+  ;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -71,14 +76,16 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+
   .logo-font {
     font-family: 'Lobster', cursive;
   }
 }
 
 .ck.ck-powered-by {
-    display: none !important;
+  display: none !important;
 }

@@ -152,6 +152,16 @@ export const baseApi = createApi({
                 body: settingsData
             }),
             invalidatesTags: ["settings"]
+        }),
+
+        //agency dashbord data
+        dashboardData: builder.query({
+            query: () => "agency-admin/dashboard/"
+        }),
+
+        //vehicle-activity
+        vehicleActivity: builder.query({
+            query: () => "agency-admin/vehicle-activity/"
         })
 
 
@@ -199,6 +209,12 @@ export const {
     //settings
     useSettingsInfoQuery,
     useUpdateSettingsMutation,
+
+    //agency dashboard home
+    useDashboardDataQuery,
+    useVehicleActivityQuery,
+
+
 
 
 } = baseApi
