@@ -25,7 +25,7 @@ export const baseApi = createApi({
         },
     }),
 
-    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers"],
+    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite"],
 
     endpoints: (builder) => ({
 
@@ -127,6 +127,17 @@ export const baseApi = createApi({
             query: (customerId) => `agency-admin/customers/${customerId}/`,
         }),
 
+        //payment and deposite
+        paymentAndDeposite: builder.query({
+            query: () => "agency-admin/payments-deposits/",
+            providesTags: ["paymentAndDeposite"]
+        }),
+
+        //report and analytics
+        reportAnalytics: builder.query({
+            query: () => "agency-admin/reports-analytics/"
+        })
+
 
     }),
 })
@@ -163,5 +174,10 @@ export const {
     //customer details
     useCustomerDetailsQuery,
 
+    //payment and deposite
+    usePaymentAndDepositeQuery,
+
+    //report 
+    useReportAnalyticsQuery,
 
 } = baseApi
