@@ -23,7 +23,7 @@ import { NotFound } from "@/NotFound/NotFound";
 import { ErrorComponent } from "@/layouts/ErrorPage";
 
 const DashboardWrapper = () => {
-  const role = Cookies.get("role") || "Super Admin";
+  const role = Cookies.get("role") || "super_admin";
   return role === "agency_admin" ? <AgencyDashboard /> : <MainDashboard />;
 };
 

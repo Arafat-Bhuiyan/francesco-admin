@@ -2,7 +2,6 @@ import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { IoMdLogOut } from "react-icons/io";
 import { FiAlertTriangle } from "react-icons/fi";
 
-
 import {
   Users,
   Settings,
@@ -101,7 +100,7 @@ export const Sidebar = ({ currentComponent, onMenuClick }) => {
     },
   ];
 
-  const menuItems = role === "Super Admin" ? adminMenuItems : agencyMenuItems;
+  const menuItems = role === "super_admin" ? adminMenuItems : agencyMenuItems;
 
   const handleLogout = () => {
     localStorage.clear();

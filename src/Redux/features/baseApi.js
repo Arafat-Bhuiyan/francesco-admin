@@ -26,7 +26,7 @@ export const baseApi = createApi({
         },
     }),
 
-    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite", "settings"],
+    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite", "settings", "agencyList", "globalPricingRules"],
 
     endpoints: (builder) => ({
 
@@ -39,7 +39,6 @@ export const baseApi = createApi({
 
             })
         }),
-
 
         //get car
         carList: builder.mutation({
@@ -67,7 +66,6 @@ export const baseApi = createApi({
             invalidatesTags: ["cars"],
         }),
 
-
         //agent list
         agentList: builder.query({
             query: () => "agency-admin/agents/list/",
@@ -93,7 +91,6 @@ export const baseApi = createApi({
             }),
             invalidatesTags: ["agents"],
         }),
-
 
         //booking management
         bookingList: builder.query({
@@ -162,7 +159,50 @@ export const baseApi = createApi({
         //vehicle-activity
         vehicleActivity: builder.query({
             query: () => "agency-admin/vehicle-activity/"
-        })
+        }),
+
+        //super admin dashboard
+        superAdminDashboardData: builder.query({
+            query: () => "super-admin/dashboard/"
+        }),
+
+
+
+        //agency management
+        getAgencyList: builder.query({
+            query: () => "",
+            providesTags: ["agencyList"]
+        }),
+
+        //add new agency
+        addNewAgency: builder.mutation({
+            query: (agencyData) => ({
+                url: "super-admin/agencies/",
+                method: "POST",
+                body: agencyData
+            }),
+            invalidatesTags: ["agencyList"]
+        }),
+
+
+        //global pricing rules
+        CreateGlobalPricingRules: builder.query({
+            query: () => "super-admin/global-pricing-rules/",
+            providesTags: ["globalPricingRules"]
+        }),
+
+        //update
+        updateGlobalPricingRules: builder.mutation({
+            query: ({ globalPricingRulesData }) => ({
+                url: "super-admin/global-pricing-rules/",
+                method: "PATCH",
+                body: globalPricingRulesData
+            }),
+            invalidatesTags: ["globalPricingRules"]
+        }),
+
+
+
 
 
     }),
@@ -214,6 +254,20 @@ export const {
     useDashboardDataQuery,
     useVehicleActivityQuery,
 
+
+
+
+    //super admin dashboard
+    useSuperAdminDashboardDataQuery,
+
+    //agency management
+    useGetAgencyListQuery,
+    useAddNewAgencyMutation,
+
+
+    //global pricing rules
+    useCreateGlobalPricingRulesQuery,
+    useUpdateGlobalPricingRulesMutation,
 
 
 
