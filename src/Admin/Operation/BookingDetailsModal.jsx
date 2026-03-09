@@ -1,51 +1,22 @@
 import React from "react";
-import {
-  X,
-  User,
-  Car,
-  Calendar,
-  DollarSign,
-  Building2,
-  ShieldCheck,
-  Clock,
-} from "lucide-react";
+import { X, User, Car, Calendar, DollarSign, Building2, UserCheck } from "lucide-react";
 
 const BookingDetailsModal = ({ isOpen, onClose, booking }) => {
   if (!isOpen || !booking) return null;
 
-  const getStatusStyle = (status) => {
-    switch (status) {
-      case "Active":
-        return "bg-blue-50 text-blue-600 border-blue-100";
-      case "Completed":
-        return "bg-green-50 text-green-600 border-green-100";
-      case "Upcoming":
-        return "bg-purple-50 text-purple-600 border-purple-100";
-      case "Cancelled":
-        return "bg-red-50 text-red-600 border-red-100";
-      default:
-        return "bg-gray-50 text-gray-600 border-gray-100";
-    }
-  };
+  const [startDate, endDate] = (booking.rental_period || "").split(" - ");
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm transition-all duration-300">
-      <div
-        className="bg-white rounded-md shadow-2xl w-full max-w-2xl overflow-hidden animate-in fade-in zoom-in duration-300"
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+      <div className="bg-white rounded-3xl w-full max-w-xl shadow-2xl animate-in zoom-in duration-200 overflow-hidden">
+
         {/* Header */}
-        <div className="px-8 py-6 border-b border-gray-50 flex items-center justify-between bg-[#fcfdfe]">
-          <div className="flex items-center gap-4">
-            <div
-              className={`px-4 py-1.5 rounded-full text-[12px] font-bold border ${getStatusStyle(booking.status)}`}
-            >
-              {booking.status}
-            </div>
-            <h2 className="text-[#0F172A] text-xl font-bold">
-              Booking Details -{" "}
-              <span className="text-blue-600">{booking.id}</span>
-            </h2>
+        <div className="p-6 border-b border-gray-100 flex justify-between items-center">
+          <div>
+            <h3 className="font-bold text-lg text-gray-900">Booking Details</h3>
+            <p className="text-[10px] font-bold text-blue-600 uppercase tracking-widest mt-0.5">
+              {booking.status_display}
+            </p>
           </div>
           <button
             onClick={onClose}
@@ -55,143 +26,81 @@ const BookingDetailsModal = ({ isOpen, onClose, booking }) => {
           </button>
         </div>
 
-        {/* Content */}
-        <div className="p-8 grid grid-cols-2 gap-8 overflow-y-auto max-h-[75vh]">
-          {/* Customer & Agency */}
-          <div className="space-y-6">
-            <section>
-              <h3 className="text-[#94A3B8] text-[10px] font-bold uppercase tracking-widest mb-4">
-                Customer Information
-              </h3>
-              <div className="flex items-center gap-4 bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                <div className="w-12 h-12 rounded-full bg-white flex items-center justify-center shadow-sm border border-gray-100 text-[#4466f2]">
-                  <User size={24} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-gray-900">
-                    {booking.customer}
-                  </p>
-                  <p className="text-xs text-gray-500 font-medium mt-0.5">
-                    Premium Plus Member
-                  </p>
-                </div>
-              </div>
-            </section>
+        {/* Body */}
+        <div className="p-6 space-y-5">
 
-            <section>
-              <h3 className="text-[#94A3B8] text-[10px] font-bold uppercase tracking-widest mb-4">
-                Agency Information
-              </h3>
-              <div className="flex items-center gap-4 bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm border border-gray-100 text-gray-400">
-                  <Building2 size={24} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-gray-900">
-                    {booking.agency}
-                  </p>
-                  <p className="text-xs text-gray-500 font-medium mt-0.5">
-                    Verified Network Partner
-                  </p>
-                </div>
+          {/* Top Info Card */}
+          <div className="bg-gray-50 p-5 rounded-2xl border border-gray-100 space-y-4">
+            <div className="flex items-center gap-4">
+              <Building2 size={18} className="text-gray-400" />
+              <div>
+                <label className="text-[10px] uppercase font-bold text-gray-400 block">Agency</label>
+                <p className="text-sm font-bold text-gray-900">{booking.agency_name}</p>
               </div>
-            </section>
-          </div>
-
-          {/* Vehicle & Rental */}
-          <div className="space-y-6">
-            <section>
-              <h3 className="text-[#94A3B8] text-[10px] font-bold uppercase tracking-widest mb-4">
-                Vehicle Details
-              </h3>
-              <div className="flex items-center gap-4 bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm border border-gray-100 text-gray-400">
-                  <Car size={24} />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-gray-900">
-                    {booking.vehicle}
-                  </p>
-                  <p className="text-xs text-blue-600 font-bold mt-0.5 tracking-tight">
-                    PLATINUM CLASS
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            <section>
-              <h3 className="text-[#94A3B8] text-[10px] font-bold uppercase tracking-widest mb-4">
-                Rental Period
-              </h3>
-              <div className="flex items-center gap-4 bg-gray-50/50 p-4 rounded-2xl border border-gray-100">
-                <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center shadow-sm border border-gray-100 text-gray-400">
-                  <Calendar size={24} />
-                </div>
-                <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold text-gray-400 uppercase">
-                      From:
-                    </span>
-                    <span className="text-sm font-bold text-gray-900">
-                      {booking.rentalPeriod.start}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[10px] font-bold text-gray-400 uppercase">
-                      To:
-                    </span>
-                    <span className="text-sm font-bold text-gray-900">
-                      {booking.rentalPeriod.end}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-
-          {/* Bottom Grid */}
-          <div className="col-span-2 grid grid-cols-3 gap-6 pt-4 border-t border-gray-50">
-            <div className="p-4 rounded-2xl bg-[#4466f2]/5 border border-[#4466f2]/10">
-              <div className="flex items-center gap-2 mb-2">
-                <Clock size={14} className="text-[#4466f2]" />
-                <span className="text-[10px] font-bold text-[#4466f2] uppercase tracking-wider">
-                  Agent
-                </span>
-              </div>
-              <p className="text-sm font-bold text-gray-900">
-                {booking.assignedAgent}
-              </p>
             </div>
 
-            <div className="p-4 rounded-2xl bg-orange-50/50 border border-orange-100">
-              <div className="flex items-center gap-2 mb-2">
-                <DollarSign size={14} className="text-orange-600" />
-                <span className="text-[10px] font-bold text-orange-600 uppercase tracking-wider">
-                  Amount Paid
-                </span>
+            <div className="flex items-center gap-4 border-t border-gray-200/50 pt-4">
+              <Car size={18} className="text-gray-400" />
+              <div>
+                <label className="text-[10px] uppercase font-bold text-gray-400 block">Vehicle</label>
+                <p className="text-sm font-bold text-gray-900">{booking.vehicle_name}</p>
               </div>
-              <p className="text-sm font-bold text-gray-900">
-                {booking.amount}
+            </div>
+          </div>
+
+          {/* Customer & Agent Grid */}
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-1">
+              <label className="text-[10px] uppercase font-bold text-gray-400 flex items-center gap-1">
+                <User size={12} /> Customer
+              </label>
+              <p className="text-sm font-semibold text-gray-800">
+                {booking.customer_name || "Guest Customer"}
               </p>
             </div>
+            <div className="space-y-1 text-right">
+              <label className="text-[10px] uppercase font-bold text-gray-400 flex items-center gap-1 justify-end">
+                <UserCheck size={12} /> Assigned Agent
+              </label>
+              <p className="text-sm font-semibold text-gray-800">
+                {booking.agent_name || "N/A"}
+              </p>
+            </div>
+          </div>
 
-            <div className="p-4 rounded-2xl bg-green-50/50 border border-green-100">
-              <div className="flex items-center gap-2 mb-2">
-                <ShieldCheck size={14} className="text-green-600" />
-                <span className="text-[10px] font-bold text-green-600 uppercase tracking-wider">
-                  Insurance
-                </span>
+          {/* Rental Period Section */}
+          <div className="pt-4 border-t border-gray-100">
+            <label className="text-[10px] uppercase font-bold text-gray-400 block mb-3">Rental Period</label>
+            <div className="flex items-center justify-between bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
+              <div className="flex flex-col">
+                <span className="text-[10px] font-bold text-blue-400 uppercase">Pickup</span>
+                <span className="text-sm font-bold text-gray-900 flex items-center gap-1"><Calendar size={16} className="text-gray-400" />{startDate}</span>
               </div>
-              <p className="text-sm font-bold text-gray-900">Comprehensive</p>
+              <div className="h-[1px] flex-1 mx-4 bg-blue-200"></div>
+              <div className="flex flex-col text-right">
+                <span className="text-[10px] font-bold text-blue-400 uppercase">Return</span>
+                <span className="text-sm font-bold text-gray-900 flex items-center gap-1"><Calendar size={16} className="text-gray-400" />{endDate}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Amount Box */}
+          <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
+            <div>
+              <label className="text-[10px] uppercase font-bold text-gray-400 block">Total Amount</label>
+              <p className="text-2xl font-black text-gray-900">{booking.amount}</p>
+            </div>
+            <div className="bg-green-50 text-green-600 px-4 py-2 rounded-xl text-xs font-bold border border-green-100 capitalize">
+              {booking.status}
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="px-8 py-6 bg-gray-50/50 border-t border-gray-100 flex justify-end gap-4">
+        <div className="p-6 bg-gray-50 border-t border-gray-100">
           <button
             onClick={onClose}
-            className="px-6 py-2.5 text-sm font-bold text-gray-500 hover:text-gray-900 transition-colors"
+            className="w-full bg-white border border-gray-200 text-gray-600 py-3 rounded-xl font-bold hover:bg-gray-100 transition-all text-sm"
           >
             Close
           </button>

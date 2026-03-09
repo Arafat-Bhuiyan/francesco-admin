@@ -251,6 +251,10 @@ export const baseApi = createApi({
         }),
 
 
+        //operation overview
+        operationOverview: builder.query({
+            query: (tab) => `super-admin/operation-overview/?tab=${tab}`,
+        }),
 
 
     }),
@@ -325,6 +329,10 @@ export const {
     usePaymentAndCommissionAdminQuery,
     usePaymentAndCommissionDetailsQuery,
     useProcessPayoutMutation,
+
+
+    //operation overview
+    useOperationOverviewQuery,
 
 
 
