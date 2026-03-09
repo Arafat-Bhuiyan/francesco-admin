@@ -1,39 +1,51 @@
-import { useUpdateGeneralSettingsMutation } from "@/redux/features/baseApi";
+
+import {
+  useGetUpdatedDataQuery,
+  useUpdateGeneralSettingsMutation
+} from "@/redux/features/baseApi";
 import {
   Building2,
   Mail,
   Phone,
   Upload,
-  Trash2,
-  RefreshCcw,
   Save,
+  Loader2,
+  MapPin,
+  RefreshCcw,
+  X,
+  Image as ImageIcon
 } from "lucide-react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function General() {
-
-  const [updateGeneralSettings, { isLoading }] = useUpdateGeneralSettingsMutation();
+  const [updateGeneralSettings, { isLoading: isUpdating }] = useUpdateGeneralSettingsMutation();
+  const { data: generalUpdatedData, isLoading: isFetching } = useGetUpdatedDataQuery();
 
   const [formData, setFormData] = useState({
-    platformName: "RentEasy Super Admin",
-    contactEmail: "support@renteasy.com",
-    supportPhone: "+1 (555) 123-4567",
-    businessAddress: "",
+    platform_name: "",
+    support_email: "",
+    support_phone: "",
+    business_address: "",
   });
 
-  const [logo, setLogo] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
+  const [logoFile, setLogoFile] = useState(null);
   const fileInputRef = useRef(null);
 
-  const handleUpdateSetting = async () => {
-    try {
-      const res = await updateGeneralSettings(formData).unwrap();
-      console.log(res)
-      toast.success(res.message);
-    } catch (error) {
-      toast.error(error.message);
+  useEffect(() => {
+    if (generalUpdatedData) {
+      setFormData({
+        platform_name: generalUpdatedData.platform_name || "",
+        support_email: generalUpdatedData.support_email || "",
+        support_phone: generalUpdatedData.support_phone || "",
+        business_address: generalUpdatedData.business_address || "",
+      });
+      if (generalUpdatedData.platform_logo_url) {
+        setLogoPreview(generalUpdatedData.platform_logo_url);
+      }
     }
-  }
+  }, [generalUpdatedData]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,166 +59,170 @@ export default function General() {
         toast.error("Logo size should be less than 2MB");
         return;
       }
+      setLogoFile(file);
       const reader = new FileReader();
-      reader.onloadend = () => {
-        setLogo(reader.result);
-      };
+      reader.onloadend = () => setLogoPreview(reader.result);
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSave = () => {
-    console.log("Saving Platform Info:", { ...formData, logo });
-    toast.success("Platform information updated successfully!");
+  const handleUpdateSetting = async () => {
+    try {
+      const data = new FormData();
+      data.append("platform_name", formData.platform_name);
+      data.append("support_email", formData.support_email);
+      data.append("support_phone", formData.support_phone);
+      data.append("business_address", formData.business_address);
+
+      if (logoFile) {
+        data.append("platform_logo", logoFile);
+      }
+
+      const res = await updateGeneralSettings({ settingsData: data }).unwrap();
+      toast.success(res?.message || "Platform updated successfully!");
+      setLogoFile(null);
+    } catch (error) {
+      console.error("Update failed:", error);
+      toast.error(error?.data?.message || "Failed to update settings");
+    }
   };
 
-  const handleReset = () => {
-    setFormData({
-      platformName: "RentEasy Super Admin",
-      contactEmail: "support@renteasy.com",
-      supportPhone: "+1 (555) 123-4567",
-      businessAddress: "",
-    });
-    setLogo(null);
-    toast.success("Settings reset to defaults");
-  };
+  if (isFetching) {
+    return (
+      <div className="flex h-96 items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin text-blue-500" />
+      </div>
+    );
+  }
 
   return (
-    <div className="w-full space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      <Toaster position="top-right" />
+    <div className="w-full space-y-8 animate-in fade-in duration-500">
+      <Toaster position="top-center" />
 
-      {/* Main Content Card */}
-      <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.1)] border border-gray-100 p-10">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="bg-gray-100 p-2.5 rounded-xl">
-            <Building2 className="w-6 h-6 text-gray-700" />
+      <div className="bg-white rounded-3xl shadow-[0_5px_30px_-10px_rgba(0,0,0,0.1)] border border-gray-100 p-8 md:p-12">
+        <div className="flex items-center gap-4 mb-10">
+          <div className="h-12 w-12 bg-blue-50 flex items-center justify-center rounded-2xl text-blue-600">
+            <Building2 size={24} />
           </div>
-          <h2 className="text-xl font-extrabold text-gray-900 tracking-tight">
-            Platform Information
-          </h2>
+          <h2 className="text-2xl font-bold text-gray-900 tracking-tight">Platform Details</h2>
         </div>
 
-        <p className="text-gray-400 text-sm font-semibold mb-8">
-          Basic information about your platform
-        </p>
-
-        <div className="space-y-8">
-          {/* Platform Name */}
-          <div className="space-y-3">
-            <label className="text-[#2A98FF] text-sm font-bold block">
-              Platform Name
-            </label>
-            <input
-              type="text"
-              name="platformName"
-              value={formData.platformName}
-              onChange={handleInputChange}
-              className="w-full h-14 px-6 bg-[#F3F4F6] border-none rounded-2xl text-gray-900 font-bold focus:ring-2 focus:ring-[#2A98FF]/20 transition-all outline-none"
-              placeholder="Enter platform name"
-            />
-          </div>
-
-          {/* Contact Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-3">
-              <label className="text-gray-900 text-sm font-bold flex items-center gap-2">
-                <Mail className="w-4 h-4" /> Contact Email
-              </label>
-              <input
-                type="email"
-                name="contactEmail"
-                value={formData.contactEmail}
-                onChange={handleInputChange}
-                className="w-full h-14 px-6 bg-[#F3F4F6] border-none rounded-2xl text-gray-900 font-bold focus:ring-2 focus:ring-[#2A98FF]/20 transition-all outline-none"
-                placeholder="email@example.com"
-              />
-            </div>
-            <div className="space-y-3">
-              <label className="text-gray-900 text-sm font-bold flex items-center gap-2">
-                <Phone className="w-4 h-4" /> Support Phone
-              </label>
-              <input
-                type="text"
-                name="supportPhone"
-                value={formData.supportPhone}
-                onChange={handleInputChange}
-                className="w-full h-14 px-6 bg-[#F3F4F6] border-none rounded-2xl text-gray-900 font-bold focus:ring-2 focus:ring-[#2A98FF]/20 transition-all outline-none"
-                placeholder="+1 (000) 000-0000"
-              />
-            </div>
-          </div>
-
-          {/* Business Address */}
-          <div className="space-y-3">
-            <label className="text-gray-900 text-sm font-bold block">
-              Business Address
-            </label>
-            <textarea
-              name="businessAddress"
-              value={formData.businessAddress}
-              onChange={handleInputChange}
-              rows={4}
-              className="w-full px-6 py-5 bg-[#F3F4F6] border-none rounded-2xl text-gray-900 font-bold focus:ring-2 focus:ring-[#2A98FF]/20 transition-all outline-none resize-none"
-              placeholder="Enter full business address"
-            />
-          </div>
-
-          {/* Platform Logo */}
+        <div className="space-y-12">
           <div className="space-y-4">
-            <label className="text-gray-900 text-sm font-bold block">
-              Platform Logo
-            </label>
-            <div className="flex items-center gap-6">
-              <div className="w-24 h-24 bg-[#F3F4F6] rounded-2xl flex items-center justify-center border border-gray-100 overflow-hidden group relative">
-                {logo ? (
-                  <img
-                    src={logo}
-                    alt="Logo Preview"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <span className="text-[#94A3B8] font-semibold text-sm tracking-tighter">
-                    LOGO
-                  </span>
+            <label className="text-gray-500 text-sm font-bold ml-1 uppercase tracking-wider">Platform Logo</label>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-8">
+              <div className="relative">
+                <div className="w-42 h-52 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-200 flex items-center justify-center overflow-hidden group hover:border-blue-400 transition-all">
+                  {logoPreview ? (
+                    <img
+                      src={logoPreview}
+                      alt="Logo"
+                      className="w-full h-full object-cover"
+                      key={logoPreview} // Forces refresh on update
+                    />
+                  ) : (
+                    <ImageIcon className="text-gray-300" size={32} />
+                  )}
+                </div>
+                {logoFile && (
+                  <button
+                    onClick={() => { setLogoFile(null); setLogoPreview(generalUpdatedData.platform_logo_url); }}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white p-1 rounded-full shadow-lg"
+                  >
+                    <X size={14} />
+                  </button>
                 )}
               </div>
 
-              <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleLogoUpload}
-                className="hidden"
-                accept="image/*"
-              />
+              <div className="space-y-3">
+                <input type="file" ref={fileInputRef} onChange={handleLogoUpload} className="hidden" accept="image/*" />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current.click()}
+                  className="flex items-center gap-2 px-6 py-3 bg-white border-2 border-gray-100 hover:border-blue-500 rounded-2xl text-sm font-bold text-gray-700 transition-all"
+                >
+                  <Upload size={18} /> Change Logo
+                </button>
+                <p className="text-xs text-gray-400 font-medium">SVG, PNG or JPG (Max. 2MB)</p>
+              </div>
+            </div>
+          </div>
 
-              <button
-                onClick={() => fileInputRef.current.click()}
-                className="flex items-center gap-2.5 px-6 py-3.5 bg-white border border-gray-200 hover:border-gray-900 rounded-2xl transition-all text-sm font-extrabold text-gray-900 shadow-sm"
-              >
-                <Upload className="w-4 h-4" /> Upload New Logo
-              </button>
+          {/* Form Inputs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-gray-700 text-sm font-bold ml-1">Platform Name</label>
+              <input
+                type="text"
+                name="platform_name"
+                value={formData.platform_name}
+                onChange={handleInputChange}
+                className="w-full h-14 px-6 bg-gray-50 border-2 border-transparent focus:border-blue-100 focus:bg-white rounded-2xl text-gray-900 font-bold outline-none transition-all"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-gray-700 text-sm font-bold ml-1">Contact Email</label>
+              <div className="relative">
+                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <input
+                  type="email"
+                  name="support_email"
+                  value={formData.support_email}
+                  onChange={handleInputChange}
+                  className="w-full h-14 pl-14 pr-6 bg-gray-50 border-2 border-transparent focus:border-blue-100 focus:bg-white rounded-2xl text-gray-900 font-bold outline-none transition-all"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-gray-700 text-sm font-bold ml-1">Support Phone</label>
+              <div className="relative">
+                <Phone className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+                <input
+                  type="text"
+                  name="support_phone"
+                  value={formData.support_phone}
+                  onChange={handleInputChange}
+                  className="w-full h-14 pl-14 pr-6 bg-gray-50 border-2 border-transparent focus:border-blue-100 focus:bg-white rounded-2xl text-gray-900 font-bold outline-none transition-all"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 md:col-span-2">
+              <label className="text-gray-700 text-sm font-bold ml-1">Office Address</label>
+              <div className="relative">
+                <MapPin className="absolute left-5 top-6 text-gray-400" size={18} />
+                <textarea
+                  name="business_address"
+                  value={formData.business_address}
+                  onChange={handleInputChange}
+                  rows={4}
+                  className="w-full pl-14 pr-6 py-5 bg-gray-50 border-2 border-transparent focus:border-blue-100 focus:bg-white rounded-2xl text-gray-900 font-bold outline-none resize-none transition-all"
+                />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Footer Action Buttons */}
-      <div className="flex justify-end gap-4">
+      <div className="flex justify-end gap-5">
         <button
-          onClick={handleReset}
-          className="px-10 py-4 bg-white border border-gray-200 text-gray-900 rounded-full font-extrabold hover:bg-gray-50 transition-all text-sm shadow-sm"
+          type="button"
+          onClick={() => window.location.reload()}
+          className="flex items-center gap-2 px-8 py-4 bg-white text-gray-500 rounded-full font-bold hover:bg-gray-50 border border-gray-100 text-sm transition-all"
         >
-          Reset to Defaults
+          <RefreshCcw size={16} /> Discard Changes
         </button>
         <button
+          disabled={isUpdating}
           onClick={handleUpdateSetting}
-          className="px-10 py-4 bg-[#2A98FF] text-white rounded-full font-extrabold hover:bg-[#0b85f7] transition-all text-sm shadow-lg shadow-blue-500/20 flex items-center gap-2"
+          className="px-12 py-4 bg-blue-600 text-white rounded-full font-bold hover:bg-blue-700 hover:shadow-xl hover:shadow-blue-200 transition-all text-sm flex items-center gap-3 disabled:opacity-50"
         >
-          <Save className="w-4 h-4" /> Save Changes
+          {isUpdating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save size={18} />}
+          {isUpdating ? "Saving..." : "Save General Info"}
         </button>
       </div>
     </div>
   );
 }
-
-

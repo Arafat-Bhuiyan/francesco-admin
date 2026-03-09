@@ -307,8 +307,26 @@ export const baseApi = createApi({
                 method: "PATCH",
                 body: settingsData
             }),
-
+            invalidatesTags: ["updatedData"],
         }),
+
+        //getting updated data
+        getUpdatedData: builder.query({
+            query: () => "super-admin/settings/general/",
+            providesTags: ["updatedData"]
+        }),
+
+        //terms and policies
+        updateTermsAndPolicies: builder.mutation({
+            query: ({ terms }) => ({
+                url: "super-admin/settings/general/",
+                method: "PATCH",
+                body: terms,
+            }),
+            invalidatesTags: ["updatedData"],
+        }),
+
+
 
 
     }),
@@ -397,6 +415,11 @@ export const {
 
     //settings
     useUpdateGeneralSettingsMutation,
+    useGetUpdatedDataQuery,
+
+    //terms and policies
+    useUpdateTermsAndPoliciesMutation,
+
 
 
 
