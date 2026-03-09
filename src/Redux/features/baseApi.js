@@ -26,7 +26,7 @@ export const baseApi = createApi({
         },
     }),
 
-    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite", "settings", "agencyList", "globalPricingRules", "paymentAndCommission"],
+    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite", "settings", "agencyList", "globalPricingRules", "paymentAndCommission", "userManagement"],
 
     endpoints: (builder) => ({
 
@@ -256,6 +256,49 @@ export const baseApi = createApi({
             query: (tab) => `super-admin/operation-overview/?tab=${tab}`,
         }),
 
+        //user management
+        operationOverview: builder.query({
+            query: (tab) => `super-admin/operation-overview/?tab=${tab}`,
+        }),
+
+
+        //user management
+        userManagement: builder.query({
+            query: (tab) => `super-admin/users/?tab=${tab}`,
+            providesTags: ["userManagement"]
+        }),
+
+        //suspend user
+        suspendUser: builder.mutation({
+            query: ({ id, suspend }) => ({
+                url: `super-admin/customers/${id}/suspend/`,
+                method: "PATCH",
+                body: { suspend }
+            }),
+            invalidatesTags: ["userManagement"]
+        }),
+
+        //remove vip
+        removeVIP: builder.mutation({
+            query: ({ id, make_vip }) => ({
+                url: `super-admin/customers/${id}/vip/`,
+                method: "PATCH",
+                body: { make_vip }
+            }),
+            invalidatesTags: ["userManagement"]
+        }),
+
+        //deactivate agency admins
+
+        deactiveteAgencyAdmins: builder.mutation({
+            query: ({ id, is_active }) => ({
+                url: `super-admin/admins-agents/admins/${id}/toggle-active/`,
+                method: "POST",
+                body: { is_active }
+            }),
+            invalidatesTags: ["userManagement"]
+        }),
+
 
     }),
 })
@@ -333,6 +376,12 @@ export const {
 
     //operation overview
     useOperationOverviewQuery,
+
+    //user management
+    useUserManagementQuery,
+    useSuspendUserMutation,
+    useRemoveVIPMutation,
+    useDeactiveteAgencyAdminsMutation,
 
 
 

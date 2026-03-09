@@ -1,133 +1,118 @@
-import React, { useState } from "react";
-import { Ban, CheckCircle } from "lucide-react";
 
-const AdminsTable = () => {
-  const [adminsData, setAdminsData] = useState([
-    {
-      id: 1,
-      name: "Karim Ahmed",
-      agency: "Premium Car Rentals",
-      role: "Agency Admin",
-      status: "Active",
-      lastLogin: "2026-02-10 09:30 AM",
-    },
-    {
-      id: 2,
-      name: "Fatima Khan",
-      agency: "City Drive Rentals",
-      role: "Agency Admin",
-      status: "Active",
-      lastLogin: "2026-02-10 08:15 AM",
-    },
-    {
-      id: 3,
-      name: "Rahim Uddin",
-      agency: "Luxury Auto Hire",
-      role: "Agency Admin",
-      status: "Active",
-      lastLogin: "2026-02-09 06:45 PM",
-    },
-    {
-      id: 4,
-      name: "Nasrin Akter",
-      agency: "Quick Rent Services",
-      role: "Agency Admin",
-      status: "Inactive",
-      lastLogin: "2026-02-05 03:20 PM",
-    },
-  ]);
+import React from "react";
+import { Mail, Phone, Building2, UserCircle2, Loader2, Power, PowerOff } from "lucide-react";
+import { useDeactiveteAgencyAdminsMutation } from "@/redux/features/baseApi";
+import toast from "react-hot-toast";
 
-  const handleToggleStatus = (id) => {
-    setAdminsData((prevData) =>
-      prevData.map((admin) =>
-        admin.id === id
-          ? {
-            ...admin,
-            status: admin.status === "Active" ? "Inactive" : "Active",
-          }
-          : admin,
-      ),
-    );
+const AdminsTable = ({ admins }) => {
+  const [deactiveteAgencyAdmins, { isLoading }] = useDeactiveteAgencyAdminsMutation();
+
+  const handleToggleStatus = async (admin) => {
+    const isCurrentlyActive = admin.status === "Active";
+
+    const payload = {
+      id: admin.id,
+      is_active: isCurrentlyActive ? false : true
+    };
+
+    try {
+      await deactiveteAgencyAdmins(payload).unwrap();
+      toast.success(`Admin ${isCurrentlyActive ? "Deactivated" : "Activated"} successfully`);
+    } catch (error) {
+      toast.error(error?.data?.message || "Action failed");
+    }
   };
 
   return (
-    <div className="bg-white rounded-md border border-gray-100 p-10 shadow-sm animate-in fade-in slide-in-from-bottom-2 duration-500">
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="border-b border-gray-100">
-            <th className="pb-4 pt-2 text-[#64748B] font-semibold text-sm">
-              Name
-            </th>
-            <th className="pb-4 pt-2 text-[#64748B] font-semibold text-sm">
-              Agency
-            </th>
-            <th className="pb-4 pt-2 text-[#64748B] font-semibold text-sm">
-              Role
-            </th>
-            <th className="pb-4 pt-2 text-[#64748B] font-semibold text-sm">
-              Status
-            </th>
-            <th className="pb-4 pt-2 text-[#64748B] font-semibold text-sm">
-              Last Login
-            </th>
-            <th className="pb-4 pt-2 text-[#64748B] font-semibold text-sm">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-50">
-          {adminsData.map((admin) => (
-            <tr
-              key={admin.id}
-              className="hover:bg-gray-50/50 transition-colors"
-            >
-              <td className="py-5 text-[#101828] font-bold text-base">
-                {admin.name}
-              </td>
-              <td className="py-5 text-[#4A5565] font-medium text-base">
-                {admin.agency}
-              </td>
-              <td className="py-5">
-                <span className="bg-[#F8FAFC] text-[#64748B] px-3 py-1 rounded-full text-xs font-semibold border border-gray-200">
-                  {admin.role}
-                </span>
-              </td>
-              <td className="py-5">
-                <span
-                  className={`px-3 py-1 rounded-lg text-xs font-bold text-white transition-all ${admin.status === "Active" ? "bg-[#00C26F]" : "bg-[#94A3B8]"
-                    }`}
-                >
-                  {admin.status}
-                </span>
-              </td>
-              <td className="py-5 text-[#64748B] font-medium text-sm">
-                {admin.lastLogin}
-              </td>
-              <td className="py-5">
-                <button
-                  onClick={() => handleToggleStatus(admin.id)}
-                  className={`flex items-center gap-2 px-4 py-2 border rounded-xl font-bold text-sm transition-all shadow-sm ${admin.status === "Active"
-                      ? "border-gray-200 text-[#101828] hover:bg-red-50 hover:border-red-100 hover:text-red-600"
-                      : "border-[#00C26F]/20 bg-[#00C26F]/5 text-[#00C26F] hover:bg-[#00C26F] hover:text-white"
-                    }`}
-                >
-                  {admin.status === "Active" ? (
-                    <>
-                      <Ban className="w-4 h-4" />
-                      Deactivate
-                    </>
-                  ) : (
-                    <>
-                      <CheckCircle className="w-4 h-4" />
-                      Activate
-                    </>
-                  )}
-                </button>
-              </td>
+    <div className="bg-white rounded-md border border-gray-100 p-10 shadow-sm animate-in fade-in duration-500">
+
+      <h2 className="text-xl font-extrabold text-[#111827] mb-8 uppercase tracking-tight">Agency Admins</h2>
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="border-b border-gray-100">
+              <th className="pb-6 text-[#64748B] font-bold text-[11px] uppercase tracking-widest text-nowrap">Admin Details</th>
+              <th className="pb-6 text-[#64748B] font-bold text-[11px] uppercase tracking-widest px-4 text-nowrap">Contact Info</th>
+              <th className="pb-6 text-[#64748B] font-bold text-[11px] uppercase tracking-widest text-nowrap">Agency</th>
+              <th className="pb-6 text-[#64748B] font-bold text-[11px] uppercase tracking-widest text-center text-nowrap">Status</th>
+              <th className="pb-6 text-[#64748B] font-bold text-[11px] uppercase tracking-widest text-center text-nowrap">Joined</th>
+              <th className="pb-6 text-[#64748B] font-bold text-[11px] uppercase tracking-widest text-center text-nowrap">Action</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody className="divide-y divide-gray-50">
+            {admins?.map((admin) => {
+              const isActive = admin.status === "Active";
+
+              return (
+                <tr key={admin.id} className="hover:bg-gray-50/50 transition-colors group">
+                  <td className="py-6">
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-50 p-2 rounded-lg">
+                        <UserCircle2 className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <span className="text-[#101828] font-bold text-sm">{admin.full_name}</span>
+                    </div>
+                  </td>
+
+                  <td className="py-6 px-4">
+                    <div className="flex flex-col gap-1">
+                      <div className="flex items-center gap-1.5 text-[#4A5565] text-xs">
+                        <Mail className="w-3.5 h-3.5 text-gray-400" /> {admin.email}
+                      </div>
+                      <div className="flex items-center gap-1.5 text-[#4A5565] text-xs">
+                        <Phone className="w-3.5 h-3.5 text-gray-400" /> {admin.phone}
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="py-6">
+                    <div className="flex items-center gap-2 text-[#4A5565] font-semibold text-xs whitespace-nowrap">
+                      <Building2 className="w-3.5 h-3.5 text-blue-400" />
+                      {admin.agency?.name}
+                    </div>
+                  </td>
+
+                  <td className="py-6 text-center">
+                    <span className={`px-3 py-1.5 rounded-xl text-[10px] font-bold uppercase border ${isActive
+                      ? "bg-emerald-50 text-emerald-600 border-emerald-100"
+                      : "bg-gray-50 text-gray-400 border-gray-200"
+                      }`}>
+                      {admin.status}
+                    </span>
+                  </td>
+
+                  <td className="py-6 text-center text-xs font-bold text-gray-400">
+                    {admin.joined_date}
+                  </td>
+
+                  <td className="py-6 text-center">
+                    <button
+                      disabled={isLoading}
+                      onClick={() => handleToggleStatus(admin)}
+                      className={`min-w-[145px] flex items-center mx-auto justify-center gap-2 text-[11px] font-bold px-5 py-2.5 border rounded-xl transition-all shadow-sm ${isActive
+                        ? "bg-white text-gray-700 border-gray-200 hover:bg-red-50 hover:text-red-600 hover:border-red-500"
+                        : "bg-[#00C26F] text-white border-[#00C26F] hover:bg-[#05a862]"
+                        }`}
+                    >
+                      {isLoading ? (
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                      ) : isActive ? (
+                        <>
+                          <PowerOff className="w-3.5 h-3.5" /> Deactivate
+                        </>
+                      ) : (
+                        <>
+                          <Power className="w-3.5 h-3.5" /> Make Active
+                        </>
+                      )}
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
