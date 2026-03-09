@@ -100,41 +100,37 @@ export default function TermsAndPolicies() {
           <div className="flex gap-8">
             <button
               onClick={() => handleTabChange("general")}
-              className={`pb-3 font-semibold transition-colors ${
-                activeTab === "general"
+              className={`pb-3 font-semibold transition-colors ${activeTab === "general"
                   ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
                   : "text-gray-600 hover:text-gray-800"
-              }`}
+                }`}
             >
               General
             </button>
             <button
               onClick={() => handleTabChange("cargo")}
-              className={`pb-3 font-semibold transition-colors ${
-                activeTab === "cargo"
+              className={`pb-3 font-semibold transition-colors ${activeTab === "cargo"
                   ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
                   : "text-gray-600 hover:text-gray-800"
-              }`}
+                }`}
             >
               Cargo Settings
             </button>
             <button
               onClick={() => handleTabChange("terms")}
-              className={`pb-3 font-semibold transition-colors ${
-                activeTab === "terms"
+              className={`pb-3 font-semibold transition-colors ${activeTab === "terms"
                   ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
                   : "text-gray-600 hover:text-gray-800"
-              }`}
+                }`}
             >
               Terms & Conditions
             </button>
             <button
               onClick={() => handleTabChange("privacy")}
-              className={`pb-3 font-semibold transition-colors ${
-                activeTab === "privacy"
+              className={`pb-3 font-semibold transition-colors ${activeTab === "privacy"
                   ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
                   : "text-gray-600 hover:text-gray-800"
-              }`}
+                }`}
             >
               Privacy Policy
             </button>
@@ -276,3 +272,5 @@ export default function TermsAndPolicies() {
     </div>
   );
 }
+
+

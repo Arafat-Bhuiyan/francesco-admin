@@ -299,6 +299,18 @@ export const baseApi = createApi({
             invalidatesTags: ["userManagement"]
         }),
 
+        //settings
+
+
+        updateAdminSettings: builder.mutation({
+            query: ({ settingsData }) => ({
+                url: "super-admin/settings/general/",
+                method: "PATCH",
+                body: settingsData
+            }),
+
+        }),
+
 
     }),
 })
@@ -382,6 +394,10 @@ export const {
     useSuspendUserMutation,
     useRemoveVIPMutation,
     useDeactiveteAgencyAdminsMutation,
+
+
+    //settings
+    useUpdateAdminSettingsMutation,
 
 
 
