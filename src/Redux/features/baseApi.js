@@ -302,7 +302,7 @@ export const baseApi = createApi({
         //settings
 
 
-        updateAdminSettings: builder.mutation({
+        updateGeneralSettings: builder.mutation({
             query: ({ settingsData }) => ({
                 url: "super-admin/settings/general/",
                 method: "PATCH",
@@ -397,7 +397,7 @@ export const {
 
 
     //settings
-    useUpdateAdminSettingsMutation,
+    useUpdateGeneralSettingsMutation,
 
 
 

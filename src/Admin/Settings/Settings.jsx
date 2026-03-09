@@ -101,8 +101,8 @@ export default function TermsAndPolicies() {
             <button
               onClick={() => handleTabChange("general")}
               className={`pb-3 font-semibold transition-colors ${activeTab === "general"
-                  ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
-                  : "text-gray-600 hover:text-gray-800"
+                ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
+                : "text-gray-600 hover:text-gray-800"
                 }`}
             >
               General
@@ -110,8 +110,8 @@ export default function TermsAndPolicies() {
             <button
               onClick={() => handleTabChange("cargo")}
               className={`pb-3 font-semibold transition-colors ${activeTab === "cargo"
-                  ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
-                  : "text-gray-600 hover:text-gray-800"
+                ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
+                : "text-gray-600 hover:text-gray-800"
                 }`}
             >
               Cargo Settings
@@ -119,8 +119,8 @@ export default function TermsAndPolicies() {
             <button
               onClick={() => handleTabChange("terms")}
               className={`pb-3 font-semibold transition-colors ${activeTab === "terms"
-                  ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
-                  : "text-gray-600 hover:text-gray-800"
+                ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
+                : "text-gray-600 hover:text-gray-800"
                 }`}
             >
               Terms & Conditions
@@ -128,8 +128,8 @@ export default function TermsAndPolicies() {
             <button
               onClick={() => handleTabChange("privacy")}
               className={`pb-3 font-semibold transition-colors ${activeTab === "privacy"
-                  ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
-                  : "text-gray-600 hover:text-gray-800"
+                ? "text-[#FF67C2CC] border-b-2 border-[#FF67C2CC]"
+                : "text-gray-600 hover:text-gray-800"
                 }`}
             >
               Privacy Policy

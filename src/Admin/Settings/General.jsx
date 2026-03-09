@@ -1,3 +1,4 @@
+import { useUpdateGeneralSettingsMutation } from "@/redux/features/baseApi";
 import {
   Building2,
   Mail,
@@ -11,6 +12,9 @@ import { useState, useRef } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 export default function General() {
+
+  const [updateGeneralSettings, { isLoading }] = useUpdateGeneralSettingsMutation();
+
   const [formData, setFormData] = useState({
     platformName: "RentEasy Super Admin",
     contactEmail: "support@renteasy.com",
@@ -20,6 +24,16 @@ export default function General() {
 
   const [logo, setLogo] = useState(null);
   const fileInputRef = useRef(null);
+
+  const handleUpdateSetting = async () => {
+    try {
+      const res = await updateGeneralSettings(formData).unwrap();
+      console.log(res)
+      toast.success(res.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -185,7 +199,7 @@ export default function General() {
           Reset to Defaults
         </button>
         <button
-          onClick={handleSave}
+          onClick={handleUpdateSetting}
           className="px-10 py-4 bg-[#2A98FF] text-white rounded-full font-extrabold hover:bg-[#0b85f7] transition-all text-sm shadow-lg shadow-blue-500/20 flex items-center gap-2"
         >
           <Save className="w-4 h-4" /> Save Changes
@@ -194,3 +208,5 @@ export default function General() {
     </div>
   );
 }
+
+
