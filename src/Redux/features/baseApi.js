@@ -299,9 +299,8 @@ export const baseApi = createApi({
             invalidatesTags: ["userManagement"]
         }),
 
+
         //settings
-
-
         updateGeneralSettings: builder.mutation({
             query: ({ settingsData }) => ({
                 url: "super-admin/settings/general/",
