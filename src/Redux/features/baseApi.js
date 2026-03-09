@@ -26,7 +26,7 @@ export const baseApi = createApi({
         },
     }),
 
-    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite", "settings", "agencyList", "globalPricingRules"],
+    tagTypes: ["cars", "agents", "bookings", "quotationPricing", "customers", "paymentAndDeposite", "settings", "agencyList", "globalPricingRules", "paymentAndCommission"],
 
     endpoints: (builder) => ({
 
@@ -229,6 +229,29 @@ export const baseApi = createApi({
 
 
 
+        //payment and commission
+        paymentAndCommissionAdmin: builder.query({
+            query: () => "super-admin/payments-commission/",
+            providesTags: ["paymentAndCommission"]
+        }),
+
+        //details
+        paymentAndCommissionDetails: builder.query({
+            query: (id) => `super-admin/payments-commission/payout/${id}/`,
+            providesTags: ["paymentAndCommission"]
+        }),
+
+        //process payout
+        processPayout: builder.mutation({
+            query: (id) => ({
+                url: `super-admin/payments-commission/payout/${id}/process/`,
+                method: "POST",
+            }),
+            invalidatesTags: ["paymentAndCommission"]
+        }),
+
+
+
 
     }),
 })
@@ -296,6 +319,12 @@ export const {
     //global pricing rules
     useGlobalPricingRulesQuery,
     useUpdateGlobalPricingRulesMutation,
+
+
+    //payment and commission
+    usePaymentAndCommissionAdminQuery,
+    usePaymentAndCommissionDetailsQuery,
+    useProcessPayoutMutation,
 
 
 
