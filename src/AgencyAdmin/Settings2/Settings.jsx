@@ -8,7 +8,7 @@ const Settings = () => {
   const fileInputRef = useRef(null);
 
   // RTK Query Hooks
-  const { data: settings, isLoading } = useSettingsInfoQuery();
+  const { data: settings, isLoading, isError, error } = useSettingsInfoQuery();
   const [updateSettings, { isLoading: isUpdating }] = useUpdateSettingsMutation();
 
   // Local State for Form Fields & Toggles
@@ -102,6 +102,26 @@ const Settings = () => {
       </div>
     );
   }
+
+  if (isError) {
+    return (
+      <div className="h-96 flex flex-col items-center justify-center gap-4 text-center px-4">
+        <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-2">
+          <Globe className="w-8 h-8" />
+        </div>
+        <h3 className="text-xl font-bold text-gray-800">Connection Error</h3>
+        <p className="text-gray-500 max-w-sm">{error?.data?.message || "We couldn't load your agency settings. Please check your connection or try logging in again."}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-full font-bold text-sm shadow-lg hover:bg-blue-700 transition-all"
+        >
+          Retry Loading
+        </button>
+      </div>
+    );
+  }
+
+  if (!settings) return null;
 
   return (
     <div className="py-8 space-y-10 animate-in fade-in slide-in-from-bottom-6 duration-700">

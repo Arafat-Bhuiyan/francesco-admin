@@ -5,7 +5,7 @@ import { url } from "zod";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://francesco-farag.selimreza.dev/api/v1/",
+    baseUrl: "https://francesco-api.selimreza.dev/api/v1",
 
     prepareHeaders: (headers, { endpoint }) => {
       const authEndpoints = [

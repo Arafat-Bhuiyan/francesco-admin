@@ -27,17 +27,16 @@ export default function Login() {
       toast.success(response?.message || "Login successful!");
 
       // Store Credentials securely
-      Cookies.set("access_token", response?.access_token, {
+      const cookieOptions = {
         expires: 7,
-        secure: true,
+        path: "/",
+        // secure: true, // You can uncomment this if you have HTTPS
         sameSite: "strict",
-      });
-      Cookies.set("refresh_token", response?.refresh_token, {
-        expires: 7,
-        secure: true,
-        sameSite: "strict",
-      });
-      Cookies.set("role", response?.role);
+      };
+
+      Cookies.set("access_token", response?.access_token, cookieOptions);
+      Cookies.set("refresh_token", response?.refresh_token, cookieOptions);
+      Cookies.set("role", response?.role, { path: "/" });
 
       // Redirect
       navigate("/admin", { replace: true });

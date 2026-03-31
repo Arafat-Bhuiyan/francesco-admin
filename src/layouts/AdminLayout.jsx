@@ -1,11 +1,19 @@
 import React, { useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, Navigate } from "react-router-dom";
 import { Sidebar } from "@/Admin/Dashboard/Sidebar";
 import Header from "@/Admin/Dashboard/Header";
 import Cookies from "js-cookie";
 
 export default function AdminLayout() {
   const location = useLocation();
+  const navigate = useNavigate();
+  const token = Cookies.get("access_token");
+
+  // If no token, redirect to login
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
   // const user = JSON.parse(localStorage.getItem("user") || "{}");
   const role = Cookies.get("role") || "{}";
   // const role = user.role || "Super Admin";

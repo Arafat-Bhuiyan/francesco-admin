@@ -23,8 +23,20 @@ import { NotFound } from "@/NotFound/NotFound";
 import { ErrorComponent } from "@/layouts/ErrorPage";
 
 const DashboardWrapper = () => {
-  const role = Cookies.get("role") || "super_admin";
-  return role === "agency_admin" ? <AgencyDashboard /> : <MainDashboard />;
+  const role = Cookies.get("role");
+  
+  if (role === "agency_admin") {
+    return <AgencyDashboard />;
+  }
+  
+  if (role === "super_admin") {
+    return <MainDashboard />;
+  }
+
+  // Fallback if role is missing or unknown
+  // For now, default to MainDashboard but with a log
+  console.log("No valid role found in cookies, defaulting to MainDashboard. Role:", role);
+  return <MainDashboard />;
 };
 
 const router = createBrowserRouter([
