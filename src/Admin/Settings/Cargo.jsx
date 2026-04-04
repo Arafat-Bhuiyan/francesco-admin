@@ -1,612 +1,330 @@
-// import {
-//   Package,
-//   Truck,
-//   Scale,
-//   DollarSign,
-//   Clock,
-//   Save,
-//   RotateCcw,
-//   ChevronDown,
-// } from "lucide-react";
-// import { useState } from "react";
-// import toast, { Toaster } from "react-hot-toast";
-
-// const Switch = ({ enabled, onChange, label, sublabel }) => (
-//   <div className="flex items-center justify-between py-4">
-//     <div>
-//       <p className="text-gray-900 text-sm font-bold">{label}</p>
-//       {sublabel && (
-//         <p className="text-gray-400 text-xs font-semibold">{sublabel}</p>
-//       )}
-//     </div>
-//     <button
-//       onClick={() => onChange(!enabled)}
-//       className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${enabled ? "bg-[#2A98FF]" : "bg-gray-200"
-//         }`}
-//     >
-//       <span
-//         className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${enabled ? "translate-x-5" : "translate-x-0"
-//           }`}
-//       />
-//     </button>
-//   </div>
-// );
-
-// export default function Cargo() {
-//   const [settings, setSettings] = useState({
-//     enableCargo: true,
-//     enableTracking: true,
-//     defaultInsurance: true,
-//     defaultCarrier: "FedEx",
-//     maxWeight: "50",
-//     maxDimensions: "100×100×100",
-//     baseRate: "15.00",
-//     chargePerKg: "2.50",
-//     expressRate: "35.00",
-//     freeThreshold: "500.00",
-//     deliveryOptions: {
-//       standard: true,
-//       express: true,
-//       sameDay: false,
-//     },
-//   });
-
-//   const handleInputChange = (e) => {
-//     const { name, value } = e.target;
-//     setSettings((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleToggle = (key) => {
-//     setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
-//   };
-
-//   const handleDeliveryToggle = (key) => {
-//     setSettings((prev) => ({
-//       ...prev,
-//       deliveryOptions: {
-//         ...prev.deliveryOptions,
-//         [key]: !prev.deliveryOptions[key],
-//       },
-//     }));
-//   };
-
-//   const handleSave = () => {
-//     console.log("Saving Cargo Settings:", settings);
-//     toast.success("Cargo settings updated successfully!");
-//   };
-
-//   const handleReset = () => {
-//     setSettings({
-//       enableCargo: true,
-//       enableTracking: true,
-//       defaultInsurance: true,
-//       defaultCarrier: "FedEx",
-//       maxWeight: "50",
-//       maxDimensions: "100×100×100",
-//       baseRate: "15.00",
-//       chargePerKg: "2.50",
-//       expressRate: "35.00",
-//       freeThreshold: "500.00",
-//       deliveryOptions: {
-//         standard: true,
-//         express: true,
-//         sameDay: false,
-//       },
-//     });
-//     toast.success("Settings reset to defaults");
-//   };
-
-//   return (
-//     <div className="w-full space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500 pb-10">
-//       <Toaster position="top-right" />
-
-//       {/* General Cargo Settings */}
-//       <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-//         <div className="flex items-center gap-3 mb-6">
-//           <Package className="w-5 h-5 text-gray-700" />
-//           <h3 className="text-base font-extrabold text-gray-900">
-//             General Cargo Settings
-//           </h3>
-//         </div>
-//         <p className="text-gray-400 text-xs font-semibold mb-2">
-//           Basic configuration for cargo management
-//         </p>
-//         <div className="divide-y divide-gray-50">
-//           <Switch
-//             label="Enable Cargo Services"
-//             sublabel="Allow cargo shipping for properties"
-//             enabled={settings.enableCargo}
-//             onChange={() => handleToggle("enableCargo")}
-//           />
-//           <Switch
-//             label="Enable Tracking"
-//             sublabel="Real-time shipment tracking"
-//             enabled={settings.enableTracking}
-//             onChange={() => handleToggle("enableTracking")}
-//           />
-//           <Switch
-//             label="Default Insurance"
-//             sublabel="Include insurance by default"
-//             enabled={settings.defaultInsurance}
-//             onChange={() => handleToggle("defaultInsurance")}
-//           />
-//         </div>
-//       </div>
-
-//       {/* Carrier Settings */}
-//       <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-//         <div className="flex items-center gap-3 mb-6">
-//           <Truck className="w-5 h-5 text-gray-700" />
-//           <h3 className="text-base font-extrabold text-gray-900">
-//             Carrier Settings
-//           </h3>
-//         </div>
-//         <p className="text-gray-400 text-xs font-semibold mb-4">
-//           Configure shipping carrier preferences
-//         </p>
-//         <div className="space-y-3">
-//           <label className="text-gray-900 text-xs font-bold block">
-//             Default Carrier
-//           </label>
-//           <div className="relative">
-//             <select
-//               name="defaultCarrier"
-//               value={settings.defaultCarrier}
-//               onChange={handleInputChange}
-//               className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold appearance-none outline-none focus:ring-2 focus:ring-[#2A98FF]/20 transition-all"
-//             >
-//               <option value="FedEx">FedEx</option>
-//               <option value="UPS">UPS</option>
-//               <option value="DHL">DHL</option>
-//             </select>
-//             <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Weight & Dimensions Limits */}
-//       <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-//         <div className="flex items-center gap-3 mb-6">
-//           <Scale className="w-5 h-5 text-gray-700" />
-//           <h3 className="text-base font-extrabold text-gray-900">
-//             Weight & Dimensions Limits
-//           </h3>
-//         </div>
-//         <p className="text-gray-400 text-xs font-semibold mb-4">
-//           Set maximum allowed weight and dimensions
-//         </p>
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//           <div className="space-y-3">
-//             <label className="text-gray-900 text-xs font-bold block">
-//               Maximum Weight (kg)
-//             </label>
-//             <input
-//               type="text"
-//               name="maxWeight"
-//               value={settings.maxWeight}
-//               onChange={handleInputChange}
-//               className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-[#2A98FF]/20 transition-all"
-//             />
-//           </div>
-//           <div className="space-y-3">
-//             <label className="text-gray-900 text-xs font-bold block">
-//               Max Dimensions (cm)
-//             </label>
-//             <input
-//               type="text"
-//               name="maxDimensions"
-//               value={settings.maxDimensions}
-//               onChange={handleInputChange}
-//               className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-[#2A98FF]/20 transition-all"
-//             />
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Pricing Settings */}
-//       <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-//         <div className="flex items-center gap-3 mb-6">
-//           <DollarSign className="w-5 h-5 text-gray-700" />
-//           <h3 className="text-base font-extrabold text-gray-900">
-//             Pricing Settings
-//           </h3>
-//         </div>
-//         <p className="text-gray-400 text-xs font-semibold mb-4">
-//           Configure shipping rates and charges
-//         </p>
-//         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//           <div className="space-y-3">
-//             <label className="text-gray-900 text-xs font-bold block">
-//               Base Shipping Rate ($)
-//             </label>
-//             <input
-//               type="text"
-//               name="baseRate"
-//               value={settings.baseRate}
-//               onChange={handleInputChange}
-//               className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-[#2A98FF]/20 transition-all"
-//             />
-//           </div>
-//           <div className="space-y-3">
-//             <label className="text-gray-900 text-xs font-bold block">
-//               Charge per kg ($)
-//             </label>
-//             <input
-//               type="text"
-//               name="chargePerKg"
-//               value={settings.chargePerKg}
-//               onChange={handleInputChange}
-//               className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-[#2A98FF]/20 transition-all"
-//             />
-//           </div>
-//           <div className="space-y-3">
-//             <label className="text-gray-900 text-xs font-bold block">
-//               Express Shipping Rate ($)
-//             </label>
-//             <input
-//               type="text"
-//               name="expressRate"
-//               value={settings.expressRate}
-//               onChange={handleInputChange}
-//               className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-[#2A98FF]/20 transition-all"
-//             />
-//           </div>
-//           <div className="space-y-3">
-//             <label className="text-gray-900 text-xs font-bold block">
-//               Free Shipping Threshold ($)
-//             </label>
-//             <input
-//               type="text"
-//               name="freeThreshold"
-//               value={settings.freeThreshold}
-//               onChange={handleInputChange}
-//               className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-[#2A98FF]/20 transition-all"
-//             />
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Delivery Options */}
-//       <div className="bg-white rounded-md shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-//         <div className="flex items-center gap-3 mb-6">
-//           <Clock className="w-5 h-5 text-gray-700" />
-//           <h3 className="text-base font-extrabold text-gray-900">
-//             Delivery Options
-//           </h3>
-//         </div>
-//         <p className="text-gray-400 text-xs font-semibold mb-6">
-//           Configure available delivery methods
-//         </p>
-//         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-//           <div className="border border-gray-100 rounded-2xl p-5 transition-all hover:shadow-sm">
-//             <Switch
-//               label="Standard"
-//               sublabel="5-7 business days"
-//               enabled={settings.deliveryOptions.standard}
-//               onChange={() => handleDeliveryToggle("standard")}
-//             />
-//           </div>
-//           <div className="border border-gray-100 rounded-2xl p-5 transition-all hover:shadow-sm">
-//             <Switch
-//               label="Express"
-//               sublabel="2-3 business days"
-//               enabled={settings.deliveryOptions.express}
-//               onChange={() => handleDeliveryToggle("express")}
-//             />
-//           </div>
-//           <div className="border border-gray-100 rounded-2xl p-5 transition-all hover:shadow-sm">
-//             <Switch
-//               label="Same Day"
-//               sublabel="Within 24 hours"
-//               enabled={settings.deliveryOptions.sameDay}
-//               onChange={() => handleDeliveryToggle("sameDay")}
-//             />
-//           </div>
-//         </div>
-//       </div>
-
-//       {/* Footer Actions */}
-//       <div className="flex justify-end gap-4 pt-4">
-//         <button
-//           onClick={handleReset}
-//           className="px-8 py-3 bg-white border border-gray-100 text-gray-900 rounded-full font-extrabold hover:bg-gray-50 transition-all text-sm shadow-sm flex items-center gap-2"
-//         >
-//           <RotateCcw className="w-4 h-4" /> Reset to Defaults
-//         </button>
-//         <button
-//           onClick={handleSave}
-//           className="px-10 py-3 bg-[#2A98FF] text-white rounded-full font-extrabold hover:bg-[#0b85f7] transition-all text-sm shadow-lg shadow-blue-500/20 flex items-center gap-2"
-//         >
-//           <Save className="w-4 h-4" /> Save Changes
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
-import { useGetUpdatedDataQuery, useUpdateGeneralSettingsMutation } from "@/redux/features/baseApi";
-import {
-  Package,
-  Truck,
-  Scale,
-  DollarSign,
-  Clock,
-  Save,
+import { 
+  CheckCircle2, 
+  Clock, 
+  ShieldCheck, 
+  AlertCircle, 
+  Download, 
   RotateCcw,
   ChevronDown,
-  Loader2,
+  Check
 } from "lucide-react";
-import { useState, useEffect } from "react";
-import toast, { Toaster } from "react-hot-toast";
+import { useState, useRef, useEffect } from "react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
-const Switch = ({ enabled, onChange, label, sublabel }) => (
-  <div className="flex items-center justify-between py-4">
-    <div>
-      <p className="text-gray-900 text-sm font-bold">{label}</p>
-      {sublabel && (
-        <p className="text-gray-400 text-xs font-semibold">{sublabel}</p>
-      )}
+const StatsCard = ({ title, value, icon: Icon, colorClass, bgColorClass, iconColorClass }) => (
+  <div className="bg-white p-6 rounded-[24px] border border-gray-100 flex items-center justify-between shadow-sm">
+    <div className="space-y-1">
+      <p className="text-gray-500 text-xs font-medium uppercase tracking-wider">{title}</p>
+      <p className="text-2xl font-extrabold text-gray-900">{value}</p>
     </div>
-    <button
-      type="button"
-      onClick={() => onChange(!enabled)}
-      className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${enabled ? "bg-[#2A98FF]" : "bg-gray-200"
-        }`}
-    >
-      <span
-        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${enabled ? "translate-x-5" : "translate-x-0"
-          }`}
-      />
-    </button>
+    <div className={`p-3 rounded-2xl ${bgColorClass}`}>
+      <Icon className={`w-6 h-6 ${iconColorClass}`} />
+    </div>
   </div>
 );
 
+const StatusBadge = ({ status }) => {
+  const styles = {
+    pending: "bg-orange-50 text-orange-400 border-orange-100",
+    verified: "bg-green-50 text-green-500 border-green-100",
+    failed: "bg-red-50 text-red-500 border-red-100",
+  };
+  
+  return (
+    <span className={`px-4 py-1 rounded-full text-[11px] font-bold border ${styles[status.toLowerCase()] || styles.pending}`}>
+      {status}
+    </span>
+  );
+};
+
 export default function Cargo() {
-  const [updateSettings, { isLoading: isUpdating }] = useUpdateGeneralSettingsMutation();
-  const { data: serverData, isLoading: isFetching } = useGetUpdatedDataQuery();
+  const [filterStatus, setFilterStatus] = useState("All Status");
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  const [settings, setSettings] = useState({
-    enable_cargo_services: false,
-    enable_tracking: false,
-    default_insurance: true,
-    default_carrier: "FedEx",
-    base_shipping_rate: "0.00",
-    charge_per_kg: "0.00",
-    express_shipping_rate: "0.00",
-    free_shipping_threshold: "0.00",
-    max_weight_kg: 0,
-    max_dimensions_cm: "",
-    enable_standard_delivery: false,
-    enable_express_delivery: false,
-    enable_same_day_delivery: false,
-  });
+  const [listData, setListData] = useState([
+    {
+      id: "BK-0045",
+      customer: "John Smith",
+      vehicle: "Toyota Camry",
+      plate: "5XYZ123",
+      date: "03/02/2024",
+      status: "Pending",
+      lastSync: "Send to Cargos",
+      action: "Send to Cargos",
+      actionType: "primary"
+    },
+    {
+      id: "BK-0046",
+      customer: "John Smith",
+      vehicle: "Toyota Camry",
+      plate: "5XYZ123",
+      date: "03/02/2024",
+      status: "Verified",
+      lastSync: "Today, 10:24 AM",
+      action: "Done",
+      actionType: "success"
+    },
+    {
+      id: "BK-0047",
+      customer: "John Smith",
+      vehicle: "Toyota Camry",
+      plate: "5XYZ123",
+      date: "03/02/2024",
+      status: "Failed",
+      lastSync: "02/01/2026 Today, 10:24 AM",
+      action: "Retry",
+      actionType: "warning"
+    },
+    {
+      id: "BK-0048",
+      customer: "John Smith",
+      vehicle: "Toyota Camry",
+      plate: "5XYZ123",
+      date: "03/02/2024",
+      status: "Pending",
+      lastSync: "Send to Cargos",
+      action: "Send to Cargos",
+      actionType: "primary"
+    }
+  ]);
 
-  // Sync with Backend
+  // Derived filtered list
+  const cargoList = filterStatus === "All Status" 
+    ? listData 
+    : listData.filter(item => item.status === filterStatus);
+
+  // Close dropdown on outside click
   useEffect(() => {
-    if (serverData) {
-      setSettings({
-        enable_cargo_services: serverData.enable_cargo_services,
-        enable_tracking: serverData.enable_tracking,
-        default_insurance: serverData.default_insurance,
-        default_carrier: serverData.default_carrier || "FedEx",
-        base_shipping_rate: serverData.base_shipping_rate,
-        charge_per_kg: serverData.charge_per_kg,
-        express_shipping_rate: serverData.express_shipping_rate,
-        free_shipping_threshold: serverData.free_shipping_threshold,
-        max_weight_kg: serverData.max_weight_kg,
-        max_dimensions_cm: serverData.max_dimensions_cm,
-        enable_standard_delivery: serverData.enable_standard_delivery,
-        enable_express_delivery: serverData.enable_express_delivery,
-        enable_same_day_delivery: serverData.enable_same_day_delivery,
-      });
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
     }
-  }, [serverData]);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setSettings((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleToggle = (key) => {
-    setSettings((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const handleSave = async () => {
-    try {
-      // Sending as JSON inside settingsData as per your API structure
-      await updateSettings({ settingsData: settings }).unwrap();
-      toast.success("Cargo settings updated successfully!");
-    } catch (error) {
-      toast.error(error?.data?.message || "Failed to update settings");
-    }
-  };
-
-  const handleReset = () => {
-    if (serverData) {
-      setSettings({ ...serverData });
-      toast.success("Reverted to saved settings");
-    }
-  };
-
-  if (isFetching) {
-    return (
-      <div className="flex h-96 items-center justify-center">
-        <Loader2 className="w-10 h-10 animate-spin text-[#2A98FF]" />
-      </div>
+  const handleAction = (id) => {
+    setListData((prev) => 
+      prev.map((item) => 
+        item.id === id 
+          ? { 
+              ...item, 
+              status: "Verified", 
+              action: "Done", 
+              actionType: "success", 
+              lastSync: "Today, 10:24 AM" 
+            }
+          : item
+      )
     );
-  }
+  };
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    
+    // Add Report Header
+    doc.setFontSize(18);
+    doc.text("Cargo Settings Report", 14, 22);
+    doc.setFontSize(11);
+    doc.setTextColor(100);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 30);
+    doc.text(`Filter Status: ${filterStatus}`, 14, 37);
+
+    // Prepare Table Data
+    const tableColumn = ["Booking ID", "Customer", "Vehicle", "Check-in Date", "Status", "Last Sync"];
+    const tableRows = cargoList.map(item => [
+      item.id,
+      item.customer,
+      `${item.vehicle} (${item.plate})`,
+      item.date,
+      item.status,
+      item.lastSync
+    ]);
+
+    // Generate Table
+    autoTable(doc, {
+      head: [tableColumn],
+      body: tableRows,
+      startY: 45,
+      theme: 'striped',
+      headStyles: { fillColor: [42, 152, 255] }, // Matches #2A98FF
+      styles: { fontSize: 9 },
+    });
+
+    // Save PDF
+    doc.save(`Cargo_List_${filterStatus.replace(/\s+/g, '_')}.pdf`);
+  };
+
+  const statusOptions = ["All Status", "Pending", "Verified", "Failed"];
 
   return (
-    <div className="w-full space-y-6 animate-in fade-in duration-500 pb-10">
-      <Toaster position="top-right" />
-
-      {/* General Cargo Settings */}
-      <div className="bg-white rounded-3xl shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-blue-50 rounded-xl text-[#2A98FF]">
-            <Package className="w-5 h-5" />
-          </div>
-          <h3 className="text-lg font-extrabold text-gray-900">
-            Cargo & Tracking
-          </h3>
-        </div>
-        <div className="divide-y divide-gray-50">
-          <Switch
-            label="Enable Cargo Services"
-            sublabel="Allow cargo shipping for properties"
-            enabled={settings.enable_cargo_services}
-            onChange={() => handleToggle("enable_cargo_services")}
-          />
-          <Switch
-            label="Enable Tracking"
-            sublabel="Real-time shipment tracking"
-            enabled={settings.enable_tracking}
-            onChange={() => handleToggle("enable_tracking")}
-          />
-          <Switch
-            label="Default Insurance"
-            sublabel="Include insurance by default"
-            enabled={settings.default_insurance}
-            onChange={() => handleToggle("default_insurance")}
-          />
-        </div>
+    <div className="w-full space-y-8 animate-in fade-in duration-500 pb-10 px-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-extrabold text-gray-900">Cargo Settings</h2>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Carrier Settings */}
-        <div className="bg-white rounded-3xl shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Truck className="w-5 h-5 text-gray-700" />
-            <h3 className="text-base font-extrabold text-gray-900">Carrier Preferences</h3>
-          </div>
-          <div className="space-y-3">
-            <label className="text-gray-900 text-xs font-bold block">Default Carrier</label>
-            <div className="relative">
-              <select
-                name="default_carrier"
-                value={settings.default_carrier}
-                onChange={handleInputChange}
-                className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold appearance-none outline-none focus:ring-2 focus:ring-[#2A98FF]/20"
+      {/* Stats Section */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <StatsCard 
+          title="Total Requests" 
+          value="255" 
+          icon={CheckCircle2} 
+          bgColorClass="bg-blue-50/50" 
+          iconColorClass="text-[#2A98FF]"
+        />
+        <StatsCard 
+          title="Pending Verification" 
+          value="12" 
+          icon={Clock} 
+          bgColorClass="bg-yellow-50/50" 
+          iconColorClass="text-yellow-500"
+        />
+        <StatsCard 
+          title="Verified" 
+          value="292" 
+          icon={ShieldCheck} 
+          bgColorClass="bg-green-50/50" 
+          iconColorClass="text-green-500"
+        />
+        <StatsCard 
+          title="Failed" 
+          value="20" 
+          icon={AlertCircle} 
+          bgColorClass="bg-red-50/50" 
+          iconColorClass="text-red-500"
+        />
+      </div>
+
+      {/* List Section */}
+      <div className="bg-white rounded-[32px] border border-blue-100 border-dashed p-8 shadow-[0_8px_30px_rgb(0,0,0,0.02)]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <h3 className="text-xl font-extrabold text-gray-900">Cargo list</h3>
+          <div className="flex items-center gap-3">
+            {/* Filter Dropdown */}
+            <div className="relative" ref={dropdownRef}>
+              <button 
+                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                className="flex items-center gap-2 px-5 py-2.5 bg-gray-50 border border-gray-100 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-100 transition-all min-w-[140px] justify-between"
               >
-                <option value="FedEx">FedEx</option>
-                <option value="UPS">UPS</option>
-                <option value="DHL">DHL</option>
-              </select>
-              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
+                <div className="flex items-center gap-2">
+                  <span className={`w-2 h-2 rounded-full ${
+                    filterStatus === 'Pending' ? 'bg-orange-400' : 
+                    filterStatus === 'Verified' ? 'bg-green-400' : 
+                    filterStatus === 'Failed' ? 'bg-red-400' : 'bg-blue-500'
+                  }`}></span>
+                  {filterStatus}
+                </div>
+                <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {isDropdownOpen && (
+                <div className="absolute top-full left-0 mt-2 w-full bg-white border border-gray-100 rounded-2xl shadow-xl z-20 py-2 animate-in zoom-in-95 duration-200">
+                  {statusOptions.map((option) => (
+                    <button
+                      key={option}
+                      onClick={() => {
+                        setFilterStatus(option);
+                        setIsDropdownOpen(false);
+                      }}
+                      className={`w-full text-left px-5 py-2.5 text-[13px] font-bold flex items-center justify-between hover:bg-gray-50 transition-colors ${
+                        filterStatus === option ? 'text-[#2A98FF] bg-blue-50/30' : 'text-gray-600'
+                      }`}
+                    >
+                      {option}
+                      {filterStatus === option && <Check className="w-4 h-4 text-[#2A98FF]" />}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
+
+            <button 
+              onClick={exportToPDF}
+              className="flex items-center gap-2 px-6 py-2.5 bg-[#2A98FF] text-white rounded-xl text-sm font-extrabold hover:bg-blue-600 transition-all shadow-lg shadow-blue-200"
+            >
+              <Download className="w-4 h-4" />
+              Export Data
+            </button>
           </div>
         </div>
 
-        {/* Weight & Dimensions */}
-        <div className="bg-white rounded-3xl shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-          <div className="flex items-center gap-3 mb-6">
-            <Scale className="w-5 h-5 text-gray-700" />
-            <h3 className="text-base font-extrabold text-gray-900">Limits</h3>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <label className="text-gray-700 text-[10px] uppercase font-bold">Max Weight (kg)</label>
-              <input
-                type="number"
-                name="max_weight_kg"
-                value={settings.max_weight_kg}
-                onChange={handleInputChange}
-                className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none"
-              />
-            </div>
-            <div className="space-y-2">
-              <label className="text-gray-700 text-[10px] uppercase font-bold">Max Dimensions (cm)</label>
-              <input
-                type="text"
-                name="max_dimensions_cm"
-                value={settings.max_dimensions_cm}
-                onChange={handleInputChange}
-                className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none"
-              />
-            </div>
-          </div>
+        <div className="overflow-x-auto min-h-[300px]">
+          <table className="w-full text-left border-separate border-spacing-y-4">
+            <thead>
+              <tr className="text-gray-400 text-xs font-bold uppercase tracking-wider">
+                <th className="pb-2 px-4">Booking ID</th>
+                <th className="pb-2 px-4">Customer</th>
+                <th className="pb-2 px-4">Vehicle</th>
+                <th className="pb-2 px-4">Check-in Date</th>
+                <th className="pb-2 px-4 text-center">Cargo Status</th>
+                <th className="pb-2 px-4">Last Sync</th>
+                <th className="pb-2 px-4 text-center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {cargoList.length > 0 ? (
+                cargoList.map((item) => (
+                  <tr key={item.id} className="group transition-all">
+                    <td className="py-5 px-4 text-sm font-bold text-gray-900 bg-white border-y border-l border-gray-100 rounded-l-[18px]">
+                      {item.id}
+                    </td>
+                    <td className="py-5 px-4 text-sm font-semibold text-gray-600 bg-white border-y border-gray-100">
+                      {item.customer}
+                    </td>
+                    <td className="py-5 px-4 bg-white border-y border-gray-100">
+                      <div>
+                        <p className="text-sm font-extrabold text-gray-900 leading-tight">{item.vehicle}</p>
+                        <p className="text-[10px] font-bold text-gray-400 tracking-wider uppercase mt-0.5">{item.plate}</p>
+                      </div>
+                    </td>
+                    <td className="py-5 px-4 text-sm font-bold text-gray-600 bg-white border-y border-gray-100">
+                      {item.date}
+                    </td>
+                    <td className="py-5 px-4 text-center bg-white border-y border-gray-100">
+                      <StatusBadge status={item.status} />
+                    </td>
+                    <td className="py-5 px-4 text-sm font-bold text-gray-400 bg-white border-y border-gray-100">
+                      {item.lastSync}
+                    </td>
+                    <td className="py-5 px-4 text-center bg-white border-y border-r border-gray-100 rounded-r-[18px]">
+                      {item.actionType === 'primary' && (
+                        <button 
+                          onClick={() => handleAction(item.id)}
+                          className="px-6 py-2 border-2 border-[#2A98FF]/10 text-[#2A98FF] rounded-full text-[11px] font-extrabold hover:bg-[#2A98FF] hover:text-white transition-all"
+                        >
+                          {item.action}
+                        </button>
+                      )}
+                      {item.actionType === 'success' && (
+                        <button className="px-10 py-2 border-2 border-green-100 text-green-500 rounded-full text-[11px] font-extrabold cursor-default">
+                          {item.action}
+                        </button>
+                      )}
+                      {item.actionType === 'warning' && (
+                        <button 
+                          onClick={() => handleAction(item.id)}
+                          className="px-8 py-2 border-2 border-orange-100 text-orange-500 rounded-full text-[11px] font-extrabold hover:bg-orange-500 hover:text-white transition-all flex items-center gap-2 mx-auto"
+                        >
+                          <RotateCcw className="w-3 h-3" />
+                          {item.action}
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="py-20 text-center text-gray-400 font-bold bg-white border border-gray-50 rounded-3xl">
+                    No cargo requests found for status "{filterStatus}"
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
         </div>
-      </div>
-
-      {/* Pricing Settings */}
-      <div className="bg-white rounded-3xl shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-        <div className="flex items-center gap-3 mb-6">
-          <DollarSign className="w-5 h-5 text-gray-700" />
-          <h3 className="text-base font-extrabold text-gray-900">Rates & Thresholds</h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {[
-            { label: "Base Rate ($)", name: "base_shipping_rate" },
-            { label: "Per Kg ($)", name: "charge_per_kg" },
-            { label: "Express ($)", name: "express_shipping_rate" },
-            { label: "Free Over ($)", name: "free_shipping_threshold" },
-          ].map((field) => (
-            <div key={field.name} className="space-y-2">
-              <label className="text-gray-700 text-[10px] uppercase font-bold">{field.label}</label>
-              <input
-                type="text"
-                name={field.name}
-                value={settings[field.name]}
-                onChange={handleInputChange}
-                className="w-full h-12 px-5 bg-[#F3F4F6] border-none rounded-xl text-gray-900 font-bold outline-none focus:ring-2 focus:ring-[#2A98FF]/20 transition-all"
-              />
-            </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Delivery Options */}
-      <div className="bg-white rounded-3xl shadow-[0_2px_20px_-5px_rgba(0,0,0,0.05)] border border-gray-100 p-8">
-        <div className="flex items-center gap-3 mb-6">
-          <Clock className="w-5 h-5 text-gray-700" />
-          <h3 className="text-base font-extrabold text-gray-900">Available Methods</h3>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="border border-gray-50 bg-gray-50/30 rounded-2xl px-6 py-2 transition-all">
-            <Switch
-              label="Standard"
-              sublabel="5-7 business days"
-              enabled={settings.enable_standard_delivery}
-              onChange={() => handleToggle("enable_standard_delivery")}
-            />
-          </div>
-          <div className="border border-gray-50 bg-gray-50/30 rounded-2xl px-6 py-2 transition-all">
-            <Switch
-              label="Express"
-              sublabel="2-3 business days"
-              enabled={settings.enable_express_delivery}
-              onChange={() => handleToggle("enable_express_delivery")}
-            />
-          </div>
-          <div className="border border-gray-50 bg-gray-50/30 rounded-2xl px-6 py-2 transition-all">
-            <Switch
-              label="Same Day"
-              sublabel="Within 24 hours"
-              enabled={settings.enable_same_day_delivery}
-              onChange={() => handleToggle("enable_same_day_delivery")}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Footer Actions */}
-      <div className="flex justify-end gap-4 pt-4">
-        <button
-          type="button"
-          onClick={handleReset}
-          className="px-8 py-4 bg-white border border-gray-100 text-gray-500 rounded-full font-bold hover:bg-gray-50 transition-all text-sm flex items-center gap-2"
-        >
-          <RotateCcw className="w-4 h-4" /> Discard
-        </button>
-        <button
-          type="button"
-          disabled={isUpdating}
-          onClick={handleSave}
-          className="px-12 py-4 bg-[#2A98FF] text-white rounded-full font-extrabold hover:bg-[#0b85f7] transition-all text-sm shadow-lg shadow-blue-500/20 flex items-center gap-2 disabled:opacity-50"
-        >
-          {isUpdating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
-          {isUpdating ? "Saving..." : "Update Cargo Info"}
-        </button>
       </div>
     </div>
   );
